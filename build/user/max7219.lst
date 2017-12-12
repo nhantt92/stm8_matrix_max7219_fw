@@ -1,0 +1,154 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module max7219
+                                      6 	.optsdcc -mstm8
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _SPI_GetFlagStatus
+                                     12 	.globl _SPI_SendData
+                                     13 	.globl _GPIO_WriteLow
+                                     14 	.globl _GPIO_WriteHigh
+                                     15 	.globl _GPIO_Init
+                                     16 	.globl _Max7219_Init
+                                     17 	.globl _Max7219_Write
+                                     18 ;--------------------------------------------------------
+                                     19 ; ram data
+                                     20 ;--------------------------------------------------------
+                                     21 	.area DATA
+                                     22 ;--------------------------------------------------------
+                                     23 ; ram data
+                                     24 ;--------------------------------------------------------
+                                     25 	.area INITIALIZED
+                                     26 ;--------------------------------------------------------
+                                     27 ; absolute external ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area DABS (ABS)
+                                     30 ;--------------------------------------------------------
+                                     31 ; global & static initialisations
+                                     32 ;--------------------------------------------------------
+                                     33 	.area HOME
+                                     34 	.area GSINIT
+                                     35 	.area GSFINAL
+                                     36 	.area GSINIT
+                                     37 ;--------------------------------------------------------
+                                     38 ; Home
+                                     39 ;--------------------------------------------------------
+                                     40 	.area HOME
+                                     41 	.area HOME
+                                     42 ;--------------------------------------------------------
+                                     43 ; code
+                                     44 ;--------------------------------------------------------
+                                     45 	.area CODE
+                                     46 ;	user/max7219.c: 4: static void delay_ms(uint8_t x)
+                                     47 ;	-----------------------------------------
+                                     48 ;	 function delay_ms
+                                     49 ;	-----------------------------------------
+      000000                         50 _delay_ms:
+      000000 88               [ 1]   51 	push	a
+                                     52 ;	user/max7219.c: 6: while(x--);
+      000001 7B 04            [ 1]   53 	ld	a, (0x04, sp)
+      000003                         54 00101$:
+      000003 6B 01            [ 1]   55 	ld	(0x01, sp), a
+      000005 4A               [ 1]   56 	dec	a
+      000006 0D 01            [ 1]   57 	tnz	(0x01, sp)
+      000008 26 F9            [ 1]   58 	jrne	00101$
+      00000A 84               [ 1]   59 	pop	a
+      00000B 81               [ 4]   60 	ret
+                                     61 ;	user/max7219.c: 9: void Max7219_Init(void)
+                                     62 ;	-----------------------------------------
+                                     63 ;	 function Max7219_Init
+                                     64 ;	-----------------------------------------
+      00000C                         65 _Max7219_Init:
+                                     66 ;	user/max7219.c: 11: GPIO_Init(CS_port, CS_pin, GPIO_MODE_OUT_PP_HIGH_FAST);
+      00000C 4B F0            [ 1]   67 	push	#0xf0
+      00000E 4B 10            [ 1]   68 	push	#0x10
+      000010 4B 0A            [ 1]   69 	push	#0x0a
+      000012 4B 50            [ 1]   70 	push	#0x50
+      000014 CDr00r00         [ 4]   71 	call	_GPIO_Init
+      000017 5B 04            [ 2]   72 	addw	sp, #4
+                                     73 ;	user/max7219.c: 12: Max7219_Write(SHUTDOWN, 0x01); // Normal operation
+      000019 4B 01            [ 1]   74 	push	#0x01
+      00001B 4B 0C            [ 1]   75 	push	#0x0c
+      00001D CDr00r48         [ 4]   76 	call	_Max7219_Write
+      000020 85               [ 2]   77 	popw	x
+                                     78 ;	user/max7219.c: 13: Max7219_Write(DECODEMODE, 0x00); // No decode
+      000021 4B 00            [ 1]   79 	push	#0x00
+      000023 4B 09            [ 1]   80 	push	#0x09
+      000025 CDr00r48         [ 4]   81 	call	_Max7219_Write
+      000028 85               [ 2]   82 	popw	x
+                                     83 ;	user/max7219.c: 14: Max7219_Write(SCANLIMIT, 0x07); // scan 8 row
+      000029 4B 07            [ 1]   84 	push	#0x07
+      00002B 4B 0B            [ 1]   85 	push	#0x0b
+      00002D CDr00r48         [ 4]   86 	call	_Max7219_Write
+      000030 85               [ 2]   87 	popw	x
+                                     88 ;	user/max7219.c: 15: Max7219_Write(INTENSITY, 0x04); // brightness 9/32
+      000031 4B 04            [ 1]   89 	push	#0x04
+      000033 4B 0A            [ 1]   90 	push	#0x0a
+      000035 CDr00r48         [ 4]   91 	call	_Max7219_Write
+      000038 85               [ 2]   92 	popw	x
+                                     93 ;	user/max7219.c: 16: Max7219_Write(DISPLAYTEST, 0x00);
+      000039 4B 00            [ 1]   94 	push	#0x00
+      00003B 4B 0F            [ 1]   95 	push	#0x0f
+      00003D CDr00r48         [ 4]   96 	call	_Max7219_Write
+      000040 85               [ 2]   97 	popw	x
+                                     98 ;	user/max7219.c: 17: delay_ms(100);
+      000041 4B 64            [ 1]   99 	push	#0x64
+      000043 CDr00r00         [ 4]  100 	call	_delay_ms
+      000046 84               [ 1]  101 	pop	a
+      000047 81               [ 4]  102 	ret
+                                    103 ;	user/max7219.c: 19: void Max7219_Write(unsigned char addr, unsigned char value)
+                                    104 ;	-----------------------------------------
+                                    105 ;	 function Max7219_Write
+                                    106 ;	-----------------------------------------
+      000048                        107 _Max7219_Write:
+                                    108 ;	user/max7219.c: 21: while(SPI_GetFlagStatus(SPI_FLAG_BSY));
+      000048                        109 00101$:
+      000048 4B 80            [ 1]  110 	push	#0x80
+      00004A CDr00r00         [ 4]  111 	call	_SPI_GetFlagStatus
+      00004D 5B 01            [ 2]  112 	addw	sp, #1
+      00004F 4D               [ 1]  113 	tnz	a
+      000050 26 F6            [ 1]  114 	jrne	00101$
+                                    115 ;	user/max7219.c: 22: GPIO_WriteLow(CS_port, CS_pin);
+      000052 4B 10            [ 1]  116 	push	#0x10
+      000054 4B 0A            [ 1]  117 	push	#0x0a
+      000056 4B 50            [ 1]  118 	push	#0x50
+      000058 CDr00r00         [ 4]  119 	call	_GPIO_WriteLow
+      00005B 5B 03            [ 2]  120 	addw	sp, #3
+                                    121 ;	user/max7219.c: 23: SPI_SendData(addr);
+      00005D 7B 03            [ 1]  122 	ld	a, (0x03, sp)
+      00005F 88               [ 1]  123 	push	a
+      000060 CDr00r00         [ 4]  124 	call	_SPI_SendData
+      000063 84               [ 1]  125 	pop	a
+                                    126 ;	user/max7219.c: 24: while(!SPI_GetFlagStatus(SPI_FLAG_TXE));
+      000064                        127 00104$:
+      000064 4B 02            [ 1]  128 	push	#0x02
+      000066 CDr00r00         [ 4]  129 	call	_SPI_GetFlagStatus
+      000069 5B 01            [ 2]  130 	addw	sp, #1
+      00006B 4D               [ 1]  131 	tnz	a
+      00006C 27 F6            [ 1]  132 	jreq	00104$
+                                    133 ;	user/max7219.c: 25: SPI_SendData(value);
+      00006E 7B 04            [ 1]  134 	ld	a, (0x04, sp)
+      000070 88               [ 1]  135 	push	a
+      000071 CDr00r00         [ 4]  136 	call	_SPI_SendData
+      000074 84               [ 1]  137 	pop	a
+                                    138 ;	user/max7219.c: 26: while(!SPI_GetFlagStatus(SPI_FLAG_TXE));
+      000075                        139 00107$:
+      000075 4B 02            [ 1]  140 	push	#0x02
+      000077 CDr00r00         [ 4]  141 	call	_SPI_GetFlagStatus
+      00007A 5B 01            [ 2]  142 	addw	sp, #1
+      00007C 4D               [ 1]  143 	tnz	a
+      00007D 27 F6            [ 1]  144 	jreq	00107$
+                                    145 ;	user/max7219.c: 27: GPIO_WriteHigh(CS_port, CS_pin);
+      00007F 4B 10            [ 1]  146 	push	#0x10
+      000081 4B 0A            [ 1]  147 	push	#0x0a
+      000083 4B 50            [ 1]  148 	push	#0x50
+      000085 CDr00r00         [ 4]  149 	call	_GPIO_WriteHigh
+      000088 5B 03            [ 2]  150 	addw	sp, #3
+      00008A 81               [ 4]  151 	ret
+                                    152 	.area CODE
+                                    153 	.area INITIALIZER
+                                    154 	.area CABS (ABS)
