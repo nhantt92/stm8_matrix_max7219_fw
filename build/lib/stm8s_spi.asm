@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.0 #9615 (Mac OS X x86_64)
+; Version 3.6.0 #9615 (MINGW64)
 ;--------------------------------------------------------
 	.module stm8s_spi
 	.optsdcc -mstm8
@@ -376,19 +376,19 @@ _SPI_GetITStatus:
 	jrne	00117$
 00118$:
 	pop	a
-	ld	(0x02, sp), a
+	ld	(0x01, sp), a
 ;	lib/stm8s_spi.c: 211: enablestatus = (uint8_t)((uint8_t)SPI->SR & itmask2);
 	ldw	x, #0x5203
 	ld	a, (x)
-	and	a, (0x02, sp)
-	ld	(0x01, sp), a
+	and	a, (0x01, sp)
+	ld	(0x02, sp), a
 ;	lib/stm8s_spi.c: 213: if (((SPI->ICR & itpos) != RESET) && enablestatus)
 	ldw	x, #0x5202
 	ld	a, (x)
 	and	a, (0x03, sp)
 	tnz	a
 	jreq	00102$
-	tnz	(0x01, sp)
+	tnz	(0x02, sp)
 	jreq	00102$
 ;	lib/stm8s_spi.c: 216: pendingbitstatus = SET;
 	ld	a, #0x01

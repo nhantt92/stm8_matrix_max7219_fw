@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.0 #9615 (Mac OS X x86_64)
+; Version 3.6.0 #9615 (MINGW64)
 ;--------------------------------------------------------
 	.module sw_uart
 	.optsdcc -mstm8
@@ -95,21 +95,21 @@ _VCOM_puts:
 	sim
 ;	user/sw_uart.c: 33: while ((c=*str) && maxlen--)
 	ldw	x, #0x00ff
-	ldw	(0x01, sp), x
+	ldw	(0x02, sp), x
 	ldw	y, (0x08, sp)
 	ldw	(0x04, sp), y
 00126$:
 	ldw	x, (0x04, sp)
 	ld	a, (x)
-	ld	(0x03, sp), a
+	ld	(0x01, sp), a
 	tnz	a
 	jrne	00176$
 	jp	00128$
 00176$:
-	ldw	x, (0x01, sp)
-	ldw	y, (0x01, sp)
+	ldw	x, (0x02, sp)
+	ldw	y, (0x02, sp)
 	decw	y
-	ldw	(0x01, sp), y
+	ldw	(0x02, sp), y
 	tnzw	x
 	jrne	00177$
 	jp	00128$
@@ -126,7 +126,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 37: if (c&0x01) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME); 
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	srl	a
 	jrnc	00102$
 	push	#0x20
@@ -147,7 +147,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 38: if (c&0x02) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x02
 	jreq	00105$
 	push	#0x20
@@ -168,7 +168,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 39: if (c&0x04) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x04
 	jreq	00108$
 	push	#0x20
@@ -189,7 +189,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 40: if (c&0x08) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x08
 	jreq	00111$
 	push	#0x20
@@ -210,7 +210,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 41: if (c&0x10) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x10
 	jreq	00114$
 	push	#0x20
@@ -231,7 +231,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 42: if (c&0x20) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x20
 	jreq	00117$
 	push	#0x20
@@ -252,7 +252,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 43: if (c&0x40) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	ld	a, (0x03, sp)
+	ld	a, (0x01, sp)
 	bcp	a, #0x40
 	jreq	00120$
 	push	#0x20
@@ -273,7 +273,7 @@ _VCOM_puts:
 	call	_Vcomdelay
 	popw	x
 ;	user/sw_uart.c: 44: if (c&0x80) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-	tnz	(0x03, sp)
+	tnz	(0x01, sp)
 	jrpl	00123$
 	push	#0x20
 	push	#0x0f
@@ -322,49 +322,49 @@ _delaytest:
 	sub	sp, #16
 ;	user/sw_uart.c: 55: while(x--)
 	ldw	y, (0x13, sp)
-	ldw	(0x05, sp), y
+	ldw	(0x0d, sp), y
 	ldw	y, (0x15, sp)
 00102$:
-	ldw	(0x0b, sp), y
-	ldw	x, (0x05, sp)
-	ldw	(0x09, sp), x
+	ldw	(0x07, sp), y
+	ldw	x, (0x0d, sp)
+	ldw	(0x05, sp), x
 	subw	y, #0x0001
-	ld	a, (0x06, sp)
+	ld	a, (0x0e, sp)
 	sbc	a, #0x00
-	ld	(0x06, sp), a
-	ld	a, (0x05, sp)
+	ld	(0x0e, sp), a
+	ld	a, (0x0d, sp)
 	sbc	a, #0x00
-	ld	(0x05, sp), a
-	ldw	x, (0x0b, sp)
+	ld	(0x0d, sp), a
+	ldw	x, (0x07, sp)
 	jrne	00126$
-	ldw	x, (0x09, sp)
+	ldw	x, (0x05, sp)
 	jreq	00108$
 00126$:
 	ldw	x, (0x03, sp)
-	ldw	(0x0f, sp), x
+	ldw	(0x0b, sp), x
 	ldw	x, (0x01, sp)
-	ldw	(0x0d, sp), x
+	ldw	(0x09, sp), x
 00106$:
 ;	user/sw_uart.c: 57: for(;i<3000;i++);
-	ldw	x, (0x0f, sp)
+	ldw	x, (0x0b, sp)
 	cpw	x, #0x0bb8
-	ld	a, (0x0e, sp)
+	ld	a, (0x0a, sp)
 	sbc	a, #0x00
-	ld	a, (0x0d, sp)
+	ld	a, (0x09, sp)
 	sbc	a, #0x00
 	jrnc	00102$
-	ldw	x, (0x0f, sp)
+	ldw	x, (0x0b, sp)
 	addw	x, #0x0001
-	ldw	(0x0f, sp), x
-	ld	a, (0x0e, sp)
+	ldw	(0x0b, sp), x
+	ld	a, (0x0a, sp)
 	adc	a, #0x00
-	ld	(0x0e, sp), a
-	ld	a, (0x0d, sp)
+	ld	(0x0a, sp), a
+	ld	a, (0x09, sp)
 	adc	a, #0x00
-	ld	(0x0d, sp), a
-	ldw	x, (0x0f, sp)
+	ld	(0x09, sp), a
+	ldw	x, (0x0b, sp)
 	ldw	(0x03, sp), x
-	ldw	x, (0x0d, sp)
+	ldw	x, (0x09, sp)
 	ldw	(0x01, sp), x
 	jra	00106$
 00108$:
@@ -379,11 +379,11 @@ _VCOM_TestSpeed:
 ;	user/sw_uart.c: 66: for(i=250;i>=1;i--)
 00109$:
 	ldw	x, #___str_0+0
-	ldw	(0x05, sp), x
-	ldw	x, #_vcomstr+0
 	ldw	(0x03, sp), x
-	ldw	y, (0x03, sp)
-	ldw	(0x07, sp), y
+	ldw	x, #_vcomstr+0
+	ldw	(0x07, sp), x
+	ldw	y, (0x07, sp)
+	ldw	(0x05, sp), y
 	ldw	x, #0x00fa
 	ldw	(0x01, sp), x
 00105$:
@@ -406,8 +406,8 @@ _VCOM_TestSpeed:
 	call	_delaytest
 	addw	sp, #4
 ;	user/sw_uart.c: 71: VCOM_sprintf(vcomstr,"VCOM at %d TESTING SPEED\r\n",i);
-	ldw	y, (0x05, sp)
-	ldw	x, (0x03, sp)
+	ldw	y, (0x03, sp)
+	ldw	x, (0x07, sp)
 	ld	a, (0x02, sp)
 	push	a
 	ld	a, (0x02, sp)
@@ -417,7 +417,7 @@ _VCOM_TestSpeed:
 	call	_sprintf
 	addw	sp, #6
 ;	user/sw_uart.c: 72: VCOM_puts(vcomstr); 
-	ldw	x, (0x07, sp)
+	ldw	x, (0x05, sp)
 	pushw	x
 	call	_VCOM_puts
 	popw	x

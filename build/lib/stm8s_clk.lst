@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
                                       4 ;--------------------------------------------------------
                                       5 	.module stm8s_clk
                                       6 	.optsdcc -mstm8
@@ -177,10 +177,10 @@
                                     177 ;	lib/stm8s_clk.c: 83: CLK->CKDIVR |= (uint8_t)((uint8_t)CLK_Prescaler & (uint8_t)CLK_CKDIVR_HSIDIV);
       0000B3 AE 50 C6         [ 2]  178 	ldw	x, #0x50c6
       0000B6 F6               [ 1]  179 	ld	a, (x)
-      0000B7 6B 02            [ 1]  180 	ld	(0x02, sp), a
+      0000B7 6B 01            [ 1]  180 	ld	(0x01, sp), a
       0000B9 7B 05            [ 1]  181 	ld	a, (0x05, sp)
       0000BB A4 18            [ 1]  182 	and	a, #0x18
-      0000BD 1A 02            [ 1]  183 	or	a, (0x02, sp)
+      0000BD 1A 01            [ 1]  183 	or	a, (0x01, sp)
       0000BF AE 50 C6         [ 2]  184 	ldw	x, #0x50c6
       0000C2 F7               [ 1]  185 	ld	(x), a
       0000C3 20 17            [ 2]  186 	jra	00104$
@@ -193,10 +193,10 @@
                                     193 ;	lib/stm8s_clk.c: 88: CLK->CKDIVR |= (uint8_t)((uint8_t)CLK_Prescaler & (uint8_t)CLK_CKDIVR_CPUDIV);
       0000CC AE 50 C6         [ 2]  194 	ldw	x, #0x50c6
       0000CF F6               [ 1]  195 	ld	a, (x)
-      0000D0 6B 01            [ 1]  196 	ld	(0x01, sp), a
+      0000D0 6B 02            [ 1]  196 	ld	(0x02, sp), a
       0000D2 7B 05            [ 1]  197 	ld	a, (0x05, sp)
       0000D4 A4 07            [ 1]  198 	and	a, #0x07
-      0000D6 1A 01            [ 1]  199 	or	a, (0x01, sp)
+      0000D6 1A 02            [ 1]  199 	or	a, (0x02, sp)
       0000D8 AE 50 C6         [ 2]  200 	ldw	x, #0x50c6
       0000DB F7               [ 1]  201 	ld	(x), a
       0000DC                        202 00104$:

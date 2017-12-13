@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
                                       4 ;--------------------------------------------------------
                                       5 	.module sw_uart
                                       6 	.optsdcc -mstm8
@@ -95,21 +95,21 @@
       000025 9B               [ 1]   95 	sim
                                      96 ;	user/sw_uart.c: 33: while ((c=*str) && maxlen--)
       000026 AE 00 FF         [ 2]   97 	ldw	x, #0x00ff
-      000029 1F 01            [ 2]   98 	ldw	(0x01, sp), x
+      000029 1F 02            [ 2]   98 	ldw	(0x02, sp), x
       00002B 16 08            [ 2]   99 	ldw	y, (0x08, sp)
       00002D 17 04            [ 2]  100 	ldw	(0x04, sp), y
       00002F                        101 00126$:
       00002F 1E 04            [ 2]  102 	ldw	x, (0x04, sp)
       000031 F6               [ 1]  103 	ld	a, (x)
-      000032 6B 03            [ 1]  104 	ld	(0x03, sp), a
+      000032 6B 01            [ 1]  104 	ld	(0x01, sp), a
       000034 4D               [ 1]  105 	tnz	a
       000035 26 03            [ 1]  106 	jrne	00176$
       000037 CCr01rA4         [ 2]  107 	jp	00128$
       00003A                        108 00176$:
-      00003A 1E 01            [ 2]  109 	ldw	x, (0x01, sp)
-      00003C 16 01            [ 2]  110 	ldw	y, (0x01, sp)
+      00003A 1E 02            [ 2]  109 	ldw	x, (0x02, sp)
+      00003C 16 02            [ 2]  110 	ldw	y, (0x02, sp)
       00003E 90 5A            [ 2]  111 	decw	y
-      000040 17 01            [ 2]  112 	ldw	(0x01, sp), y
+      000040 17 02            [ 2]  112 	ldw	(0x02, sp), y
       000042 5D               [ 2]  113 	tnzw	x
       000043 26 03            [ 1]  114 	jrne	00177$
       000045 CCr01rA4         [ 2]  115 	jp	00128$
@@ -126,7 +126,7 @@
       000057 CDr00r00         [ 4]  126 	call	_Vcomdelay
       00005A 85               [ 2]  127 	popw	x
                                     128 ;	user/sw_uart.c: 37: if (c&0x01) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME); 
-      00005B 7B 03            [ 1]  129 	ld	a, (0x03, sp)
+      00005B 7B 01            [ 1]  129 	ld	a, (0x01, sp)
       00005D 44               [ 1]  130 	srl	a
       00005E 24 0D            [ 1]  131 	jrnc	00102$
       000060 4B 20            [ 1]  132 	push	#0x20
@@ -147,7 +147,7 @@
       00007C CDr00r00         [ 4]  147 	call	_Vcomdelay
       00007F 85               [ 2]  148 	popw	x
                                     149 ;	user/sw_uart.c: 38: if (c&0x02) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      000080 7B 03            [ 1]  150 	ld	a, (0x03, sp)
+      000080 7B 01            [ 1]  150 	ld	a, (0x01, sp)
       000082 A5 02            [ 1]  151 	bcp	a, #0x02
       000084 27 0D            [ 1]  152 	jreq	00105$
       000086 4B 20            [ 1]  153 	push	#0x20
@@ -168,7 +168,7 @@
       0000A2 CDr00r00         [ 4]  168 	call	_Vcomdelay
       0000A5 85               [ 2]  169 	popw	x
                                     170 ;	user/sw_uart.c: 39: if (c&0x04) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      0000A6 7B 03            [ 1]  171 	ld	a, (0x03, sp)
+      0000A6 7B 01            [ 1]  171 	ld	a, (0x01, sp)
       0000A8 A5 04            [ 1]  172 	bcp	a, #0x04
       0000AA 27 0D            [ 1]  173 	jreq	00108$
       0000AC 4B 20            [ 1]  174 	push	#0x20
@@ -189,7 +189,7 @@
       0000C8 CDr00r00         [ 4]  189 	call	_Vcomdelay
       0000CB 85               [ 2]  190 	popw	x
                                     191 ;	user/sw_uart.c: 40: if (c&0x08) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      0000CC 7B 03            [ 1]  192 	ld	a, (0x03, sp)
+      0000CC 7B 01            [ 1]  192 	ld	a, (0x01, sp)
       0000CE A5 08            [ 1]  193 	bcp	a, #0x08
       0000D0 27 0D            [ 1]  194 	jreq	00111$
       0000D2 4B 20            [ 1]  195 	push	#0x20
@@ -210,7 +210,7 @@
       0000EE CDr00r00         [ 4]  210 	call	_Vcomdelay
       0000F1 85               [ 2]  211 	popw	x
                                     212 ;	user/sw_uart.c: 41: if (c&0x10) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      0000F2 7B 03            [ 1]  213 	ld	a, (0x03, sp)
+      0000F2 7B 01            [ 1]  213 	ld	a, (0x01, sp)
       0000F4 A5 10            [ 1]  214 	bcp	a, #0x10
       0000F6 27 0D            [ 1]  215 	jreq	00114$
       0000F8 4B 20            [ 1]  216 	push	#0x20
@@ -231,7 +231,7 @@
       000114 CDr00r00         [ 4]  231 	call	_Vcomdelay
       000117 85               [ 2]  232 	popw	x
                                     233 ;	user/sw_uart.c: 42: if (c&0x20) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      000118 7B 03            [ 1]  234 	ld	a, (0x03, sp)
+      000118 7B 01            [ 1]  234 	ld	a, (0x01, sp)
       00011A A5 20            [ 1]  235 	bcp	a, #0x20
       00011C 27 0D            [ 1]  236 	jreq	00117$
       00011E 4B 20            [ 1]  237 	push	#0x20
@@ -252,7 +252,7 @@
       00013A CDr00r00         [ 4]  252 	call	_Vcomdelay
       00013D 85               [ 2]  253 	popw	x
                                     254 ;	user/sw_uart.c: 43: if (c&0x40) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      00013E 7B 03            [ 1]  255 	ld	a, (0x03, sp)
+      00013E 7B 01            [ 1]  255 	ld	a, (0x01, sp)
       000140 A5 40            [ 1]  256 	bcp	a, #0x40
       000142 27 0D            [ 1]  257 	jreq	00120$
       000144 4B 20            [ 1]  258 	push	#0x20
@@ -273,7 +273,7 @@
       000160 CDr00r00         [ 4]  273 	call	_Vcomdelay
       000163 85               [ 2]  274 	popw	x
                                     275 ;	user/sw_uart.c: 44: if (c&0x80) vTx_H(); else vTx_L();   Vcomdelay(DELAYTIME);
-      000164 0D 03            [ 1]  276 	tnz	(0x03, sp)
+      000164 0D 01            [ 1]  276 	tnz	(0x01, sp)
       000166 2A 0D            [ 1]  277 	jrpl	00123$
       000168 4B 20            [ 1]  278 	push	#0x20
       00016A 4B 0F            [ 1]  279 	push	#0x0f
@@ -322,49 +322,49 @@
       0001A8 52 10            [ 2]  322 	sub	sp, #16
                                     323 ;	user/sw_uart.c: 55: while(x--)
       0001AA 16 13            [ 2]  324 	ldw	y, (0x13, sp)
-      0001AC 17 05            [ 2]  325 	ldw	(0x05, sp), y
+      0001AC 17 0D            [ 2]  325 	ldw	(0x0d, sp), y
       0001AE 16 15            [ 2]  326 	ldw	y, (0x15, sp)
       0001B0                        327 00102$:
-      0001B0 17 0B            [ 2]  328 	ldw	(0x0b, sp), y
-      0001B2 1E 05            [ 2]  329 	ldw	x, (0x05, sp)
-      0001B4 1F 09            [ 2]  330 	ldw	(0x09, sp), x
+      0001B0 17 07            [ 2]  328 	ldw	(0x07, sp), y
+      0001B2 1E 0D            [ 2]  329 	ldw	x, (0x0d, sp)
+      0001B4 1F 05            [ 2]  330 	ldw	(0x05, sp), x
       0001B6 72 A2 00 01      [ 2]  331 	subw	y, #0x0001
-      0001BA 7B 06            [ 1]  332 	ld	a, (0x06, sp)
+      0001BA 7B 0E            [ 1]  332 	ld	a, (0x0e, sp)
       0001BC A2 00            [ 1]  333 	sbc	a, #0x00
-      0001BE 6B 06            [ 1]  334 	ld	(0x06, sp), a
-      0001C0 7B 05            [ 1]  335 	ld	a, (0x05, sp)
+      0001BE 6B 0E            [ 1]  334 	ld	(0x0e, sp), a
+      0001C0 7B 0D            [ 1]  335 	ld	a, (0x0d, sp)
       0001C2 A2 00            [ 1]  336 	sbc	a, #0x00
-      0001C4 6B 05            [ 1]  337 	ld	(0x05, sp), a
-      0001C6 1E 0B            [ 2]  338 	ldw	x, (0x0b, sp)
+      0001C4 6B 0D            [ 1]  337 	ld	(0x0d, sp), a
+      0001C6 1E 07            [ 2]  338 	ldw	x, (0x07, sp)
       0001C8 26 04            [ 1]  339 	jrne	00126$
-      0001CA 1E 09            [ 2]  340 	ldw	x, (0x09, sp)
+      0001CA 1E 05            [ 2]  340 	ldw	x, (0x05, sp)
       0001CC 27 34            [ 1]  341 	jreq	00108$
       0001CE                        342 00126$:
       0001CE 1E 03            [ 2]  343 	ldw	x, (0x03, sp)
-      0001D0 1F 0F            [ 2]  344 	ldw	(0x0f, sp), x
+      0001D0 1F 0B            [ 2]  344 	ldw	(0x0b, sp), x
       0001D2 1E 01            [ 2]  345 	ldw	x, (0x01, sp)
-      0001D4 1F 0D            [ 2]  346 	ldw	(0x0d, sp), x
+      0001D4 1F 09            [ 2]  346 	ldw	(0x09, sp), x
       0001D6                        347 00106$:
                                     348 ;	user/sw_uart.c: 57: for(;i<3000;i++);
-      0001D6 1E 0F            [ 2]  349 	ldw	x, (0x0f, sp)
+      0001D6 1E 0B            [ 2]  349 	ldw	x, (0x0b, sp)
       0001D8 A3 0B B8         [ 2]  350 	cpw	x, #0x0bb8
-      0001DB 7B 0E            [ 1]  351 	ld	a, (0x0e, sp)
+      0001DB 7B 0A            [ 1]  351 	ld	a, (0x0a, sp)
       0001DD A2 00            [ 1]  352 	sbc	a, #0x00
-      0001DF 7B 0D            [ 1]  353 	ld	a, (0x0d, sp)
+      0001DF 7B 09            [ 1]  353 	ld	a, (0x09, sp)
       0001E1 A2 00            [ 1]  354 	sbc	a, #0x00
       0001E3 24 CB            [ 1]  355 	jrnc	00102$
-      0001E5 1E 0F            [ 2]  356 	ldw	x, (0x0f, sp)
+      0001E5 1E 0B            [ 2]  356 	ldw	x, (0x0b, sp)
       0001E7 1C 00 01         [ 2]  357 	addw	x, #0x0001
-      0001EA 1F 0F            [ 2]  358 	ldw	(0x0f, sp), x
-      0001EC 7B 0E            [ 1]  359 	ld	a, (0x0e, sp)
+      0001EA 1F 0B            [ 2]  358 	ldw	(0x0b, sp), x
+      0001EC 7B 0A            [ 1]  359 	ld	a, (0x0a, sp)
       0001EE A9 00            [ 1]  360 	adc	a, #0x00
-      0001F0 6B 0E            [ 1]  361 	ld	(0x0e, sp), a
-      0001F2 7B 0D            [ 1]  362 	ld	a, (0x0d, sp)
+      0001F0 6B 0A            [ 1]  361 	ld	(0x0a, sp), a
+      0001F2 7B 09            [ 1]  362 	ld	a, (0x09, sp)
       0001F4 A9 00            [ 1]  363 	adc	a, #0x00
-      0001F6 6B 0D            [ 1]  364 	ld	(0x0d, sp), a
-      0001F8 1E 0F            [ 2]  365 	ldw	x, (0x0f, sp)
+      0001F6 6B 09            [ 1]  364 	ld	(0x09, sp), a
+      0001F8 1E 0B            [ 2]  365 	ldw	x, (0x0b, sp)
       0001FA 1F 03            [ 2]  366 	ldw	(0x03, sp), x
-      0001FC 1E 0D            [ 2]  367 	ldw	x, (0x0d, sp)
+      0001FC 1E 09            [ 2]  367 	ldw	x, (0x09, sp)
       0001FE 1F 01            [ 2]  368 	ldw	(0x01, sp), x
       000200 20 D4            [ 2]  369 	jra	00106$
       000202                        370 00108$:
@@ -379,11 +379,11 @@
                                     379 ;	user/sw_uart.c: 66: for(i=250;i>=1;i--)
       000207                        380 00109$:
       000207 AEr02r6F         [ 2]  381 	ldw	x, #___str_0+0
-      00020A 1F 05            [ 2]  382 	ldw	(0x05, sp), x
+      00020A 1F 03            [ 2]  382 	ldw	(0x03, sp), x
       00020C AEr00r00         [ 2]  383 	ldw	x, #_vcomstr+0
-      00020F 1F 03            [ 2]  384 	ldw	(0x03, sp), x
-      000211 16 03            [ 2]  385 	ldw	y, (0x03, sp)
-      000213 17 07            [ 2]  386 	ldw	(0x07, sp), y
+      00020F 1F 07            [ 2]  384 	ldw	(0x07, sp), x
+      000211 16 07            [ 2]  385 	ldw	y, (0x07, sp)
+      000213 17 05            [ 2]  386 	ldw	(0x05, sp), y
       000215 AE 00 FA         [ 2]  387 	ldw	x, #0x00fa
       000218 1F 01            [ 2]  388 	ldw	(0x01, sp), x
       00021A                        389 00105$:
@@ -406,8 +406,8 @@
       000235 CDr01rA8         [ 4]  406 	call	_delaytest
       000238 5B 04            [ 2]  407 	addw	sp, #4
                                     408 ;	user/sw_uart.c: 71: VCOM_sprintf(vcomstr,"VCOM at %d TESTING SPEED\r\n",i);
-      00023A 16 05            [ 2]  409 	ldw	y, (0x05, sp)
-      00023C 1E 03            [ 2]  410 	ldw	x, (0x03, sp)
+      00023A 16 03            [ 2]  409 	ldw	y, (0x03, sp)
+      00023C 1E 07            [ 2]  410 	ldw	x, (0x07, sp)
       00023E 7B 02            [ 1]  411 	ld	a, (0x02, sp)
       000240 88               [ 1]  412 	push	a
       000241 7B 02            [ 1]  413 	ld	a, (0x02, sp)
@@ -417,7 +417,7 @@
       000247 CDr00r00         [ 4]  417 	call	_sprintf
       00024A 5B 06            [ 2]  418 	addw	sp, #6
                                     419 ;	user/sw_uart.c: 72: VCOM_puts(vcomstr); 
-      00024C 1E 07            [ 2]  420 	ldw	x, (0x07, sp)
+      00024C 1E 05            [ 2]  420 	ldw	x, (0x05, sp)
       00024E 89               [ 2]  421 	pushw	x
       00024F CDr00r23         [ 4]  422 	call	_VCOM_puts
       000252 85               [ 2]  423 	popw	x

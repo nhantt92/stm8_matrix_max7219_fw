@@ -7,14 +7,23 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000001 L
+  7 _Clear                                                         000150 GR
+  7 _DrawEx                                                        0002CC GR
     _GPIO_Init                                                     ****** GX
     _GPIO_WriteHigh                                                ****** GX
     _GPIO_WriteLow                                                 ****** GX
-  7 _Max7219_Init                                                  00000C GR
-  7 _Max7219_Write                                                 000048 GR
-    _SPI_GetFlagStatus                                             ****** GX
-    _SPI_SendData                                                  ****** GX
+  7 _Init                                                          0000F2 GR
+  7 _Max7219_Write_Byte                                            000045 R
+  7 _MaxMatrix                                                     00000C GR
+  7 _Screen                                                        000162 GR
   7 _delay_ms                                                      000000 R
+  1 _matrix                                                        000000 GR
+    _memset                                                        ****** GX
+  7 _setColumn                                                     000252 GR
+  7 _setCommand                                                    00009C GR
+  7 _setDot                                                        0001E6 GR
+  7 _setIntensity                                                  000146 GR
+  7 _setRow                                                        000297 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (STMicroelectronics STM8), page 2.
 Hexadecimal [24-Bits]
@@ -22,13 +31,13 @@ Hexadecimal [24-Bits]
 Area Table
 
    0 _CODE                                      size      0   flags    0
-   1 DATA                                       size      0   flags    0
+   1 DATA                                       size     56   flags    0
    2 INITIALIZED                                size      0   flags    0
    3 DABS                                       size      0   flags    8
    4 HOME                                       size      0   flags    0
    5 GSINIT                                     size      0   flags    0
    6 GSFINAL                                    size      0   flags    0
-   7 CODE                                       size     8B   flags    0
+   7 CODE                                       size    342   flags    0
    8 INITIALIZER                                size      0   flags    0
    9 CABS                                       size      0   flags    8
 
