@@ -124,17 +124,17 @@ void setRow(uint8_t row, uint8_t value)
 }
 
 
-void DrawEx(uint8_t scrollCnt, uint16_t *data)
+void DrawEx(uint8_t scrollCnt, uint8_t *data)
 {
-	uint16_t mask;
-	uint16_t dataGet;
+	uint8_t mask;
+	uint8_t dataGet;
 	uint8_t cntR;
 	uint8_t cntC;
 	Clear();
 	for(cntC = 0; cntC < matrix.maxLed*8; cntC++)
 	{
 		dataGet = data[cntC+scrollCnt];
-		mask = 0x0001;
+		mask = 0x01;
 		for(cntR = 0; cntR<8; cntR++)
 		{
 			if(dataGet&mask)
@@ -144,6 +144,12 @@ void DrawEx(uint8_t scrollCnt, uint16_t *data)
 			mask <<=1;
 		}
 	}
+}
+
+void printCharWithShift(char c, uint8_t shift_speed)
+{
+	if(c<32) return;
+	c -=32;
 }
 
 /* SPI

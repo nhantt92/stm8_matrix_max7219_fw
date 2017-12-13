@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.0 #9615 (MINGW64)
+                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
                                       4 ;--------------------------------------------------------
                                       5 	.module main
                                       6 	.optsdcc -mstm8
@@ -111,13 +111,13 @@
                                     111 ; code
                                     112 ;--------------------------------------------------------
                                     113 	.area CODE
-                                    114 ;	user/main.c: 26: void delay(uint16_t x)
+                                    114 ;	user/main.c: 25: void delay(uint16_t x)
                                     115 ;	-----------------------------------------
                                     116 ;	 function delay
                                     117 ;	-----------------------------------------
       000000                        118 _delay:
       000000 89               [ 2]  119 	pushw	x
-                                    120 ;	user/main.c: 28: while(x--);
+                                    120 ;	user/main.c: 27: while(x--);
       000001 1E 05            [ 2]  121 	ldw	x, (0x05, sp)
       000003                        122 00101$:
       000003 1F 01            [ 2]  123 	ldw	(0x01, sp), x
@@ -424,66 +424,64 @@
       000248 1E 6B            [ 2]  424 	ldw	x, (0x6b, sp)
       00024A 1C 00 5F         [ 2]  425 	addw	x, #0x005f
       00024D 7F               [ 1]  426 	clr	(x)
-                                    427 ;	user/main.c: 47: char smile[]={0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
+                                    427 ;	user/main.c: 47: char smile[]={0x00, 0x7E, 0x04, 0x08, 0x08, 0x04, 0x7E, 0x00};
       00024E 96               [ 1]  428 	ldw	x, sp
       00024F 5C               [ 2]  429 	incw	x
       000250 1F 69            [ 2]  430 	ldw	(0x69, sp), x
       000252 1E 69            [ 2]  431 	ldw	x, (0x69, sp)
-      000254 A6 01            [ 1]  432 	ld	a, #0x01
-      000256 F7               [ 1]  433 	ld	(x), a
-      000257 1E 69            [ 2]  434 	ldw	x, (0x69, sp)
-      000259 5C               [ 2]  435 	incw	x
-      00025A A6 01            [ 1]  436 	ld	a, #0x01
-      00025C F7               [ 1]  437 	ld	(x), a
-      00025D 1E 69            [ 2]  438 	ldw	x, (0x69, sp)
-      00025F 5C               [ 2]  439 	incw	x
-      000260 5C               [ 2]  440 	incw	x
-      000261 A6 01            [ 1]  441 	ld	a, #0x01
-      000263 F7               [ 1]  442 	ld	(x), a
-      000264 1E 69            [ 2]  443 	ldw	x, (0x69, sp)
-      000266 A6 01            [ 1]  444 	ld	a, #0x01
-      000268 E7 03            [ 1]  445 	ld	(0x0003, x), a
-      00026A 1E 69            [ 2]  446 	ldw	x, (0x69, sp)
-      00026C A6 01            [ 1]  447 	ld	a, #0x01
-      00026E E7 04            [ 1]  448 	ld	(0x0004, x), a
-      000270 1E 69            [ 2]  449 	ldw	x, (0x69, sp)
-      000272 A6 01            [ 1]  450 	ld	a, #0x01
-      000274 E7 05            [ 1]  451 	ld	(0x0005, x), a
-      000276 1E 69            [ 2]  452 	ldw	x, (0x69, sp)
-      000278 A6 01            [ 1]  453 	ld	a, #0x01
-      00027A E7 06            [ 1]  454 	ld	(0x0006, x), a
-      00027C 1E 69            [ 2]  455 	ldw	x, (0x69, sp)
-      00027E 1C 00 07         [ 2]  456 	addw	x, #0x0007
-      000281 A6 01            [ 1]  457 	ld	a, #0x01
-      000283 F7               [ 1]  458 	ld	(x), a
-                                    459 ;	user/main.c: 48: CLK_Config();
-      000284 CDr00r00         [ 4]  460 	call	_CLK_Config
-                                    461 ;	user/main.c: 51: MaxMatrix(GPIOC, GPIO_PIN_6, GPIO_PIN_4, GPIO_PIN_5, 4);
-      000287 4B 04            [ 1]  462 	push	#0x04
-      000289 4B 20            [ 1]  463 	push	#0x20
-      00028B 4B 10            [ 1]  464 	push	#0x10
-      00028D 4B 40            [ 1]  465 	push	#0x40
-      00028F 4B 0A            [ 1]  466 	push	#0x0a
-      000291 4B 50            [ 1]  467 	push	#0x50
-      000293 CDr00r00         [ 4]  468 	call	_MaxMatrix
-      000296 5B 06            [ 2]  469 	addw	sp, #6
-                                    470 ;	user/main.c: 52: Init();
-      000298 CDr00r00         [ 4]  471 	call	_Init
-                                    472 ;	user/main.c: 53: Screen();
-      00029B CDr00r00         [ 4]  473 	call	_Screen
-                                    474 ;	user/main.c: 57: DrawEx(1, smile);
-      00029E 1E 69            [ 2]  475 	ldw	x, (0x69, sp)
-      0002A0 89               [ 2]  476 	pushw	x
-      0002A1 4B 01            [ 1]  477 	push	#0x01
-      0002A3 CDr00r00         [ 4]  478 	call	_DrawEx
-      0002A6 5B 03            [ 2]  479 	addw	sp, #3
-                                    480 ;	user/main.c: 58: Screen();
-      0002A8 CDr00r00         [ 4]  481 	call	_Screen
-                                    482 ;	user/main.c: 82: while(TRUE) 
-      0002AB                        483 00102$:
-      0002AB 20 FE            [ 2]  484 	jra	00102$
-      0002AD 5B 6C            [ 2]  485 	addw	sp, #108
-      0002AF 81               [ 4]  486 	ret
-                                    487 	.area CODE
-                                    488 	.area INITIALIZER
-                                    489 	.area CABS (ABS)
+      000254 7F               [ 1]  432 	clr	(x)
+      000255 1E 69            [ 2]  433 	ldw	x, (0x69, sp)
+      000257 5C               [ 2]  434 	incw	x
+      000258 A6 7E            [ 1]  435 	ld	a, #0x7e
+      00025A F7               [ 1]  436 	ld	(x), a
+      00025B 1E 69            [ 2]  437 	ldw	x, (0x69, sp)
+      00025D 5C               [ 2]  438 	incw	x
+      00025E 5C               [ 2]  439 	incw	x
+      00025F A6 04            [ 1]  440 	ld	a, #0x04
+      000261 F7               [ 1]  441 	ld	(x), a
+      000262 1E 69            [ 2]  442 	ldw	x, (0x69, sp)
+      000264 A6 08            [ 1]  443 	ld	a, #0x08
+      000266 E7 03            [ 1]  444 	ld	(0x0003, x), a
+      000268 1E 69            [ 2]  445 	ldw	x, (0x69, sp)
+      00026A A6 08            [ 1]  446 	ld	a, #0x08
+      00026C E7 04            [ 1]  447 	ld	(0x0004, x), a
+      00026E 1E 69            [ 2]  448 	ldw	x, (0x69, sp)
+      000270 A6 04            [ 1]  449 	ld	a, #0x04
+      000272 E7 05            [ 1]  450 	ld	(0x0005, x), a
+      000274 1E 69            [ 2]  451 	ldw	x, (0x69, sp)
+      000276 A6 7E            [ 1]  452 	ld	a, #0x7e
+      000278 E7 06            [ 1]  453 	ld	(0x0006, x), a
+      00027A 1E 69            [ 2]  454 	ldw	x, (0x69, sp)
+      00027C 1C 00 07         [ 2]  455 	addw	x, #0x0007
+      00027F 7F               [ 1]  456 	clr	(x)
+                                    457 ;	user/main.c: 48: CLK_Config();
+      000280 CDr00r00         [ 4]  458 	call	_CLK_Config
+                                    459 ;	user/main.c: 51: MaxMatrix(GPIOC, GPIO_PIN_6, GPIO_PIN_4, GPIO_PIN_5, 4);
+      000283 4B 04            [ 1]  460 	push	#0x04
+      000285 4B 20            [ 1]  461 	push	#0x20
+      000287 4B 10            [ 1]  462 	push	#0x10
+      000289 4B 40            [ 1]  463 	push	#0x40
+      00028B 4B 0A            [ 1]  464 	push	#0x0a
+      00028D 4B 50            [ 1]  465 	push	#0x50
+      00028F CDr00r00         [ 4]  466 	call	_MaxMatrix
+      000292 5B 06            [ 2]  467 	addw	sp, #6
+                                    468 ;	user/main.c: 52: Init();
+      000294 CDr00r00         [ 4]  469 	call	_Init
+                                    470 ;	user/main.c: 53: Screen();
+      000297 CDr00r00         [ 4]  471 	call	_Screen
+                                    472 ;	user/main.c: 57: DrawEx(8, text);
+      00029A 1E 6B            [ 2]  473 	ldw	x, (0x6b, sp)
+      00029C 89               [ 2]  474 	pushw	x
+      00029D 4B 08            [ 1]  475 	push	#0x08
+      00029F CDr00r00         [ 4]  476 	call	_DrawEx
+      0002A2 5B 03            [ 2]  477 	addw	sp, #3
+                                    478 ;	user/main.c: 58: Screen();
+      0002A4 CDr00r00         [ 4]  479 	call	_Screen
+                                    480 ;	user/main.c: 82: while(TRUE) 
+      0002A7                        481 00102$:
+      0002A7 20 FE            [ 2]  482 	jra	00102$
+      0002A9 5B 6C            [ 2]  483 	addw	sp, #108
+      0002AB 81               [ 4]  484 	ret
+                                    485 	.area CODE
+                                    486 	.area INITIALIZER
+                                    487 	.area CABS (ABS)

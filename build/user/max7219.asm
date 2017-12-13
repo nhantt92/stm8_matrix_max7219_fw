@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.0 #9615 (MINGW64)
+; Version 3.6.0 #9615 (Mac OS X x86_64)
 ;--------------------------------------------------------
 	.module max7219
 	.optsdcc -mstm8
@@ -120,25 +120,25 @@ _Max7219_Write_Byte:
 	ld	(0x02, sp), a
 ;	user/max7219.c: 27: for(cnt=0; cnt<8; cnt++)
 	ldw	x, #_matrix+0
-	ldw	(0x03, sp), x
-	ldw	x, (0x03, sp)
-	addw	x, #0x0004
 	ldw	(0x05, sp), x
+	ldw	x, (0x05, sp)
+	addw	x, #0x0004
+	ldw	(0x03, sp), x
 	clr	(0x01, sp)
 00105$:
 ;	user/max7219.c: 29: GPIO_WriteLow(matrix.port, matrix.clk);
-	ldw	x, (0x05, sp)
-	ld	a, (x)
 	ldw	x, (0x03, sp)
+	ld	a, (x)
+	ldw	x, (0x05, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
 	call	_GPIO_WriteLow
 	addw	sp, #3
-	ldw	x, (0x03, sp)
+	ldw	x, (0x05, sp)
 	ldw	x, (x)
 ;	user/max7219.c: 31: GPIO_WriteHigh(matrix.port, matrix.data);
-	ldw	y, (0x03, sp)
+	ldw	y, (0x05, sp)
 	ld	a, (0x2, y)
 ;	user/max7219.c: 30: if(dsent&0x80)
 	tnz	(0x02, sp)
@@ -157,9 +157,9 @@ _Max7219_Write_Byte:
 	addw	sp, #3
 00103$:
 ;	user/max7219.c: 34: GPIO_WriteHigh(matrix.port, matrix.clk);
-	ldw	x, (0x05, sp)
-	ld	a, (x)
 	ldw	x, (0x03, sp)
+	ld	a, (x)
+	ldw	x, (0x05, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
@@ -182,24 +182,24 @@ _setCommand:
 	sub	sp, #7
 ;	user/max7219.c: 42: GPIO_WriteLow(matrix.port, matrix.cs);
 	ldw	x, #_matrix+0
-	ldw	(0x02, sp), x
-	ldw	x, (0x02, sp)
+	ldw	(0x06, sp), x
+	ldw	x, (0x06, sp)
 	addw	x, #0x0003
 	ldw	(0x04, sp), x
 	ldw	x, (0x04, sp)
 	ld	a, (x)
-	ldw	x, (0x02, sp)
+	ldw	x, (0x06, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
 	call	_GPIO_WriteLow
 	addw	sp, #3
 ;	user/max7219.c: 43: for(i = 0; i < matrix.maxLed; i++)
-	ldw	y, (0x02, sp)
-	ldw	(0x06, sp), y
+	ldw	y, (0x06, sp)
+	ldw	(0x02, sp), y
 	clr	(0x01, sp)
 00103$:
-	ldw	x, (0x06, sp)
+	ldw	x, (0x02, sp)
 	ld	a, (0x5, x)
 	cp	a, (0x01, sp)
 	jrule	00101$
@@ -220,7 +220,7 @@ _setCommand:
 ;	user/max7219.c: 48: GPIO_WriteLow(matrix.port, matrix.cs);
 	ldw	x, (0x04, sp)
 	ld	a, (x)
-	ldw	x, (0x02, sp)
+	ldw	x, (0x06, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
@@ -229,7 +229,7 @@ _setCommand:
 ;	user/max7219.c: 49: GPIO_WriteHigh(matrix.port, matrix.cs);
 	ldw	x, (0x04, sp)
 	ld	a, (x)
-	ldw	x, (0x02, sp)
+	ldw	x, (0x06, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
@@ -244,18 +244,18 @@ _Init:
 	sub	sp, #4
 ;	user/max7219.c: 54: GPIO_Init(matrix.port, matrix.data|matrix.cs|matrix.clk, GPIO_MODE_OUT_PP_HIGH_FAST);
 	ldw	x, #_matrix+0
-	ldw	(0x03, sp), x
-	ldw	x, (0x03, sp)
+	ldw	(0x01, sp), x
+	ldw	x, (0x01, sp)
 	ld	a, (0x2, x)
-	ld	(0x02, sp), a
-	ldw	x, (0x03, sp)
+	ld	(0x04, sp), a
+	ldw	x, (0x01, sp)
 	ld	a, (0x3, x)
-	or	a, (0x02, sp)
-	ld	(0x01, sp), a
-	ldw	x, (0x03, sp)
+	or	a, (0x04, sp)
+	ld	(0x03, sp), a
+	ldw	x, (0x01, sp)
 	ld	a, (0x4, x)
-	or	a, (0x01, sp)
-	ldw	x, (0x03, sp)
+	or	a, (0x03, sp)
+	ldw	x, (0x01, sp)
 	ldw	x, (x)
 	push	#0xf0
 	push	a
@@ -325,39 +325,39 @@ _Screen:
 	sub	sp, #13
 ;	user/max7219.c: 76: for(i = 0; i < 8; i++)
 	ldw	x, #_matrix+0
-	ldw	(0x03, sp), x
-	ldw	x, (0x03, sp)
+	ldw	(0x0c, sp), x
+	ldw	x, (0x0c, sp)
 	addw	x, #0x0003
-	ldw	(0x0b, sp), x
-	clr	(0x02, sp)
+	ldw	(0x0a, sp), x
+	clr	(0x01, sp)
 00106$:
 ;	user/max7219.c: 79: GPIO_WriteLow(matrix.port, matrix.cs);
-	ldw	x, (0x0b, sp)
+	ldw	x, (0x0a, sp)
 	ld	a, (x)
-	ldw	x, (0x03, sp)
+	ldw	x, (0x0c, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
 	call	_GPIO_WriteLow
 	addw	sp, #3
 ;	user/max7219.c: 80: for(j = 0; j < matrix.maxLed; j++)
-	ld	a, (0x02, sp)
+	ld	a, (0x01, sp)
 	inc	a
-	ld	(0x05, sp), a
-	ld	a, (0x05, sp)
+	ld	(0x09, sp), a
+	ld	a, (0x09, sp)
 	ld	(0x08, sp), a
-	ldw	x, (0x03, sp)
+	ldw	x, (0x0c, sp)
 	addw	x, #0x0006
 	ldw	(0x06, sp), x
-	ldw	y, (0x03, sp)
-	ldw	(0x09, sp), y
-	ld	a, (0x02, sp)
-	ld	(0x0d, sp), a
-	clr	(0x01, sp)
+	ldw	y, (0x0c, sp)
+	ldw	(0x04, sp), y
+	ld	a, (0x01, sp)
+	ld	(0x03, sp), a
+	clr	(0x02, sp)
 00104$:
-	ldw	x, (0x09, sp)
+	ldw	x, (0x04, sp)
 	ld	a, (0x5, x)
-	cp	a, (0x01, sp)
+	cp	a, (0x02, sp)
 	jrule	00101$
 ;	user/max7219.c: 82: Max7219_Write_Byte(i+1);
 	ld	a, (0x08, sp)
@@ -366,7 +366,7 @@ _Screen:
 	pop	a
 ;	user/max7219.c: 83: Max7219_Write_Byte(matrix.buffer[col]);
 	clrw	x
-	ld	a, (0x0d, sp)
+	ld	a, (0x03, sp)
 	ld	xl, a
 	addw	x, (0x06, sp)
 	ld	a, (x)
@@ -374,35 +374,35 @@ _Screen:
 	call	_Max7219_Write_Byte
 	pop	a
 ;	user/max7219.c: 84: col += 8;
-	ld	a, (0x0d, sp)
+	ld	a, (0x03, sp)
 	add	a, #0x08
-	ld	(0x0d, sp), a
+	ld	(0x03, sp), a
 ;	user/max7219.c: 80: for(j = 0; j < matrix.maxLed; j++)
-	inc	(0x01, sp)
+	inc	(0x02, sp)
 	jra	00104$
 00101$:
 ;	user/max7219.c: 86: GPIO_WriteLow(matrix.port, matrix.cs);
-	ldw	x, (0x0b, sp)
+	ldw	x, (0x0a, sp)
 	ld	a, (x)
-	ldw	x, (0x03, sp)
+	ldw	x, (0x0c, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
 	call	_GPIO_WriteLow
 	addw	sp, #3
 ;	user/max7219.c: 87: GPIO_WriteHigh(matrix.port, matrix.cs);
-	ldw	x, (0x0b, sp)
+	ldw	x, (0x0a, sp)
 	ld	a, (x)
-	ldw	x, (0x03, sp)
+	ldw	x, (0x0c, sp)
 	ldw	x, (x)
 	push	a
 	pushw	x
 	call	_GPIO_WriteHigh
 	addw	sp, #3
 ;	user/max7219.c: 76: for(i = 0; i < 8; i++)
-	ld	a, (0x05, sp)
-	ld	(0x02, sp), a
-	ld	a, (0x05, sp)
+	ld	a, (0x09, sp)
+	ld	(0x01, sp), a
+	ld	a, (0x09, sp)
 	cp	a, #0x08
 	jrc	00106$
 	addw	sp, #13
@@ -425,9 +425,9 @@ _setDot:
 	srl	a
 	srl	a
 	srl	a
-	ld	(0x03, sp), a
+	ld	(0x05, sp), a
 	ld	a, xh
-	sub	a, (0x03, sp)
+	sub	a, (0x05, sp)
 ;	user/max7219.c: 95: offset = (n*8 + row);
 	sll	a
 	sll	a
@@ -459,9 +459,9 @@ _setDot:
 	sllw	x
 	sllw	x
 	ld	a, (0x0a, sp)
-	ld	(0x05, sp), a
-	clr	(0x04, sp)
-	cpw	x, (0x04, sp)
+	ld	(0x04, sp), a
+	clr	(0x03, sp)
+	cpw	x, (0x03, sp)
 	jrslt	00109$
 ;	user/max7219.c: 99: matrix.buffer[offset] |= val;
 	ldw	x, (0x06, sp)
@@ -557,8 +557,8 @@ _setRow:
 ;	user/max7219.c: 119: for(i = 0; i < matrix.maxLed; i++)
 	jrugt	00108$
 	ldw	x, #_matrix+0
-	ldw	(0x02, sp), x
-	ldw	y, (0x02, sp)
+	ldw	(0x04, sp), x
+	ldw	y, (0x04, sp)
 	clr	(0x01, sp)
 00106$:
 	ld	a, (0x5, y)
@@ -571,12 +571,12 @@ _setRow:
 	sll	a
 	add	a, (0x08, sp)
 ;	user/max7219.c: 122: matrix.buffer[offset] = value;
-	ldw	x, (0x02, sp)
+	ldw	x, (0x04, sp)
 	addw	x, #0x0006
-	ldw	(0x04, sp), x
+	ldw	(0x02, sp), x
 	clrw	x
 	ld	xl, a
-	addw	x, (0x04, sp)
+	addw	x, (0x02, sp)
 	ld	a, (0x09, sp)
 	ld	(x), a
 ;	user/max7219.c: 119: for(i = 0; i < matrix.maxLed; i++)
@@ -585,66 +585,61 @@ _setRow:
 00108$:
 	addw	sp, #5
 	ret
-;	user/max7219.c: 126: void DrawEx(uint8_t scrollCnt, uint16_t *data)
+;	user/max7219.c: 127: void DrawEx(uint8_t scrollCnt, uint8_t *data)
 ;	-----------------------------------------
 ;	 function DrawEx
 ;	-----------------------------------------
 _DrawEx:
-	sub	sp, #12
+	sub	sp, #11
 ;	user/max7219.c: 133: Clear();
 	call	_Clear
 ;	user/max7219.c: 134: for(cntC = 0; cntC < matrix.maxLed*8; cntC++)
 	ldw	x, #_matrix+5
-	ldw	(0x0b, sp), x
-	clr	(0x04, sp)
+	ldw	(0x0a, sp), x
+	clr	(0x01, sp)
 00109$:
-	ldw	x, (0x0b, sp)
+	ldw	x, (0x0a, sp)
 	ld	a, (x)
 	clrw	x
 	ld	xl, a
 	sllw	x
 	sllw	x
 	sllw	x
-	ldw	(0x09, sp), x
-	ld	a, (0x04, sp)
-	ld	(0x08, sp), a
-	clr	(0x07, sp)
-	ldw	x, (0x07, sp)
-	cpw	x, (0x09, sp)
+	ldw	(0x08, sp), x
+	ld	a, (0x01, sp)
+	ld	(0x07, sp), a
+	clr	(0x06, sp)
+	ldw	x, (0x06, sp)
+	cpw	x, (0x08, sp)
 	jrsge	00111$
 ;	user/max7219.c: 136: dataGet = data[cntC+scrollCnt];
 	clrw	x
-	ld	a, (0x0f, sp)
+	ld	a, (0x0e, sp)
 	ld	xl, a
-	addw	x, (0x07, sp)
-	sllw	x
-	addw	x, (0x10, sp)
-	ldw	x, (x)
-	ldw	(0x01, sp), x
-;	user/max7219.c: 137: mask = 0x0001;
-	ldw	x, #0x0001
-	ldw	(0x05, sp), x
+	addw	x, (0x06, sp)
+	addw	x, (0x0f, sp)
+	ld	a, (x)
+	ld	(0x03, sp), a
+;	user/max7219.c: 137: mask = 0x01;
+	ld	a, #0x01
+	ld	(0x04, sp), a
 ;	user/max7219.c: 138: for(cntR = 0; cntR<8; cntR++)
-	clr	(0x03, sp)
+	clr	(0x02, sp)
 00106$:
 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR -1, 1);
 	ld	a, #0x07
-	sub	a, (0x03, sp)
+	sub	a, (0x02, sp)
+	ld	(0x05, sp), a
 ;	user/max7219.c: 140: if(dataGet&mask)
-	push	a
 	ld	a, (0x03, sp)
-	and	a, (0x07, sp)
-	ld	xl, a
-	ld	a, (0x02, sp)
-	and	a, (0x06, sp)
-	ld	xh, a
-	pop	a
-	tnzw	x
+	and	a, (0x04, sp)
+	tnz	a
 	jreq	00102$
 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR -1, 1);
 	push	#0x01
-	push	a
 	ld	a, (0x06, sp)
+	push	a
+	ld	a, (0x03, sp)
 	push	a
 	call	_setDot
 	addw	sp, #3
@@ -652,26 +647,25 @@ _DrawEx:
 00102$:
 ;	user/max7219.c: 143: setDot(cntC, 8 - cntR -1, 0);
 	push	#0x00
-	push	a
 	ld	a, (0x06, sp)
+	push	a
+	ld	a, (0x03, sp)
 	push	a
 	call	_setDot
 	addw	sp, #3
 00103$:
 ;	user/max7219.c: 144: mask <<=1;
-	ldw	x, (0x05, sp)
-	sllw	x
-	ldw	(0x05, sp), x
+	sll	(0x04, sp)
 ;	user/max7219.c: 138: for(cntR = 0; cntR<8; cntR++)
-	inc	(0x03, sp)
-	ld	a, (0x03, sp)
+	inc	(0x02, sp)
+	ld	a, (0x02, sp)
 	cp	a, #0x08
 	jrc	00106$
 ;	user/max7219.c: 134: for(cntC = 0; cntC < matrix.maxLed*8; cntC++)
-	inc	(0x04, sp)
+	inc	(0x01, sp)
 	jra	00109$
 00111$:
-	addw	sp, #12
+	addw	sp, #11
 	ret
 	.area CODE
 	.area INITIALIZER

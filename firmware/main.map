@@ -7,66 +7,46 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000000  .__.ABS.                           _strlen
+     00000000  .__.ABS.                           _memset
      00000000  l_CABS                          
      00000000  l_DABS                          
+     00000000  l_INITIALIZED                   
+     00000000  l_INITIALIZER                   
      00000000  l__CODE                         
      00000000  s_CABS                          
      00000000  s_DABS                          
      00000000  s__CODE                         
      00000001  l_SSEG                          
      00000001  s_DATA                          
-     00000002  l_INITIALIZED                   
-     00000002  l_INITIALIZER                   
      00000003  l_GSFINAL                       
      0000001A  l_GSINIT                        
-     0000007D  l_DATA                          
-     0000007E  s_INITIALIZED                   
-     00000080  s_SSEG                          
+     0000005F  l_DATA                          
+     00000060  s_INITIALIZED                   
      00000083  l_HOME                          
-     000015CC  l_CODE                          
+     00001098  l_CODE                          
      00008000  s_HOME                          
      00008083  s_GSINIT                        
      0000809D  s_GSFINAL                       
      000080A0  s_CODE                          
-     0000966C  s_INITIALIZER                   
+     00009138  s_INITIALIZER                   
+     00009138  s_SSEG                          
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-DATA                                00000001    0000007D =         125. bytes (REL,CON)
+DATA                                00000001    0000005F =          95. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000001  _matrix                            max7219
-     00000057  _vcomstr                           sw_uart
-     00000075  _timeGet                           timerTick
-     00000077  _timeBack                          timerTick
-     00000079  _timeTickMs                        timerTick
-     0000007D  _timeTickUs                        timerTick
+     00000057  _timeGet                           timerTick
+     00000059  _timeBack                          timerTick
+     0000005B  _timeTickMs                        timerTick
+     0000005F  _timeTickUs                        timerTick
+
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
-Hexadecimal  [32-Bits]
-
-Area                                    Addr        Size        Decimal Bytes (Attributes)
---------------------------------        ----        ----        ------- ----- ------------
-INITIALIZED                         0000007E    00000002 =           2. bytes (REL,CON)
-
-      Value  Global                              Global Defined In Module
-      -----  --------------------------------   ------------------------
-     0000007E  _DELAYTIME                         sw_uart
-
-ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
-Hexadecimal  [32-Bits]
-
-Area                                    Addr        Size        Decimal Bytes (Attributes)
---------------------------------        ----        ----        ------- ----- ------------
-SSEG                                00000080    00000001 =           1. bytes (REL,CON)
-
-      Value  Global                              Global Defined In Module
-      -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -75,7 +55,7 @@ HOME                                00008000    00000083 =         131. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -84,7 +64,7 @@ GSINIT                              00008083    0000001A =          26. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -93,112 +73,103 @@ GSFINAL                             0000809D    00000003 =           3. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CODE                                000080A0    00001098 =        4248. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000085A0  _delay                             main
+     000085AC  _main                              main
+     00008858  _MaxMatrix                         max7219
+     000088E8  _setCommand                        max7219
+     0000893E  _Init                              max7219
+     00008992  _setIntensity                      max7219
+     0000899C  _Clear                             max7219
+     000089AE  _Screen                            max7219
+     00008A32  _setDot                            max7219
+     00008A9E  _setColumn                         max7219
+     00008AE3  _setRow                            max7219
+     00008B18  _DrawEx                            max7219
+     00008B87  _TIMER_Init                        timerTick
+     00008BBA  _TIMER_Inc                         timerTick
+     00008BE6  _TIMER_InitTime                    timerTick
+     00008BF6  _TIMER_CheckTimeUS                 timerTick
+     00008C3D  _TIMER_CheckTimeMS                 timerTick
+     00008CB3  _CLK_Config                        stm8s_clk
+     00008D04  _CLK_PeripheralClockConfig         stm8s_clk
+     00008D5A  _CLK_SYSCLKConfig                  stm8s_clk
+     00008D91  _CLK_GetClockFreq                  stm8s_clk
+     00008DEA  _HSIDivFactor                      stm8s_clk
+     00008DEE  _GPIO_Init                         stm8s_gpio
+     00008E7C  _GPIO_Write                        stm8s_gpio
+     00008E82  _GPIO_WriteHigh                    stm8s_gpio
+     00008E89  _GPIO_WriteLow                     stm8s_gpio
+     00008E97  _GPIO_WriteReverse                 stm8s_gpio
+     00008E9E  _GPIO_ReadOutputData               stm8s_gpio
+     00008EA2  _GPIO_ReadInputData                stm8s_gpio
+     00008EA7  _GPIO_ReadInputPin                 stm8s_gpio
+     00008EAE  _GPIO_ExternalPullUpConfig         stm8s_gpio
+     00008EC9  _IWDG_WriteAccessCmd               stm8s_iwdg
+     00008ED0  _IWDG_SetPrescaler                 stm8s_iwdg
+     00008ED7  _IWDG_SetReload                    stm8s_iwdg
+     00008EDE  _IWDG_ReloadCounter                stm8s_iwdg
+     00008EE3  _IWDG_Enable                       stm8s_iwdg
+     00008EE8  _SPI_DeInit                        stm8s_spi
+     00008EFD  _SPI_Init                          stm8s_spi
+     00008F38  _SPI_Cmd                           stm8s_spi
+     00008F4C  _SPI_ITConfig                      stm8s_spi
+     00008F82  _SPI_SendData                      stm8s_spi
+     00008F89  _SPI_ReceiveData                   stm8s_spi
+     00008F8E  _SPI_NSSInternalSoftwareCmd        stm8s_spi
+     00008F9C  _SPI_TransmitCRC                   stm8s_spi
+     00008FA4  _SPI_CalculateCRCCmd               stm8s_spi
+     00008FB8  _SPI_GetCRC                        stm8s_spi
+     00008FC6  _SPI_ResetCRC                      stm8s_spi
+     00008FD3  _SPI_GetCRCPolynomial              stm8s_spi
+     00008FD8  _SPI_BiDirectionalLineConfig       stm8s_spi
+     00008FEC  _SPI_GetFlagStatus                 stm8s_spi
+ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CODE                                000080A0    00001098 =        4248. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008FFA  _SPI_ClearFlag                     stm8s_spi
+     00009002  _SPI_GetITStatus                   stm8s_spi
+     00009049  _SPI_ClearITPendingBit             stm8s_spi
+     00009064  _TIM4_DeInit                       stm8s_tim4
+     0000907D  _TIM4_TimeBaseInit                 stm8s_tim4
+     0000908A  _TIM4_Cmd                          stm8s_tim4
+     0000908F  _TIM4_ITConfig                     stm8s_tim4
+     0000909A  _TIM4_GetCounter                   stm8s_tim4
+     0000909F  _TIM4_GetFlagStatus                stm8s_tim4
+     000090AD  _TIM4_ClearFlag                    stm8s_tim4
+     000090B5  _TIM4_ClearITPendingBit            stm8s_tim4
+     000090BD  __divulong                         
+     00009117  _memset                            _memset
 ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CODE                                000080A0    000015CC =        5580. bytes (REL,CON)
+SSEG                                00009138    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000080A0  _delay                             main
-     000080AC  _main                              main
-     0000835C  _MaxMatrix                         max7219
-     000083EC  _setCommand                        max7219
-     00008442  _Init                              max7219
-     00008496  _setIntensity                      max7219
-     000084A0  _Clear                             max7219
-     000084B2  _Screen                            max7219
-     00008536  _setDot                            max7219
-     000085A2  _setColumn                         max7219
-     000085E7  _setRow                            max7219
-     0000861C  _DrawEx                            max7219
-     00008692  _Vcomdelay                         sw_uart
-     0000869C  _VCOM_Init                         sw_uart
-     000086B5  _VCOM_puts                         sw_uart
-     0000883A  _delaytest                         sw_uart
-     00008897  _VCOM_TestSpeed                    sw_uart
-     0000891C  _TIMER_Init                        timerTick
-     0000894F  _TIMER_Inc                         timerTick
-     0000897B  _TIMER_InitTime                    timerTick
-     0000898B  _TIMER_CheckTimeUS                 timerTick
-     000089D2  _TIMER_CheckTimeMS                 timerTick
-     00008A48  _CLK_Config                        stm8s_clk
-     00008A99  _CLK_PeripheralClockConfig         stm8s_clk
-     00008AEF  _CLK_SYSCLKConfig                  stm8s_clk
-     00008B26  _CLK_GetClockFreq                  stm8s_clk
-     00008B7F  _HSIDivFactor                      stm8s_clk
-     00008B83  _GPIO_Init                         stm8s_gpio
-     00008C11  _GPIO_Write                        stm8s_gpio
-     00008C17  _GPIO_WriteHigh                    stm8s_gpio
-     00008C1E  _GPIO_WriteLow                     stm8s_gpio
-     00008C2C  _GPIO_WriteReverse                 stm8s_gpio
-     00008C33  _GPIO_ReadOutputData               stm8s_gpio
-     00008C37  _GPIO_ReadInputData                stm8s_gpio
-     00008C3C  _GPIO_ReadInputPin                 stm8s_gpio
-     00008C43  _GPIO_ExternalPullUpConfig         stm8s_gpio
-     00008C5E  _IWDG_WriteAccessCmd               stm8s_iwdg
-     00008C65  _IWDG_SetPrescaler                 stm8s_iwdg
-     00008C6C  _IWDG_SetReload                    stm8s_iwdg
-     00008C73  _IWDG_ReloadCounter                stm8s_iwdg
-     00008C78  _IWDG_Enable                       stm8s_iwdg
-     00008C7D  _SPI_DeInit                        stm8s_spi
-     00008C92  _SPI_Init                          stm8s_spi
-     00008CCD  _SPI_Cmd                           stm8s_spi
-     00008CE1  _SPI_ITConfig                      stm8s_spi
-     00008D17  _SPI_SendData                      stm8s_spi
-     00008D1E  _SPI_ReceiveData                   stm8s_spi
-     00008D23  _SPI_NSSInternalSoftwareCmd        stm8s_spi
-     00008D31  _SPI_TransmitCRC                   stm8s_spi
-     00008D39  _SPI_CalculateCRCCmd               stm8s_spi
 ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
-Hexadecimal  [32-Bits]
-
-Area                                    Addr        Size        Decimal Bytes (Attributes)
---------------------------------        ----        ----        ------- ----- ------------
-CODE                                000080A0    000015CC =        5580. bytes (REL,CON)
-
-      Value  Global                              Global Defined In Module
-      -----  --------------------------------   ------------------------
-     00008D4D  _SPI_GetCRC                        stm8s_spi
-     00008D5B  _SPI_ResetCRC                      stm8s_spi
-     00008D68  _SPI_GetCRCPolynomial              stm8s_spi
-     00008D6D  _SPI_BiDirectionalLineConfig       stm8s_spi
-     00008D81  _SPI_GetFlagStatus                 stm8s_spi
-     00008D8F  _SPI_ClearFlag                     stm8s_spi
-     00008D97  _SPI_GetITStatus                   stm8s_spi
-     00008DDE  _SPI_ClearITPendingBit             stm8s_spi
-     00008DF9  _TIM4_DeInit                       stm8s_tim4
-     00008E12  _TIM4_TimeBaseInit                 stm8s_tim4
-     00008E1F  _TIM4_Cmd                          stm8s_tim4
-     00008E24  _TIM4_ITConfig                     stm8s_tim4
-     00008E2F  _TIM4_GetCounter                   stm8s_tim4
-     00008E34  _TIM4_GetFlagStatus                stm8s_tim4
-     00008E42  _TIM4_ClearFlag                    stm8s_tim4
-     00008E4A  _TIM4_ClearITPendingBit            stm8s_tim4
-     00008E6A  _vsprintf                          sprintf
-     00008E85  _sprintf                           sprintf
-     00008EA5  __divulong                         
-     00008EFF  _memset                            _memset
-     00008FCD  __print_format                     printf_large
-     0000965D  _strlen                            _strlen
-ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
-Hexadecimal  [32-Bits]
-
-Area                                    Addr        Size        Decimal Bytes (Attributes)
---------------------------------        ----        ----        ------- ----- ------------
-INITIALIZER                         0000966C    00000002 =           2. bytes (REL,CON)
-
-      Value  Global                              Global Defined In Module
-      -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
 
 Files Linked                              [ module(s) ]
 
+build/user/font.rel                       [ font ]
 build/user/main.rel                       [ main ]
 build/user/max7219.rel                    [ max7219 ]
-build/user/sw_uart.rel                    [ sw_uart ]
 build/user/timerTick.rel                  [ timerTick ]
 build/lib/stm8s_clk.rel                   [ stm8s_clk ]
 build/lib/stm8s_gpio.rel                  [ stm8s_gpio ]
@@ -209,18 +180,12 @@ build/lib/stm8s_tim4.rel                  [ stm8s_tim4 ]
 
 Libraries Linked                          [ object file ]
 
-c:\Program Files\SDCC\bin\..\lib\stm8/stm8.lib
-                                          [ sprintf.rel ]
-c:\Program Files\SDCC\bin\..\lib\stm8/stm8.lib
+/usr/local/bin/../share/sdcc/lib/stm8/stm8.lib
                                           [ _divulong.rel ]
-c:\Program Files\SDCC\bin\..\lib\stm8/stm8.lib
+/usr/local/bin/../share/sdcc/lib/stm8/stm8.lib
                                           [ _memset.rel ]
-c:\Program Files\SDCC\bin\..\lib\stm8/stm8.lib
-                                          [ printf_large.rel ]
-c:\Program Files\SDCC\bin\..\lib\stm8/stm8.lib
-                                          [ _strlen.rel ]
 
-ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 
 User Base Address Definitions
 

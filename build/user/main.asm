@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.0 #9615 (MINGW64)
+; Version 3.6.0 #9615 (Mac OS X x86_64)
 ;--------------------------------------------------------
 	.module main
 	.optsdcc -mstm8
@@ -111,13 +111,13 @@ __sdcc_program_startup:
 ; code
 ;--------------------------------------------------------
 	.area CODE
-;	user/main.c: 26: void delay(uint16_t x)
+;	user/main.c: 25: void delay(uint16_t x)
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
 _delay:
 	pushw	x
-;	user/main.c: 28: while(x--);
+;	user/main.c: 27: while(x--);
 	ldw	x, (0x05, sp)
 00101$:
 	ldw	(0x01, sp), x
@@ -424,38 +424,36 @@ _main:
 	ldw	x, (0x6b, sp)
 	addw	x, #0x005f
 	clr	(x)
-;	user/main.c: 47: char smile[]={0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
+;	user/main.c: 47: char smile[]={0x00, 0x7E, 0x04, 0x08, 0x08, 0x04, 0x7E, 0x00};
 	ldw	x, sp
 	incw	x
 	ldw	(0x69, sp), x
 	ldw	x, (0x69, sp)
-	ld	a, #0x01
+	clr	(x)
+	ldw	x, (0x69, sp)
+	incw	x
+	ld	a, #0x7e
 	ld	(x), a
 	ldw	x, (0x69, sp)
 	incw	x
-	ld	a, #0x01
+	incw	x
+	ld	a, #0x04
 	ld	(x), a
 	ldw	x, (0x69, sp)
-	incw	x
-	incw	x
-	ld	a, #0x01
-	ld	(x), a
-	ldw	x, (0x69, sp)
-	ld	a, #0x01
+	ld	a, #0x08
 	ld	(0x0003, x), a
 	ldw	x, (0x69, sp)
-	ld	a, #0x01
+	ld	a, #0x08
 	ld	(0x0004, x), a
 	ldw	x, (0x69, sp)
-	ld	a, #0x01
+	ld	a, #0x04
 	ld	(0x0005, x), a
 	ldw	x, (0x69, sp)
-	ld	a, #0x01
+	ld	a, #0x7e
 	ld	(0x0006, x), a
 	ldw	x, (0x69, sp)
 	addw	x, #0x0007
-	ld	a, #0x01
-	ld	(x), a
+	clr	(x)
 ;	user/main.c: 48: CLK_Config();
 	call	_CLK_Config
 ;	user/main.c: 51: MaxMatrix(GPIOC, GPIO_PIN_6, GPIO_PIN_4, GPIO_PIN_5, 4);
@@ -471,10 +469,10 @@ _main:
 	call	_Init
 ;	user/main.c: 53: Screen();
 	call	_Screen
-;	user/main.c: 57: DrawEx(1, smile);
-	ldw	x, (0x69, sp)
+;	user/main.c: 57: DrawEx(8, text);
+	ldw	x, (0x6b, sp)
 	pushw	x
-	push	#0x01
+	push	#0x08
 	call	_DrawEx
 	addw	sp, #3
 ;	user/main.c: 58: Screen();

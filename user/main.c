@@ -14,14 +14,11 @@
 #include "stm8s_gpio.h"
 #include "stm8s_clk.h"
 #include "stm8s_conf.h"
-#include "sw_uart.h"
 #include "max7219.h"
 #include "stm8s_spi.h"
 #include <string.h>
 
 extern MaxMatrix_Struct matrix;
-uint8_t scrollDelay = 75;
-uint8_t buffertext[14] = {0};
 
 void GPIO_setup(void); 
 void SPI_setup(void);
@@ -30,24 +27,6 @@ void delay(uint16_t x)
     while(x--);
 }
 
-void printBuffer()
-{
-  uint8_t cnt, y;
-  uint8_t x;
-  for(cnt = 0; cnt<7; cnt++)
-  {
-    x = buffertext[cnt*2+1];
-    y = x;
-    setRow(3, cnt, y);
-    x = buffertext[cnt*2];
-    y = (x>>24);
-    setRow(2, cnt, y);
-    y = (x>>16);
-    setRow(1, cnt, y);
-    y = (x>>8);
-    setRow(0, cnt, y);
-  }
-}
 
 void main() 
 {
@@ -65,7 +44,7 @@ void main()
                                     0x00, 0x7C, 0x12, 0x12, 0x12, 0x12, 0x7C, 0x00, //A 
                                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; 
   //char smile[] = {0x3C, 0x43, 0x95, 0xA1, 0xA1, 0x95, 0x43, 0x3C};
-  char smile[]={0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
+  char smile[]={0x00, 0x7E, 0x04, 0x08, 0x08, 0x04, 0x7E, 0x00};
   CLK_Config();
   // GPIO_setup(); 
   // SPI_setup(); 
@@ -74,8 +53,8 @@ void main()
   Screen();
   //setColumn(31, 0x0f);
   //setRow(7,0xff);
-  //setDot(6,0,1);
-  //DrawEx(1, smile);
+  //setDot(0,0,1);
+  DrawEx(8, text);
   Screen();
   //Screen();
   // memset(matrix.buffer, 0x01, sizeof(matrix.buffer));

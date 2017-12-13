@@ -3,12 +3,13 @@
 -Y
 -b HOME = 0x8000
 -b DATA = 0x0001
--k c:\Program Files\SDCC\bin\..\lib\stm8
+-k /usr/local/bin/../share/sdcc/lib/stm8
+-k /usr/local/Cellar/sdcc/3.6.0/share/sdcc/lib/stm8
 -l stm8
 -l stm8
+build/user/font.rel
 build/user/main.rel
 build/user/max7219.rel
-build/user/sw_uart.rel
 build/user/timerTick.rel
 build/lib/stm8s_clk.rel
 build/lib/stm8s_gpio.rel

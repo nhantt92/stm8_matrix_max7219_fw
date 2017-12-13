@@ -44,4 +44,4 @@ void shiftLeft(bool rotate, bool fill_zero);
 void shiftRight(bool rotate, bool fill_zero);
 void shiftUp(bool rotate);
 void shiftDown(bool rotate);
-void DrawEx(uint8_t scrollCnt, uint16_t *data);
+void DrawEx(uint8_t scrollCnt, uint8_t *data);
