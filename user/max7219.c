@@ -138,19 +138,14 @@ void DrawEx(uint8_t scrollCnt, uint8_t *data)
 		for(cntR = 0; cntR<8; cntR++)
 		{
 			if(dataGet&mask)
-				setDot(cntC, 8 - cntR -1, 1);
+				setDot(cntC, 8 - cntR-1, 1);
 			else
-				setDot(cntC, 8 - cntR -1, 0);
+				setDot(cntC, 8 - cntR-1, 0);
 			mask <<=1;
 		}
 	}
 }
 
-void printCharWithShift(char c, uint8_t shift_speed)
-{
-	if(c<32) return;
-	c -=32;
-}
 
 /* SPI
 // void Max7219_Init(uint8_t numled)

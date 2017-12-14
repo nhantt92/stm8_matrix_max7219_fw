@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
                                       4 ;--------------------------------------------------------
                                       5 	.module max7219
                                       6 	.optsdcc -mstm8
@@ -27,8 +27,8 @@
                                      27 ; ram data
                                      28 ;--------------------------------------------------------
                                      29 	.area DATA
-      000001                         30 _matrix::
-      000001                         31 	.ds 86
+      0000D3                         30 _matrix::
+      0000D3                         31 	.ds 86
                                      32 ;--------------------------------------------------------
                                      33 ; ram data
                                      34 ;--------------------------------------------------------
@@ -57,616 +57,616 @@
                                      57 ;	-----------------------------------------
                                      58 ;	 function delay_ms
                                      59 ;	-----------------------------------------
-      00884C                         60 _delay_ms:
-      00884C 88               [ 1]   61 	push	a
+      008CA2                         60 _delay_ms:
+      008CA2 88               [ 1]   61 	push	a
                                      62 ;	user/max7219.c: 9: while(x--);
-      00884D 7B 04            [ 1]   63 	ld	a, (0x04, sp)
-      00884F                         64 00101$:
-      00884F 6B 01            [ 1]   65 	ld	(0x01, sp), a
-      008851 4A               [ 1]   66 	dec	a
-      008852 0D 01            [ 1]   67 	tnz	(0x01, sp)
-      008854 26 F9            [ 1]   68 	jrne	00101$
-      008856 84               [ 1]   69 	pop	a
-      008857 81               [ 4]   70 	ret
+      008CA3 7B 04            [ 1]   63 	ld	a, (0x04, sp)
+      008CA5                         64 00101$:
+      008CA5 6B 01            [ 1]   65 	ld	(0x01, sp), a
+      008CA7 4A               [ 1]   66 	dec	a
+      008CA8 0D 01            [ 1]   67 	tnz	(0x01, sp)
+      008CAA 26 F9            [ 1]   68 	jrne	00101$
+      008CAC 84               [ 1]   69 	pop	a
+      008CAD 81               [ 4]   70 	ret
                                      71 ;	user/max7219.c: 12: void MaxMatrix(GPIO_TypeDef* port, uint8_t data, uint8_t cs, uint8_t clk, uint8_t numLed)
                                      72 ;	-----------------------------------------
                                      73 ;	 function MaxMatrix
                                      74 ;	-----------------------------------------
-      008858                         75 _MaxMatrix:
-      008858 89               [ 2]   76 	pushw	x
+      008CAE                         75 _MaxMatrix:
+      008CAE 89               [ 2]   76 	pushw	x
                                      77 ;	user/max7219.c: 14: matrix.port = port;
-      008859 AE 00 01         [ 2]   78 	ldw	x, #_matrix+0
-      00885C 16 05            [ 2]   79 	ldw	y, (0x05, sp)
-      00885E FF               [ 2]   80 	ldw	(x), y
+      008CAF AE 00 D3         [ 2]   78 	ldw	x, #_matrix+0
+      008CB2 16 05            [ 2]   79 	ldw	y, (0x05, sp)
+      008CB4 FF               [ 2]   80 	ldw	(x), y
                                      81 ;	user/max7219.c: 15: matrix.data = data;
-      00885F AE 00 01         [ 2]   82 	ldw	x, #_matrix+0
-      008862 1F 01            [ 2]   83 	ldw	(0x01, sp), x
-      008864 1E 01            [ 2]   84 	ldw	x, (0x01, sp)
-      008866 5C               [ 2]   85 	incw	x
-      008867 5C               [ 2]   86 	incw	x
-      008868 7B 07            [ 1]   87 	ld	a, (0x07, sp)
-      00886A F7               [ 1]   88 	ld	(x), a
+      008CB5 AE 00 D3         [ 2]   82 	ldw	x, #_matrix+0
+      008CB8 1F 01            [ 2]   83 	ldw	(0x01, sp), x
+      008CBA 1E 01            [ 2]   84 	ldw	x, (0x01, sp)
+      008CBC 5C               [ 2]   85 	incw	x
+      008CBD 5C               [ 2]   86 	incw	x
+      008CBE 7B 07            [ 1]   87 	ld	a, (0x07, sp)
+      008CC0 F7               [ 1]   88 	ld	(x), a
                                      89 ;	user/max7219.c: 16: matrix.cs = cs;
-      00886B 1E 01            [ 2]   90 	ldw	x, (0x01, sp)
-      00886D 7B 08            [ 1]   91 	ld	a, (0x08, sp)
-      00886F E7 03            [ 1]   92 	ld	(0x0003, x), a
+      008CC1 1E 01            [ 2]   90 	ldw	x, (0x01, sp)
+      008CC3 7B 08            [ 1]   91 	ld	a, (0x08, sp)
+      008CC5 E7 03            [ 1]   92 	ld	(0x0003, x), a
                                      93 ;	user/max7219.c: 17: matrix.clk = clk;
-      008871 1E 01            [ 2]   94 	ldw	x, (0x01, sp)
-      008873 7B 09            [ 1]   95 	ld	a, (0x09, sp)
-      008875 E7 04            [ 1]   96 	ld	(0x0004, x), a
+      008CC7 1E 01            [ 2]   94 	ldw	x, (0x01, sp)
+      008CC9 7B 09            [ 1]   95 	ld	a, (0x09, sp)
+      008CCB E7 04            [ 1]   96 	ld	(0x0004, x), a
                                      97 ;	user/max7219.c: 18: matrix.maxLed =  numLed;
-      008877 1E 01            [ 2]   98 	ldw	x, (0x01, sp)
-      008879 7B 0A            [ 1]   99 	ld	a, (0x0a, sp)
-      00887B E7 05            [ 1]  100 	ld	(0x0005, x), a
+      008CCD 1E 01            [ 2]   98 	ldw	x, (0x01, sp)
+      008CCF 7B 0A            [ 1]   99 	ld	a, (0x0a, sp)
+      008CD1 E7 05            [ 1]  100 	ld	(0x0005, x), a
                                     101 ;	user/max7219.c: 19: memset(matrix.buffer, 0x00, sizeof(matrix.buffer));
-      00887D 1E 01            [ 2]  102 	ldw	x, (0x01, sp)
-      00887F 1C 00 06         [ 2]  103 	addw	x, #0x0006
-      008882 4B 50            [ 1]  104 	push	#0x50
-      008884 4B 00            [ 1]  105 	push	#0x00
-      008886 4B 00            [ 1]  106 	push	#0x00
-      008888 4B 00            [ 1]  107 	push	#0x00
-      00888A 89               [ 2]  108 	pushw	x
-      00888B CD 91 17         [ 4]  109 	call	_memset
-      00888E 5B 08            [ 2]  110 	addw	sp, #8
-      008890 81               [ 4]  111 	ret
+      008CD3 1E 01            [ 2]  102 	ldw	x, (0x01, sp)
+      008CD5 1C 00 06         [ 2]  103 	addw	x, #0x0006
+      008CD8 4B 50            [ 1]  104 	push	#0x50
+      008CDA 4B 00            [ 1]  105 	push	#0x00
+      008CDC 4B 00            [ 1]  106 	push	#0x00
+      008CDE 4B 00            [ 1]  107 	push	#0x00
+      008CE0 89               [ 2]  108 	pushw	x
+      008CE1 CD 95 6C         [ 4]  109 	call	_memset
+      008CE4 5B 08            [ 2]  110 	addw	sp, #8
+      008CE6 81               [ 4]  111 	ret
                                     112 ;	user/max7219.c: 22: static void Max7219_Write_Byte(uint8_t dat)
                                     113 ;	-----------------------------------------
                                     114 ;	 function Max7219_Write_Byte
                                     115 ;	-----------------------------------------
-      008891                        116 _Max7219_Write_Byte:
-      008891 52 06            [ 2]  117 	sub	sp, #6
+      008CE7                        116 _Max7219_Write_Byte:
+      008CE7 52 06            [ 2]  117 	sub	sp, #6
                                     118 ;	user/max7219.c: 26: dsent = dat;
-      008893 7B 09            [ 1]  119 	ld	a, (0x09, sp)
-      008895 6B 02            [ 1]  120 	ld	(0x02, sp), a
+      008CE9 7B 09            [ 1]  119 	ld	a, (0x09, sp)
+      008CEB 6B 02            [ 1]  120 	ld	(0x02, sp), a
                                     121 ;	user/max7219.c: 27: for(cnt=0; cnt<8; cnt++)
-      008897 AE 00 01         [ 2]  122 	ldw	x, #_matrix+0
-      00889A 1F 05            [ 2]  123 	ldw	(0x05, sp), x
-      00889C 1E 05            [ 2]  124 	ldw	x, (0x05, sp)
-      00889E 1C 00 04         [ 2]  125 	addw	x, #0x0004
-      0088A1 1F 03            [ 2]  126 	ldw	(0x03, sp), x
-      0088A3 0F 01            [ 1]  127 	clr	(0x01, sp)
-      0088A5                        128 00105$:
+      008CED AE 00 D3         [ 2]  122 	ldw	x, #_matrix+0
+      008CF0 1F 03            [ 2]  123 	ldw	(0x03, sp), x
+      008CF2 1E 03            [ 2]  124 	ldw	x, (0x03, sp)
+      008CF4 1C 00 04         [ 2]  125 	addw	x, #0x0004
+      008CF7 1F 05            [ 2]  126 	ldw	(0x05, sp), x
+      008CF9 0F 01            [ 1]  127 	clr	(0x01, sp)
+      008CFB                        128 00105$:
                                     129 ;	user/max7219.c: 29: GPIO_WriteLow(matrix.port, matrix.clk);
-      0088A5 1E 03            [ 2]  130 	ldw	x, (0x03, sp)
-      0088A7 F6               [ 1]  131 	ld	a, (x)
-      0088A8 1E 05            [ 2]  132 	ldw	x, (0x05, sp)
-      0088AA FE               [ 2]  133 	ldw	x, (x)
-      0088AB 88               [ 1]  134 	push	a
-      0088AC 89               [ 2]  135 	pushw	x
-      0088AD CD 8E 89         [ 4]  136 	call	_GPIO_WriteLow
-      0088B0 5B 03            [ 2]  137 	addw	sp, #3
-      0088B2 1E 05            [ 2]  138 	ldw	x, (0x05, sp)
-      0088B4 FE               [ 2]  139 	ldw	x, (x)
+      008CFB 1E 05            [ 2]  130 	ldw	x, (0x05, sp)
+      008CFD F6               [ 1]  131 	ld	a, (x)
+      008CFE 1E 03            [ 2]  132 	ldw	x, (0x03, sp)
+      008D00 FE               [ 2]  133 	ldw	x, (x)
+      008D01 88               [ 1]  134 	push	a
+      008D02 89               [ 2]  135 	pushw	x
+      008D03 CD 92 DE         [ 4]  136 	call	_GPIO_WriteLow
+      008D06 5B 03            [ 2]  137 	addw	sp, #3
+      008D08 1E 03            [ 2]  138 	ldw	x, (0x03, sp)
+      008D0A FE               [ 2]  139 	ldw	x, (x)
                                     140 ;	user/max7219.c: 31: GPIO_WriteHigh(matrix.port, matrix.data);
-      0088B5 16 05            [ 2]  141 	ldw	y, (0x05, sp)
-      0088B7 90 E6 02         [ 1]  142 	ld	a, (0x2, y)
+      008D0B 16 03            [ 2]  141 	ldw	y, (0x03, sp)
+      008D0D 90 E6 02         [ 1]  142 	ld	a, (0x2, y)
                                     143 ;	user/max7219.c: 30: if(dsent&0x80)
-      0088BA 0D 02            [ 1]  144 	tnz	(0x02, sp)
-      0088BC 2A 09            [ 1]  145 	jrpl	00102$
+      008D10 0D 02            [ 1]  144 	tnz	(0x02, sp)
+      008D12 2A 09            [ 1]  145 	jrpl	00102$
                                     146 ;	user/max7219.c: 31: GPIO_WriteHigh(matrix.port, matrix.data);
-      0088BE 88               [ 1]  147 	push	a
-      0088BF 89               [ 2]  148 	pushw	x
-      0088C0 CD 8E 82         [ 4]  149 	call	_GPIO_WriteHigh
-      0088C3 5B 03            [ 2]  150 	addw	sp, #3
-      0088C5 20 07            [ 2]  151 	jra	00103$
-      0088C7                        152 00102$:
+      008D14 88               [ 1]  147 	push	a
+      008D15 89               [ 2]  148 	pushw	x
+      008D16 CD 92 D7         [ 4]  149 	call	_GPIO_WriteHigh
+      008D19 5B 03            [ 2]  150 	addw	sp, #3
+      008D1B 20 07            [ 2]  151 	jra	00103$
+      008D1D                        152 00102$:
                                     153 ;	user/max7219.c: 33: GPIO_WriteLow(matrix.port, matrix.data);
-      0088C7 88               [ 1]  154 	push	a
-      0088C8 89               [ 2]  155 	pushw	x
-      0088C9 CD 8E 89         [ 4]  156 	call	_GPIO_WriteLow
-      0088CC 5B 03            [ 2]  157 	addw	sp, #3
-      0088CE                        158 00103$:
+      008D1D 88               [ 1]  154 	push	a
+      008D1E 89               [ 2]  155 	pushw	x
+      008D1F CD 92 DE         [ 4]  156 	call	_GPIO_WriteLow
+      008D22 5B 03            [ 2]  157 	addw	sp, #3
+      008D24                        158 00103$:
                                     159 ;	user/max7219.c: 34: GPIO_WriteHigh(matrix.port, matrix.clk);
-      0088CE 1E 03            [ 2]  160 	ldw	x, (0x03, sp)
-      0088D0 F6               [ 1]  161 	ld	a, (x)
-      0088D1 1E 05            [ 2]  162 	ldw	x, (0x05, sp)
-      0088D3 FE               [ 2]  163 	ldw	x, (x)
-      0088D4 88               [ 1]  164 	push	a
-      0088D5 89               [ 2]  165 	pushw	x
-      0088D6 CD 8E 82         [ 4]  166 	call	_GPIO_WriteHigh
-      0088D9 5B 03            [ 2]  167 	addw	sp, #3
+      008D24 1E 05            [ 2]  160 	ldw	x, (0x05, sp)
+      008D26 F6               [ 1]  161 	ld	a, (x)
+      008D27 1E 03            [ 2]  162 	ldw	x, (0x03, sp)
+      008D29 FE               [ 2]  163 	ldw	x, (x)
+      008D2A 88               [ 1]  164 	push	a
+      008D2B 89               [ 2]  165 	pushw	x
+      008D2C CD 92 D7         [ 4]  166 	call	_GPIO_WriteHigh
+      008D2F 5B 03            [ 2]  167 	addw	sp, #3
                                     168 ;	user/max7219.c: 35: dsent <<= 1;
-      0088DB 08 02            [ 1]  169 	sll	(0x02, sp)
+      008D31 08 02            [ 1]  169 	sll	(0x02, sp)
                                     170 ;	user/max7219.c: 27: for(cnt=0; cnt<8; cnt++)
-      0088DD 0C 01            [ 1]  171 	inc	(0x01, sp)
-      0088DF 7B 01            [ 1]  172 	ld	a, (0x01, sp)
-      0088E1 A1 08            [ 1]  173 	cp	a, #0x08
-      0088E3 25 C0            [ 1]  174 	jrc	00105$
-      0088E5 5B 06            [ 2]  175 	addw	sp, #6
-      0088E7 81               [ 4]  176 	ret
+      008D33 0C 01            [ 1]  171 	inc	(0x01, sp)
+      008D35 7B 01            [ 1]  172 	ld	a, (0x01, sp)
+      008D37 A1 08            [ 1]  173 	cp	a, #0x08
+      008D39 25 C0            [ 1]  174 	jrc	00105$
+      008D3B 5B 06            [ 2]  175 	addw	sp, #6
+      008D3D 81               [ 4]  176 	ret
                                     177 ;	user/max7219.c: 39: void setCommand(uint8_t command, uint8_t value)
                                     178 ;	-----------------------------------------
                                     179 ;	 function setCommand
                                     180 ;	-----------------------------------------
-      0088E8                        181 _setCommand:
-      0088E8 52 07            [ 2]  182 	sub	sp, #7
+      008D3E                        181 _setCommand:
+      008D3E 52 07            [ 2]  182 	sub	sp, #7
                                     183 ;	user/max7219.c: 42: GPIO_WriteLow(matrix.port, matrix.cs);
-      0088EA AE 00 01         [ 2]  184 	ldw	x, #_matrix+0
-      0088ED 1F 06            [ 2]  185 	ldw	(0x06, sp), x
-      0088EF 1E 06            [ 2]  186 	ldw	x, (0x06, sp)
-      0088F1 1C 00 03         [ 2]  187 	addw	x, #0x0003
-      0088F4 1F 04            [ 2]  188 	ldw	(0x04, sp), x
-      0088F6 1E 04            [ 2]  189 	ldw	x, (0x04, sp)
-      0088F8 F6               [ 1]  190 	ld	a, (x)
-      0088F9 1E 06            [ 2]  191 	ldw	x, (0x06, sp)
-      0088FB FE               [ 2]  192 	ldw	x, (x)
-      0088FC 88               [ 1]  193 	push	a
-      0088FD 89               [ 2]  194 	pushw	x
-      0088FE CD 8E 89         [ 4]  195 	call	_GPIO_WriteLow
-      008901 5B 03            [ 2]  196 	addw	sp, #3
+      008D40 AE 00 D3         [ 2]  184 	ldw	x, #_matrix+0
+      008D43 1F 06            [ 2]  185 	ldw	(0x06, sp), x
+      008D45 1E 06            [ 2]  186 	ldw	x, (0x06, sp)
+      008D47 1C 00 03         [ 2]  187 	addw	x, #0x0003
+      008D4A 1F 04            [ 2]  188 	ldw	(0x04, sp), x
+      008D4C 1E 04            [ 2]  189 	ldw	x, (0x04, sp)
+      008D4E F6               [ 1]  190 	ld	a, (x)
+      008D4F 1E 06            [ 2]  191 	ldw	x, (0x06, sp)
+      008D51 FE               [ 2]  192 	ldw	x, (x)
+      008D52 88               [ 1]  193 	push	a
+      008D53 89               [ 2]  194 	pushw	x
+      008D54 CD 92 DE         [ 4]  195 	call	_GPIO_WriteLow
+      008D57 5B 03            [ 2]  196 	addw	sp, #3
                                     197 ;	user/max7219.c: 43: for(i = 0; i < matrix.maxLed; i++)
-      008903 16 06            [ 2]  198 	ldw	y, (0x06, sp)
-      008905 17 02            [ 2]  199 	ldw	(0x02, sp), y
-      008907 0F 01            [ 1]  200 	clr	(0x01, sp)
-      008909                        201 00103$:
-      008909 1E 02            [ 2]  202 	ldw	x, (0x02, sp)
-      00890B E6 05            [ 1]  203 	ld	a, (0x5, x)
-      00890D 11 01            [ 1]  204 	cp	a, (0x01, sp)
-      00890F 23 12            [ 2]  205 	jrule	00101$
+      008D59 16 06            [ 2]  198 	ldw	y, (0x06, sp)
+      008D5B 17 02            [ 2]  199 	ldw	(0x02, sp), y
+      008D5D 0F 01            [ 1]  200 	clr	(0x01, sp)
+      008D5F                        201 00103$:
+      008D5F 1E 02            [ 2]  202 	ldw	x, (0x02, sp)
+      008D61 E6 05            [ 1]  203 	ld	a, (0x5, x)
+      008D63 11 01            [ 1]  204 	cp	a, (0x01, sp)
+      008D65 23 12            [ 2]  205 	jrule	00101$
                                     206 ;	user/max7219.c: 45: Max7219_Write_Byte(command);
-      008911 7B 0A            [ 1]  207 	ld	a, (0x0a, sp)
-      008913 88               [ 1]  208 	push	a
-      008914 CD 88 91         [ 4]  209 	call	_Max7219_Write_Byte
-      008917 84               [ 1]  210 	pop	a
+      008D67 7B 0A            [ 1]  207 	ld	a, (0x0a, sp)
+      008D69 88               [ 1]  208 	push	a
+      008D6A CD 8C E7         [ 4]  209 	call	_Max7219_Write_Byte
+      008D6D 84               [ 1]  210 	pop	a
                                     211 ;	user/max7219.c: 46: Max7219_Write_Byte(value);
-      008918 7B 0B            [ 1]  212 	ld	a, (0x0b, sp)
-      00891A 88               [ 1]  213 	push	a
-      00891B CD 88 91         [ 4]  214 	call	_Max7219_Write_Byte
-      00891E 84               [ 1]  215 	pop	a
+      008D6E 7B 0B            [ 1]  212 	ld	a, (0x0b, sp)
+      008D70 88               [ 1]  213 	push	a
+      008D71 CD 8C E7         [ 4]  214 	call	_Max7219_Write_Byte
+      008D74 84               [ 1]  215 	pop	a
                                     216 ;	user/max7219.c: 43: for(i = 0; i < matrix.maxLed; i++)
-      00891F 0C 01            [ 1]  217 	inc	(0x01, sp)
-      008921 20 E6            [ 2]  218 	jra	00103$
-      008923                        219 00101$:
+      008D75 0C 01            [ 1]  217 	inc	(0x01, sp)
+      008D77 20 E6            [ 2]  218 	jra	00103$
+      008D79                        219 00101$:
                                     220 ;	user/max7219.c: 48: GPIO_WriteLow(matrix.port, matrix.cs);
-      008923 1E 04            [ 2]  221 	ldw	x, (0x04, sp)
-      008925 F6               [ 1]  222 	ld	a, (x)
-      008926 1E 06            [ 2]  223 	ldw	x, (0x06, sp)
-      008928 FE               [ 2]  224 	ldw	x, (x)
-      008929 88               [ 1]  225 	push	a
-      00892A 89               [ 2]  226 	pushw	x
-      00892B CD 8E 89         [ 4]  227 	call	_GPIO_WriteLow
-      00892E 5B 03            [ 2]  228 	addw	sp, #3
+      008D79 1E 04            [ 2]  221 	ldw	x, (0x04, sp)
+      008D7B F6               [ 1]  222 	ld	a, (x)
+      008D7C 1E 06            [ 2]  223 	ldw	x, (0x06, sp)
+      008D7E FE               [ 2]  224 	ldw	x, (x)
+      008D7F 88               [ 1]  225 	push	a
+      008D80 89               [ 2]  226 	pushw	x
+      008D81 CD 92 DE         [ 4]  227 	call	_GPIO_WriteLow
+      008D84 5B 03            [ 2]  228 	addw	sp, #3
                                     229 ;	user/max7219.c: 49: GPIO_WriteHigh(matrix.port, matrix.cs);
-      008930 1E 04            [ 2]  230 	ldw	x, (0x04, sp)
-      008932 F6               [ 1]  231 	ld	a, (x)
-      008933 1E 06            [ 2]  232 	ldw	x, (0x06, sp)
-      008935 FE               [ 2]  233 	ldw	x, (x)
-      008936 88               [ 1]  234 	push	a
-      008937 89               [ 2]  235 	pushw	x
-      008938 CD 8E 82         [ 4]  236 	call	_GPIO_WriteHigh
-      00893B 5B 0A            [ 2]  237 	addw	sp, #10
-      00893D 81               [ 4]  238 	ret
+      008D86 1E 04            [ 2]  230 	ldw	x, (0x04, sp)
+      008D88 F6               [ 1]  231 	ld	a, (x)
+      008D89 1E 06            [ 2]  232 	ldw	x, (0x06, sp)
+      008D8B FE               [ 2]  233 	ldw	x, (x)
+      008D8C 88               [ 1]  234 	push	a
+      008D8D 89               [ 2]  235 	pushw	x
+      008D8E CD 92 D7         [ 4]  236 	call	_GPIO_WriteHigh
+      008D91 5B 0A            [ 2]  237 	addw	sp, #10
+      008D93 81               [ 4]  238 	ret
                                     239 ;	user/max7219.c: 52: void Init(void)
                                     240 ;	-----------------------------------------
                                     241 ;	 function Init
                                     242 ;	-----------------------------------------
-      00893E                        243 _Init:
-      00893E 52 04            [ 2]  244 	sub	sp, #4
+      008D94                        243 _Init:
+      008D94 52 04            [ 2]  244 	sub	sp, #4
                                     245 ;	user/max7219.c: 54: GPIO_Init(matrix.port, matrix.data|matrix.cs|matrix.clk, GPIO_MODE_OUT_PP_HIGH_FAST);
-      008940 AE 00 01         [ 2]  246 	ldw	x, #_matrix+0
-      008943 1F 01            [ 2]  247 	ldw	(0x01, sp), x
-      008945 1E 01            [ 2]  248 	ldw	x, (0x01, sp)
-      008947 E6 02            [ 1]  249 	ld	a, (0x2, x)
-      008949 6B 04            [ 1]  250 	ld	(0x04, sp), a
-      00894B 1E 01            [ 2]  251 	ldw	x, (0x01, sp)
-      00894D E6 03            [ 1]  252 	ld	a, (0x3, x)
-      00894F 1A 04            [ 1]  253 	or	a, (0x04, sp)
-      008951 6B 03            [ 1]  254 	ld	(0x03, sp), a
-      008953 1E 01            [ 2]  255 	ldw	x, (0x01, sp)
-      008955 E6 04            [ 1]  256 	ld	a, (0x4, x)
-      008957 1A 03            [ 1]  257 	or	a, (0x03, sp)
-      008959 1E 01            [ 2]  258 	ldw	x, (0x01, sp)
-      00895B FE               [ 2]  259 	ldw	x, (x)
-      00895C 4B F0            [ 1]  260 	push	#0xf0
-      00895E 88               [ 1]  261 	push	a
-      00895F 89               [ 2]  262 	pushw	x
-      008960 CD 8D EE         [ 4]  263 	call	_GPIO_Init
-      008963 5B 04            [ 2]  264 	addw	sp, #4
+      008D96 AE 00 D3         [ 2]  246 	ldw	x, #_matrix+0
+      008D99 1F 02            [ 2]  247 	ldw	(0x02, sp), x
+      008D9B 1E 02            [ 2]  248 	ldw	x, (0x02, sp)
+      008D9D E6 02            [ 1]  249 	ld	a, (0x2, x)
+      008D9F 6B 04            [ 1]  250 	ld	(0x04, sp), a
+      008DA1 1E 02            [ 2]  251 	ldw	x, (0x02, sp)
+      008DA3 E6 03            [ 1]  252 	ld	a, (0x3, x)
+      008DA5 1A 04            [ 1]  253 	or	a, (0x04, sp)
+      008DA7 6B 01            [ 1]  254 	ld	(0x01, sp), a
+      008DA9 1E 02            [ 2]  255 	ldw	x, (0x02, sp)
+      008DAB E6 04            [ 1]  256 	ld	a, (0x4, x)
+      008DAD 1A 01            [ 1]  257 	or	a, (0x01, sp)
+      008DAF 1E 02            [ 2]  258 	ldw	x, (0x02, sp)
+      008DB1 FE               [ 2]  259 	ldw	x, (x)
+      008DB2 4B F0            [ 1]  260 	push	#0xf0
+      008DB4 88               [ 1]  261 	push	a
+      008DB5 89               [ 2]  262 	pushw	x
+      008DB6 CD 92 43         [ 4]  263 	call	_GPIO_Init
+      008DB9 5B 04            [ 2]  264 	addw	sp, #4
                                     265 ;	user/max7219.c: 55: setCommand(SCANLIMIT, 0x07); //scanf 8digit
-      008965 4B 07            [ 1]  266 	push	#0x07
-      008967 4B 0B            [ 1]  267 	push	#0x0b
-      008969 CD 88 E8         [ 4]  268 	call	_setCommand
-      00896C 85               [ 2]  269 	popw	x
+      008DBB 4B 07            [ 1]  266 	push	#0x07
+      008DBD 4B 0B            [ 1]  267 	push	#0x0b
+      008DBF CD 8D 3E         [ 4]  268 	call	_setCommand
+      008DC2 85               [ 2]  269 	popw	x
                                     270 ;	user/max7219.c: 56: setCommand(DECODEMODE, 0x00); //use led matrix, not decode digit
-      00896D 4B 00            [ 1]  271 	push	#0x00
-      00896F 4B 09            [ 1]  272 	push	#0x09
-      008971 CD 88 E8         [ 4]  273 	call	_setCommand
-      008974 85               [ 2]  274 	popw	x
+      008DC3 4B 00            [ 1]  271 	push	#0x00
+      008DC5 4B 09            [ 1]  272 	push	#0x09
+      008DC7 CD 8D 3E         [ 4]  273 	call	_setCommand
+      008DCA 85               [ 2]  274 	popw	x
                                     275 ;	user/max7219.c: 57: setCommand(SHUTDOWN, 0x01); // normal operator
-      008975 4B 01            [ 1]  276 	push	#0x01
-      008977 4B 0C            [ 1]  277 	push	#0x0c
-      008979 CD 88 E8         [ 4]  278 	call	_setCommand
-      00897C 85               [ 2]  279 	popw	x
+      008DCB 4B 01            [ 1]  276 	push	#0x01
+      008DCD 4B 0C            [ 1]  277 	push	#0x0c
+      008DCF CD 8D 3E         [ 4]  278 	call	_setCommand
+      008DD2 85               [ 2]  279 	popw	x
                                     280 ;	user/max7219.c: 58: setCommand(DISPLAYTEST, 0x00); //no display test
-      00897D 4B 00            [ 1]  281 	push	#0x00
-      00897F 4B 0F            [ 1]  282 	push	#0x0f
-      008981 CD 88 E8         [ 4]  283 	call	_setCommand
-      008984 85               [ 2]  284 	popw	x
+      008DD3 4B 00            [ 1]  281 	push	#0x00
+      008DD5 4B 0F            [ 1]  282 	push	#0x0f
+      008DD7 CD 8D 3E         [ 4]  283 	call	_setCommand
+      008DDA 85               [ 2]  284 	popw	x
                                     285 ;	user/max7219.c: 59: Clear();
-      008985 CD 89 9C         [ 4]  286 	call	_Clear
+      008DDB CD 8D F2         [ 4]  286 	call	_Clear
                                     287 ;	user/max7219.c: 60: setCommand(INTENSITY, 0x04); // brightness 9/32
-      008988 4B 04            [ 1]  288 	push	#0x04
-      00898A 4B 0A            [ 1]  289 	push	#0x0a
-      00898C CD 88 E8         [ 4]  290 	call	_setCommand
-      00898F 5B 06            [ 2]  291 	addw	sp, #6
-      008991 81               [ 4]  292 	ret
+      008DDE 4B 04            [ 1]  288 	push	#0x04
+      008DE0 4B 0A            [ 1]  289 	push	#0x0a
+      008DE2 CD 8D 3E         [ 4]  290 	call	_setCommand
+      008DE5 5B 06            [ 2]  291 	addw	sp, #6
+      008DE7 81               [ 4]  292 	ret
                                     293 ;	user/max7219.c: 63: void setIntensity(uint8_t intensity)
                                     294 ;	-----------------------------------------
                                     295 ;	 function setIntensity
                                     296 ;	-----------------------------------------
-      008992                        297 _setIntensity:
+      008DE8                        297 _setIntensity:
                                     298 ;	user/max7219.c: 65: setCommand(INTENSITY, intensity);
-      008992 7B 03            [ 1]  299 	ld	a, (0x03, sp)
-      008994 88               [ 1]  300 	push	a
-      008995 4B 0A            [ 1]  301 	push	#0x0a
-      008997 CD 88 E8         [ 4]  302 	call	_setCommand
-      00899A 85               [ 2]  303 	popw	x
-      00899B 81               [ 4]  304 	ret
+      008DE8 7B 03            [ 1]  299 	ld	a, (0x03, sp)
+      008DEA 88               [ 1]  300 	push	a
+      008DEB 4B 0A            [ 1]  301 	push	#0x0a
+      008DED CD 8D 3E         [ 4]  302 	call	_setCommand
+      008DF0 85               [ 2]  303 	popw	x
+      008DF1 81               [ 4]  304 	ret
                                     305 ;	user/max7219.c: 68: void Clear(void)
                                     306 ;	-----------------------------------------
                                     307 ;	 function Clear
                                     308 ;	-----------------------------------------
-      00899C                        309 _Clear:
+      008DF2                        309 _Clear:
                                     310 ;	user/max7219.c: 70: memset(matrix.buffer, 0x00, sizeof(matrix.buffer));
-      00899C AE 00 07         [ 2]  311 	ldw	x, #_matrix+6
-      00899F 4B 50            [ 1]  312 	push	#0x50
-      0089A1 4B 00            [ 1]  313 	push	#0x00
-      0089A3 4B 00            [ 1]  314 	push	#0x00
-      0089A5 4B 00            [ 1]  315 	push	#0x00
-      0089A7 89               [ 2]  316 	pushw	x
-      0089A8 CD 91 17         [ 4]  317 	call	_memset
-      0089AB 5B 06            [ 2]  318 	addw	sp, #6
-      0089AD 81               [ 4]  319 	ret
+      008DF2 AE 00 D9         [ 2]  311 	ldw	x, #_matrix+6
+      008DF5 4B 50            [ 1]  312 	push	#0x50
+      008DF7 4B 00            [ 1]  313 	push	#0x00
+      008DF9 4B 00            [ 1]  314 	push	#0x00
+      008DFB 4B 00            [ 1]  315 	push	#0x00
+      008DFD 89               [ 2]  316 	pushw	x
+      008DFE CD 95 6C         [ 4]  317 	call	_memset
+      008E01 5B 06            [ 2]  318 	addw	sp, #6
+      008E03 81               [ 4]  319 	ret
                                     320 ;	user/max7219.c: 73: void Screen(void)
                                     321 ;	-----------------------------------------
                                     322 ;	 function Screen
                                     323 ;	-----------------------------------------
-      0089AE                        324 _Screen:
-      0089AE 52 0D            [ 2]  325 	sub	sp, #13
+      008E04                        324 _Screen:
+      008E04 52 0D            [ 2]  325 	sub	sp, #13
                                     326 ;	user/max7219.c: 76: for(i = 0; i < 8; i++)
-      0089B0 AE 00 01         [ 2]  327 	ldw	x, #_matrix+0
-      0089B3 1F 0C            [ 2]  328 	ldw	(0x0c, sp), x
-      0089B5 1E 0C            [ 2]  329 	ldw	x, (0x0c, sp)
-      0089B7 1C 00 03         [ 2]  330 	addw	x, #0x0003
-      0089BA 1F 0A            [ 2]  331 	ldw	(0x0a, sp), x
-      0089BC 0F 01            [ 1]  332 	clr	(0x01, sp)
-      0089BE                        333 00106$:
+      008E06 AE 00 D3         [ 2]  327 	ldw	x, #_matrix+0
+      008E09 1F 0C            [ 2]  328 	ldw	(0x0c, sp), x
+      008E0B 1E 0C            [ 2]  329 	ldw	x, (0x0c, sp)
+      008E0D 1C 00 03         [ 2]  330 	addw	x, #0x0003
+      008E10 1F 03            [ 2]  331 	ldw	(0x03, sp), x
+      008E12 0F 01            [ 1]  332 	clr	(0x01, sp)
+      008E14                        333 00106$:
                                     334 ;	user/max7219.c: 79: GPIO_WriteLow(matrix.port, matrix.cs);
-      0089BE 1E 0A            [ 2]  335 	ldw	x, (0x0a, sp)
-      0089C0 F6               [ 1]  336 	ld	a, (x)
-      0089C1 1E 0C            [ 2]  337 	ldw	x, (0x0c, sp)
-      0089C3 FE               [ 2]  338 	ldw	x, (x)
-      0089C4 88               [ 1]  339 	push	a
-      0089C5 89               [ 2]  340 	pushw	x
-      0089C6 CD 8E 89         [ 4]  341 	call	_GPIO_WriteLow
-      0089C9 5B 03            [ 2]  342 	addw	sp, #3
+      008E14 1E 03            [ 2]  335 	ldw	x, (0x03, sp)
+      008E16 F6               [ 1]  336 	ld	a, (x)
+      008E17 1E 0C            [ 2]  337 	ldw	x, (0x0c, sp)
+      008E19 FE               [ 2]  338 	ldw	x, (x)
+      008E1A 88               [ 1]  339 	push	a
+      008E1B 89               [ 2]  340 	pushw	x
+      008E1C CD 92 DE         [ 4]  341 	call	_GPIO_WriteLow
+      008E1F 5B 03            [ 2]  342 	addw	sp, #3
                                     343 ;	user/max7219.c: 80: for(j = 0; j < matrix.maxLed; j++)
-      0089CB 7B 01            [ 1]  344 	ld	a, (0x01, sp)
-      0089CD 4C               [ 1]  345 	inc	a
-      0089CE 6B 09            [ 1]  346 	ld	(0x09, sp), a
-      0089D0 7B 09            [ 1]  347 	ld	a, (0x09, sp)
-      0089D2 6B 08            [ 1]  348 	ld	(0x08, sp), a
-      0089D4 1E 0C            [ 2]  349 	ldw	x, (0x0c, sp)
-      0089D6 1C 00 06         [ 2]  350 	addw	x, #0x0006
-      0089D9 1F 06            [ 2]  351 	ldw	(0x06, sp), x
-      0089DB 16 0C            [ 2]  352 	ldw	y, (0x0c, sp)
-      0089DD 17 04            [ 2]  353 	ldw	(0x04, sp), y
-      0089DF 7B 01            [ 1]  354 	ld	a, (0x01, sp)
-      0089E1 6B 03            [ 1]  355 	ld	(0x03, sp), a
-      0089E3 0F 02            [ 1]  356 	clr	(0x02, sp)
-      0089E5                        357 00104$:
-      0089E5 1E 04            [ 2]  358 	ldw	x, (0x04, sp)
-      0089E7 E6 05            [ 1]  359 	ld	a, (0x5, x)
-      0089E9 11 02            [ 1]  360 	cp	a, (0x02, sp)
-      0089EB 23 1E            [ 2]  361 	jrule	00101$
+      008E21 7B 01            [ 1]  344 	ld	a, (0x01, sp)
+      008E23 4C               [ 1]  345 	inc	a
+      008E24 6B 05            [ 1]  346 	ld	(0x05, sp), a
+      008E26 7B 05            [ 1]  347 	ld	a, (0x05, sp)
+      008E28 6B 0B            [ 1]  348 	ld	(0x0b, sp), a
+      008E2A 1E 0C            [ 2]  349 	ldw	x, (0x0c, sp)
+      008E2C 1C 00 06         [ 2]  350 	addw	x, #0x0006
+      008E2F 1F 06            [ 2]  351 	ldw	(0x06, sp), x
+      008E31 16 0C            [ 2]  352 	ldw	y, (0x0c, sp)
+      008E33 17 08            [ 2]  353 	ldw	(0x08, sp), y
+      008E35 7B 01            [ 1]  354 	ld	a, (0x01, sp)
+      008E37 6B 0A            [ 1]  355 	ld	(0x0a, sp), a
+      008E39 0F 02            [ 1]  356 	clr	(0x02, sp)
+      008E3B                        357 00104$:
+      008E3B 1E 08            [ 2]  358 	ldw	x, (0x08, sp)
+      008E3D E6 05            [ 1]  359 	ld	a, (0x5, x)
+      008E3F 11 02            [ 1]  360 	cp	a, (0x02, sp)
+      008E41 23 1E            [ 2]  361 	jrule	00101$
                                     362 ;	user/max7219.c: 82: Max7219_Write_Byte(i+1);
-      0089ED 7B 08            [ 1]  363 	ld	a, (0x08, sp)
-      0089EF 88               [ 1]  364 	push	a
-      0089F0 CD 88 91         [ 4]  365 	call	_Max7219_Write_Byte
-      0089F3 84               [ 1]  366 	pop	a
+      008E43 7B 0B            [ 1]  363 	ld	a, (0x0b, sp)
+      008E45 88               [ 1]  364 	push	a
+      008E46 CD 8C E7         [ 4]  365 	call	_Max7219_Write_Byte
+      008E49 84               [ 1]  366 	pop	a
                                     367 ;	user/max7219.c: 83: Max7219_Write_Byte(matrix.buffer[col]);
-      0089F4 5F               [ 1]  368 	clrw	x
-      0089F5 7B 03            [ 1]  369 	ld	a, (0x03, sp)
-      0089F7 97               [ 1]  370 	ld	xl, a
-      0089F8 72 FB 06         [ 2]  371 	addw	x, (0x06, sp)
-      0089FB F6               [ 1]  372 	ld	a, (x)
-      0089FC 88               [ 1]  373 	push	a
-      0089FD CD 88 91         [ 4]  374 	call	_Max7219_Write_Byte
-      008A00 84               [ 1]  375 	pop	a
+      008E4A 5F               [ 1]  368 	clrw	x
+      008E4B 7B 0A            [ 1]  369 	ld	a, (0x0a, sp)
+      008E4D 97               [ 1]  370 	ld	xl, a
+      008E4E 72 FB 06         [ 2]  371 	addw	x, (0x06, sp)
+      008E51 F6               [ 1]  372 	ld	a, (x)
+      008E52 88               [ 1]  373 	push	a
+      008E53 CD 8C E7         [ 4]  374 	call	_Max7219_Write_Byte
+      008E56 84               [ 1]  375 	pop	a
                                     376 ;	user/max7219.c: 84: col += 8;
-      008A01 7B 03            [ 1]  377 	ld	a, (0x03, sp)
-      008A03 AB 08            [ 1]  378 	add	a, #0x08
-      008A05 6B 03            [ 1]  379 	ld	(0x03, sp), a
+      008E57 7B 0A            [ 1]  377 	ld	a, (0x0a, sp)
+      008E59 AB 08            [ 1]  378 	add	a, #0x08
+      008E5B 6B 0A            [ 1]  379 	ld	(0x0a, sp), a
                                     380 ;	user/max7219.c: 80: for(j = 0; j < matrix.maxLed; j++)
-      008A07 0C 02            [ 1]  381 	inc	(0x02, sp)
-      008A09 20 DA            [ 2]  382 	jra	00104$
-      008A0B                        383 00101$:
+      008E5D 0C 02            [ 1]  381 	inc	(0x02, sp)
+      008E5F 20 DA            [ 2]  382 	jra	00104$
+      008E61                        383 00101$:
                                     384 ;	user/max7219.c: 86: GPIO_WriteLow(matrix.port, matrix.cs);
-      008A0B 1E 0A            [ 2]  385 	ldw	x, (0x0a, sp)
-      008A0D F6               [ 1]  386 	ld	a, (x)
-      008A0E 1E 0C            [ 2]  387 	ldw	x, (0x0c, sp)
-      008A10 FE               [ 2]  388 	ldw	x, (x)
-      008A11 88               [ 1]  389 	push	a
-      008A12 89               [ 2]  390 	pushw	x
-      008A13 CD 8E 89         [ 4]  391 	call	_GPIO_WriteLow
-      008A16 5B 03            [ 2]  392 	addw	sp, #3
+      008E61 1E 03            [ 2]  385 	ldw	x, (0x03, sp)
+      008E63 F6               [ 1]  386 	ld	a, (x)
+      008E64 1E 0C            [ 2]  387 	ldw	x, (0x0c, sp)
+      008E66 FE               [ 2]  388 	ldw	x, (x)
+      008E67 88               [ 1]  389 	push	a
+      008E68 89               [ 2]  390 	pushw	x
+      008E69 CD 92 DE         [ 4]  391 	call	_GPIO_WriteLow
+      008E6C 5B 03            [ 2]  392 	addw	sp, #3
                                     393 ;	user/max7219.c: 87: GPIO_WriteHigh(matrix.port, matrix.cs);
-      008A18 1E 0A            [ 2]  394 	ldw	x, (0x0a, sp)
-      008A1A F6               [ 1]  395 	ld	a, (x)
-      008A1B 1E 0C            [ 2]  396 	ldw	x, (0x0c, sp)
-      008A1D FE               [ 2]  397 	ldw	x, (x)
-      008A1E 88               [ 1]  398 	push	a
-      008A1F 89               [ 2]  399 	pushw	x
-      008A20 CD 8E 82         [ 4]  400 	call	_GPIO_WriteHigh
-      008A23 5B 03            [ 2]  401 	addw	sp, #3
+      008E6E 1E 03            [ 2]  394 	ldw	x, (0x03, sp)
+      008E70 F6               [ 1]  395 	ld	a, (x)
+      008E71 1E 0C            [ 2]  396 	ldw	x, (0x0c, sp)
+      008E73 FE               [ 2]  397 	ldw	x, (x)
+      008E74 88               [ 1]  398 	push	a
+      008E75 89               [ 2]  399 	pushw	x
+      008E76 CD 92 D7         [ 4]  400 	call	_GPIO_WriteHigh
+      008E79 5B 03            [ 2]  401 	addw	sp, #3
                                     402 ;	user/max7219.c: 76: for(i = 0; i < 8; i++)
-      008A25 7B 09            [ 1]  403 	ld	a, (0x09, sp)
-      008A27 6B 01            [ 1]  404 	ld	(0x01, sp), a
-      008A29 7B 09            [ 1]  405 	ld	a, (0x09, sp)
-      008A2B A1 08            [ 1]  406 	cp	a, #0x08
-      008A2D 25 8F            [ 1]  407 	jrc	00106$
-      008A2F 5B 0D            [ 2]  408 	addw	sp, #13
-      008A31 81               [ 4]  409 	ret
+      008E7B 7B 05            [ 1]  403 	ld	a, (0x05, sp)
+      008E7D 6B 01            [ 1]  404 	ld	(0x01, sp), a
+      008E7F 7B 05            [ 1]  405 	ld	a, (0x05, sp)
+      008E81 A1 08            [ 1]  406 	cp	a, #0x08
+      008E83 25 8F            [ 1]  407 	jrc	00106$
+      008E85 5B 0D            [ 2]  408 	addw	sp, #13
+      008E87 81               [ 4]  409 	ret
                                     410 ;	user/max7219.c: 91: void setDot(uint8_t col, uint8_t row, uint8_t value)
                                     411 ;	-----------------------------------------
                                     412 ;	 function setDot
                                     413 ;	-----------------------------------------
-      008A32                        414 _setDot:
-      008A32 52 07            [ 2]  415 	sub	sp, #7
+      008E88                        414 _setDot:
+      008E88 52 07            [ 2]  415 	sub	sp, #7
                                     416 ;	user/max7219.c: 94: uint8_t n = (matrix.maxLed - 1) - (col / 8);
-      008A34 AE 00 01         [ 2]  417 	ldw	x, #_matrix+0
-      008A37 1F 06            [ 2]  418 	ldw	(0x06, sp), x
-      008A39 1E 06            [ 2]  419 	ldw	x, (0x06, sp)
-      008A3B E6 05            [ 1]  420 	ld	a, (0x5, x)
-      008A3D 97               [ 1]  421 	ld	xl, a
-      008A3E 4A               [ 1]  422 	dec	a
-      008A3F 95               [ 1]  423 	ld	xh, a
-      008A40 7B 0A            [ 1]  424 	ld	a, (0x0a, sp)
-      008A42 44               [ 1]  425 	srl	a
-      008A43 44               [ 1]  426 	srl	a
-      008A44 44               [ 1]  427 	srl	a
-      008A45 6B 05            [ 1]  428 	ld	(0x05, sp), a
-      008A47 9E               [ 1]  429 	ld	a, xh
-      008A48 10 05            [ 1]  430 	sub	a, (0x05, sp)
+      008E8A AE 00 D3         [ 2]  417 	ldw	x, #_matrix+0
+      008E8D 1F 03            [ 2]  418 	ldw	(0x03, sp), x
+      008E8F 1E 03            [ 2]  419 	ldw	x, (0x03, sp)
+      008E91 E6 05            [ 1]  420 	ld	a, (0x5, x)
+      008E93 97               [ 1]  421 	ld	xl, a
+      008E94 4A               [ 1]  422 	dec	a
+      008E95 95               [ 1]  423 	ld	xh, a
+      008E96 7B 0A            [ 1]  424 	ld	a, (0x0a, sp)
+      008E98 44               [ 1]  425 	srl	a
+      008E99 44               [ 1]  426 	srl	a
+      008E9A 44               [ 1]  427 	srl	a
+      008E9B 6B 05            [ 1]  428 	ld	(0x05, sp), a
+      008E9D 9E               [ 1]  429 	ld	a, xh
+      008E9E 10 05            [ 1]  430 	sub	a, (0x05, sp)
                                     431 ;	user/max7219.c: 95: offset = (n*8 + row);
-      008A4A 48               [ 1]  432 	sll	a
-      008A4B 48               [ 1]  433 	sll	a
-      008A4C 48               [ 1]  434 	sll	a
-      008A4D 1B 0B            [ 1]  435 	add	a, (0x0b, sp)
-      008A4F 6B 01            [ 1]  436 	ld	(0x01, sp), a
+      008EA0 48               [ 1]  432 	sll	a
+      008EA1 48               [ 1]  433 	sll	a
+      008EA2 48               [ 1]  434 	sll	a
+      008EA3 1B 0B            [ 1]  435 	add	a, (0x0b, sp)
+      008EA5 6B 01            [ 1]  436 	ld	(0x01, sp), a
                                     437 ;	user/max7219.c: 96: val = 0x01 << (col%8);
-      008A51 7B 0A            [ 1]  438 	ld	a, (0x0a, sp)
-      008A53 A4 07            [ 1]  439 	and	a, #0x07
-      008A55 61               [ 1]  440 	exg	a, yl
-      008A56 A6 01            [ 1]  441 	ld	a, #0x01
-      008A58 61               [ 1]  442 	exg	a, yl
-      008A59 4D               [ 1]  443 	tnz	a
-      008A5A 27 06            [ 1]  444 	jreq	00120$
-      008A5C                        445 00119$:
-      008A5C 61               [ 1]  446 	exg	a, yl
-      008A5D 48               [ 1]  447 	sll	a
-      008A5E 61               [ 1]  448 	exg	a, yl
-      008A5F 4A               [ 1]  449 	dec	a
-      008A60 26 FA            [ 1]  450 	jrne	00119$
-      008A62                        451 00120$:
+      008EA7 7B 0A            [ 1]  438 	ld	a, (0x0a, sp)
+      008EA9 A4 07            [ 1]  439 	and	a, #0x07
+      008EAB 61               [ 1]  440 	exg	a, yl
+      008EAC A6 01            [ 1]  441 	ld	a, #0x01
+      008EAE 61               [ 1]  442 	exg	a, yl
+      008EAF 4D               [ 1]  443 	tnz	a
+      008EB0 27 06            [ 1]  444 	jreq	00120$
+      008EB2                        445 00119$:
+      008EB2 61               [ 1]  446 	exg	a, yl
+      008EB3 48               [ 1]  447 	sll	a
+      008EB4 61               [ 1]  448 	exg	a, yl
+      008EB5 4A               [ 1]  449 	dec	a
+      008EB6 26 FA            [ 1]  450 	jrne	00119$
+      008EB8                        451 00120$:
                                     452 ;	user/max7219.c: 97: if(row < 0 || row > 7 || col < 0 || col > matrix.maxLed*8) return;
-      008A62 7B 0B            [ 1]  453 	ld	a, (0x0b, sp)
-      008A64 A1 07            [ 1]  454 	cp	a, #0x07
-      008A66 22 33            [ 1]  455 	jrugt	00109$
-      008A68 4F               [ 1]  456 	clr	a
-      008A69 95               [ 1]  457 	ld	xh, a
-      008A6A 58               [ 2]  458 	sllw	x
-      008A6B 58               [ 2]  459 	sllw	x
-      008A6C 58               [ 2]  460 	sllw	x
-      008A6D 7B 0A            [ 1]  461 	ld	a, (0x0a, sp)
-      008A6F 6B 04            [ 1]  462 	ld	(0x04, sp), a
-      008A71 0F 03            [ 1]  463 	clr	(0x03, sp)
-      008A73 13 03            [ 2]  464 	cpw	x, (0x03, sp)
-      008A75 2F 24            [ 1]  465 	jrslt	00109$
+      008EB8 7B 0B            [ 1]  453 	ld	a, (0x0b, sp)
+      008EBA A1 07            [ 1]  454 	cp	a, #0x07
+      008EBC 22 33            [ 1]  455 	jrugt	00109$
+      008EBE 4F               [ 1]  456 	clr	a
+      008EBF 95               [ 1]  457 	ld	xh, a
+      008EC0 58               [ 2]  458 	sllw	x
+      008EC1 58               [ 2]  459 	sllw	x
+      008EC2 58               [ 2]  460 	sllw	x
+      008EC3 7B 0A            [ 1]  461 	ld	a, (0x0a, sp)
+      008EC5 6B 07            [ 1]  462 	ld	(0x07, sp), a
+      008EC7 0F 06            [ 1]  463 	clr	(0x06, sp)
+      008EC9 13 06            [ 2]  464 	cpw	x, (0x06, sp)
+      008ECB 2F 24            [ 1]  465 	jrslt	00109$
                                     466 ;	user/max7219.c: 99: matrix.buffer[offset] |= val;
-      008A77 1E 06            [ 2]  467 	ldw	x, (0x06, sp)
-      008A79 1C 00 06         [ 2]  468 	addw	x, #0x0006
-      008A7C 9F               [ 1]  469 	ld	a, xl
-      008A7D 1B 01            [ 1]  470 	add	a, (0x01, sp)
-      008A7F 02               [ 1]  471 	rlwa	x
-      008A80 A9 00            [ 1]  472 	adc	a, #0x00
-      008A82 95               [ 1]  473 	ld	xh, a
-      008A83 F6               [ 1]  474 	ld	a, (x)
+      008ECD 1E 03            [ 2]  467 	ldw	x, (0x03, sp)
+      008ECF 1C 00 06         [ 2]  468 	addw	x, #0x0006
+      008ED2 9F               [ 1]  469 	ld	a, xl
+      008ED3 1B 01            [ 1]  470 	add	a, (0x01, sp)
+      008ED5 02               [ 1]  471 	rlwa	x
+      008ED6 A9 00            [ 1]  472 	adc	a, #0x00
+      008ED8 95               [ 1]  473 	ld	xh, a
+      008ED9 F6               [ 1]  474 	ld	a, (x)
                                     475 ;	user/max7219.c: 98: if(value)
-      008A84 0D 0C            [ 1]  476 	tnz	(0x0c, sp)
-      008A86 27 09            [ 1]  477 	jreq	00107$
+      008EDA 0D 0C            [ 1]  476 	tnz	(0x0c, sp)
+      008EDC 27 09            [ 1]  477 	jreq	00107$
                                     478 ;	user/max7219.c: 99: matrix.buffer[offset] |= val;
-      008A88 90 89            [ 2]  479 	pushw	y
-      008A8A 1A 02            [ 1]  480 	or	a, (2, sp)
-      008A8C 90 85            [ 2]  481 	popw	y
-      008A8E F7               [ 1]  482 	ld	(x), a
-      008A8F 20 0A            [ 2]  483 	jra	00109$
-      008A91                        484 00107$:
+      008EDE 90 89            [ 2]  479 	pushw	y
+      008EE0 1A 02            [ 1]  480 	or	a, (2, sp)
+      008EE2 90 85            [ 2]  481 	popw	y
+      008EE4 F7               [ 1]  482 	ld	(x), a
+      008EE5 20 0A            [ 2]  483 	jra	00109$
+      008EE7                        484 00107$:
                                     485 ;	user/max7219.c: 101: matrix.buffer[offset] &= ~val;
-      008A91 88               [ 1]  486 	push	a
-      008A92 90 9F            [ 1]  487 	ld	a, yl
-      008A94 43               [ 1]  488 	cpl	a
-      008A95 6B 03            [ 1]  489 	ld	(0x03, sp), a
-      008A97 84               [ 1]  490 	pop	a
-      008A98 14 02            [ 1]  491 	and	a, (0x02, sp)
-      008A9A F7               [ 1]  492 	ld	(x), a
-      008A9B                        493 00109$:
-      008A9B 5B 07            [ 2]  494 	addw	sp, #7
-      008A9D 81               [ 4]  495 	ret
+      008EE7 88               [ 1]  486 	push	a
+      008EE8 90 9F            [ 1]  487 	ld	a, yl
+      008EEA 43               [ 1]  488 	cpl	a
+      008EEB 6B 03            [ 1]  489 	ld	(0x03, sp), a
+      008EED 84               [ 1]  490 	pop	a
+      008EEE 14 02            [ 1]  491 	and	a, (0x02, sp)
+      008EF0 F7               [ 1]  492 	ld	(x), a
+      008EF1                        493 00109$:
+      008EF1 5B 07            [ 2]  494 	addw	sp, #7
+      008EF3 81               [ 4]  495 	ret
                                     496 ;	user/max7219.c: 104: void setColumn(uint8_t col, uint8_t value)
                                     497 ;	-----------------------------------------
                                     498 ;	 function setColumn
                                     499 ;	-----------------------------------------
-      008A9E                        500 _setColumn:
-      008A9E 52 05            [ 2]  501 	sub	sp, #5
+      008EF4                        500 _setColumn:
+      008EF4 52 05            [ 2]  501 	sub	sp, #5
                                     502 ;	user/max7219.c: 107: if(col < 0 || col > matrix.maxLed*8) return;
-      008AA0 AE 00 06         [ 2]  503 	ldw	x, #_matrix+5
-      008AA3 F6               [ 1]  504 	ld	a, (x)
-      008AA4 5F               [ 1]  505 	clrw	x
-      008AA5 97               [ 1]  506 	ld	xl, a
-      008AA6 58               [ 2]  507 	sllw	x
-      008AA7 58               [ 2]  508 	sllw	x
-      008AA8 58               [ 2]  509 	sllw	x
-      008AA9 7B 08            [ 1]  510 	ld	a, (0x08, sp)
-      008AAB 6B 03            [ 1]  511 	ld	(0x03, sp), a
-      008AAD 0F 02            [ 1]  512 	clr	(0x02, sp)
-      008AAF 13 02            [ 2]  513 	cpw	x, (0x02, sp)
+      008EF6 AE 00 D8         [ 2]  503 	ldw	x, #_matrix+5
+      008EF9 F6               [ 1]  504 	ld	a, (x)
+      008EFA 5F               [ 1]  505 	clrw	x
+      008EFB 97               [ 1]  506 	ld	xl, a
+      008EFC 58               [ 2]  507 	sllw	x
+      008EFD 58               [ 2]  508 	sllw	x
+      008EFE 58               [ 2]  509 	sllw	x
+      008EFF 7B 08            [ 1]  510 	ld	a, (0x08, sp)
+      008F01 6B 05            [ 1]  511 	ld	(0x05, sp), a
+      008F03 0F 04            [ 1]  512 	clr	(0x04, sp)
+      008F05 13 04            [ 2]  513 	cpw	x, (0x04, sp)
                                     514 ;	user/max7219.c: 108: for(row = 0; row < 8; row++)
-      008AB1 2F 2D            [ 1]  515 	jrslt	00107$
-      008AB3 0F 01            [ 1]  516 	clr	(0x01, sp)
-      008AB5                        517 00105$:
+      008F07 2F 2D            [ 1]  515 	jrslt	00107$
+      008F09 0F 01            [ 1]  516 	clr	(0x01, sp)
+      008F0B                        517 00105$:
                                     518 ;	user/max7219.c: 110: val = value >> (7-row);
-      008AB5 7B 01            [ 1]  519 	ld	a, (0x01, sp)
-      008AB7 6B 05            [ 1]  520 	ld	(0x05, sp), a
-      008AB9 0F 04            [ 1]  521 	clr	(0x04, sp)
-      008ABB AE 00 07         [ 2]  522 	ldw	x, #0x0007
-      008ABE 72 F0 04         [ 2]  523 	subw	x, (0x04, sp)
-      008AC1 7B 09            [ 1]  524 	ld	a, (0x09, sp)
-      008AC3 88               [ 1]  525 	push	a
-      008AC4 9F               [ 1]  526 	ld	a, xl
-      008AC5 4D               [ 1]  527 	tnz	a
-      008AC6 27 05            [ 1]  528 	jreq	00120$
-      008AC8                        529 00119$:
-      008AC8 04 01            [ 1]  530 	srl	(1, sp)
-      008ACA 4A               [ 1]  531 	dec	a
-      008ACB 26 FB            [ 1]  532 	jrne	00119$
-      008ACD                        533 00120$:
-      008ACD 7B 02            [ 1]  534 	ld	a, (0x02, sp)
-      008ACF 88               [ 1]  535 	push	a
-      008AD0 7B 0A            [ 1]  536 	ld	a, (0x0a, sp)
-      008AD2 88               [ 1]  537 	push	a
-      008AD3 CD 8A 32         [ 4]  538 	call	_setDot
-      008AD6 5B 03            [ 2]  539 	addw	sp, #3
+      008F0B 7B 01            [ 1]  519 	ld	a, (0x01, sp)
+      008F0D 6B 03            [ 1]  520 	ld	(0x03, sp), a
+      008F0F 0F 02            [ 1]  521 	clr	(0x02, sp)
+      008F11 AE 00 07         [ 2]  522 	ldw	x, #0x0007
+      008F14 72 F0 02         [ 2]  523 	subw	x, (0x02, sp)
+      008F17 7B 09            [ 1]  524 	ld	a, (0x09, sp)
+      008F19 88               [ 1]  525 	push	a
+      008F1A 9F               [ 1]  526 	ld	a, xl
+      008F1B 4D               [ 1]  527 	tnz	a
+      008F1C 27 05            [ 1]  528 	jreq	00120$
+      008F1E                        529 00119$:
+      008F1E 04 01            [ 1]  530 	srl	(1, sp)
+      008F20 4A               [ 1]  531 	dec	a
+      008F21 26 FB            [ 1]  532 	jrne	00119$
+      008F23                        533 00120$:
+      008F23 7B 02            [ 1]  534 	ld	a, (0x02, sp)
+      008F25 88               [ 1]  535 	push	a
+      008F26 7B 0A            [ 1]  536 	ld	a, (0x0a, sp)
+      008F28 88               [ 1]  537 	push	a
+      008F29 CD 8E 88         [ 4]  538 	call	_setDot
+      008F2C 5B 03            [ 2]  539 	addw	sp, #3
                                     540 ;	user/max7219.c: 108: for(row = 0; row < 8; row++)
-      008AD8 0C 01            [ 1]  541 	inc	(0x01, sp)
-      008ADA 7B 01            [ 1]  542 	ld	a, (0x01, sp)
-      008ADC A1 08            [ 1]  543 	cp	a, #0x08
-      008ADE 25 D5            [ 1]  544 	jrc	00105$
-      008AE0                        545 00107$:
-      008AE0 5B 05            [ 2]  546 	addw	sp, #5
-      008AE2 81               [ 4]  547 	ret
+      008F2E 0C 01            [ 1]  541 	inc	(0x01, sp)
+      008F30 7B 01            [ 1]  542 	ld	a, (0x01, sp)
+      008F32 A1 08            [ 1]  543 	cp	a, #0x08
+      008F34 25 D5            [ 1]  544 	jrc	00105$
+      008F36                        545 00107$:
+      008F36 5B 05            [ 2]  546 	addw	sp, #5
+      008F38 81               [ 4]  547 	ret
                                     548 ;	user/max7219.c: 115: void setRow(uint8_t row, uint8_t value)
                                     549 ;	-----------------------------------------
                                     550 ;	 function setRow
                                     551 ;	-----------------------------------------
-      008AE3                        552 _setRow:
-      008AE3 52 05            [ 2]  553 	sub	sp, #5
+      008F39                        552 _setRow:
+      008F39 52 05            [ 2]  553 	sub	sp, #5
                                     554 ;	user/max7219.c: 118: if(row < 0 || row > 7) return;
-      008AE5 7B 08            [ 1]  555 	ld	a, (0x08, sp)
-      008AE7 A1 07            [ 1]  556 	cp	a, #0x07
+      008F3B 7B 08            [ 1]  555 	ld	a, (0x08, sp)
+      008F3D A1 07            [ 1]  556 	cp	a, #0x07
                                     557 ;	user/max7219.c: 119: for(i = 0; i < matrix.maxLed; i++)
-      008AE9 22 2A            [ 1]  558 	jrugt	00108$
-      008AEB AE 00 01         [ 2]  559 	ldw	x, #_matrix+0
-      008AEE 1F 04            [ 2]  560 	ldw	(0x04, sp), x
-      008AF0 16 04            [ 2]  561 	ldw	y, (0x04, sp)
-      008AF2 0F 01            [ 1]  562 	clr	(0x01, sp)
-      008AF4                        563 00106$:
-      008AF4 90 E6 05         [ 1]  564 	ld	a, (0x5, y)
-      008AF7 11 01            [ 1]  565 	cp	a, (0x01, sp)
-      008AF9 23 1A            [ 2]  566 	jrule	00108$
+      008F3F 22 2A            [ 1]  558 	jrugt	00108$
+      008F41 AE 00 D3         [ 2]  559 	ldw	x, #_matrix+0
+      008F44 1F 02            [ 2]  560 	ldw	(0x02, sp), x
+      008F46 16 02            [ 2]  561 	ldw	y, (0x02, sp)
+      008F48 0F 01            [ 1]  562 	clr	(0x01, sp)
+      008F4A                        563 00106$:
+      008F4A 90 E6 05         [ 1]  564 	ld	a, (0x5, y)
+      008F4D 11 01            [ 1]  565 	cp	a, (0x01, sp)
+      008F4F 23 1A            [ 2]  566 	jrule	00108$
                                     567 ;	user/max7219.c: 121: offset = (i*8)+row;
-      008AFB 7B 01            [ 1]  568 	ld	a, (0x01, sp)
-      008AFD 48               [ 1]  569 	sll	a
-      008AFE 48               [ 1]  570 	sll	a
-      008AFF 48               [ 1]  571 	sll	a
-      008B00 1B 08            [ 1]  572 	add	a, (0x08, sp)
+      008F51 7B 01            [ 1]  568 	ld	a, (0x01, sp)
+      008F53 48               [ 1]  569 	sll	a
+      008F54 48               [ 1]  570 	sll	a
+      008F55 48               [ 1]  571 	sll	a
+      008F56 1B 08            [ 1]  572 	add	a, (0x08, sp)
                                     573 ;	user/max7219.c: 122: matrix.buffer[offset] = value;
-      008B02 1E 04            [ 2]  574 	ldw	x, (0x04, sp)
-      008B04 1C 00 06         [ 2]  575 	addw	x, #0x0006
-      008B07 1F 02            [ 2]  576 	ldw	(0x02, sp), x
-      008B09 5F               [ 1]  577 	clrw	x
-      008B0A 97               [ 1]  578 	ld	xl, a
-      008B0B 72 FB 02         [ 2]  579 	addw	x, (0x02, sp)
-      008B0E 7B 09            [ 1]  580 	ld	a, (0x09, sp)
-      008B10 F7               [ 1]  581 	ld	(x), a
+      008F58 1E 02            [ 2]  574 	ldw	x, (0x02, sp)
+      008F5A 1C 00 06         [ 2]  575 	addw	x, #0x0006
+      008F5D 1F 04            [ 2]  576 	ldw	(0x04, sp), x
+      008F5F 5F               [ 1]  577 	clrw	x
+      008F60 97               [ 1]  578 	ld	xl, a
+      008F61 72 FB 04         [ 2]  579 	addw	x, (0x04, sp)
+      008F64 7B 09            [ 1]  580 	ld	a, (0x09, sp)
+      008F66 F7               [ 1]  581 	ld	(x), a
                                     582 ;	user/max7219.c: 119: for(i = 0; i < matrix.maxLed; i++)
-      008B11 0C 01            [ 1]  583 	inc	(0x01, sp)
-      008B13 20 DF            [ 2]  584 	jra	00106$
-      008B15                        585 00108$:
-      008B15 5B 05            [ 2]  586 	addw	sp, #5
-      008B17 81               [ 4]  587 	ret
+      008F67 0C 01            [ 1]  583 	inc	(0x01, sp)
+      008F69 20 DF            [ 2]  584 	jra	00106$
+      008F6B                        585 00108$:
+      008F6B 5B 05            [ 2]  586 	addw	sp, #5
+      008F6D 81               [ 4]  587 	ret
                                     588 ;	user/max7219.c: 127: void DrawEx(uint8_t scrollCnt, uint8_t *data)
                                     589 ;	-----------------------------------------
                                     590 ;	 function DrawEx
                                     591 ;	-----------------------------------------
-      008B18                        592 _DrawEx:
-      008B18 52 0B            [ 2]  593 	sub	sp, #11
+      008F6E                        592 _DrawEx:
+      008F6E 52 0B            [ 2]  593 	sub	sp, #11
                                     594 ;	user/max7219.c: 133: Clear();
-      008B1A CD 89 9C         [ 4]  595 	call	_Clear
+      008F70 CD 8D F2         [ 4]  595 	call	_Clear
                                     596 ;	user/max7219.c: 134: for(cntC = 0; cntC < matrix.maxLed*8; cntC++)
-      008B1D AE 00 06         [ 2]  597 	ldw	x, #_matrix+5
-      008B20 1F 0A            [ 2]  598 	ldw	(0x0a, sp), x
-      008B22 0F 01            [ 1]  599 	clr	(0x01, sp)
-      008B24                        600 00109$:
-      008B24 1E 0A            [ 2]  601 	ldw	x, (0x0a, sp)
-      008B26 F6               [ 1]  602 	ld	a, (x)
-      008B27 5F               [ 1]  603 	clrw	x
-      008B28 97               [ 1]  604 	ld	xl, a
-      008B29 58               [ 2]  605 	sllw	x
-      008B2A 58               [ 2]  606 	sllw	x
-      008B2B 58               [ 2]  607 	sllw	x
-      008B2C 1F 08            [ 2]  608 	ldw	(0x08, sp), x
-      008B2E 7B 01            [ 1]  609 	ld	a, (0x01, sp)
-      008B30 6B 07            [ 1]  610 	ld	(0x07, sp), a
-      008B32 0F 06            [ 1]  611 	clr	(0x06, sp)
-      008B34 1E 06            [ 2]  612 	ldw	x, (0x06, sp)
-      008B36 13 08            [ 2]  613 	cpw	x, (0x08, sp)
-      008B38 2E 4A            [ 1]  614 	jrsge	00111$
+      008F73 AE 00 D8         [ 2]  597 	ldw	x, #_matrix+5
+      008F76 1F 08            [ 2]  598 	ldw	(0x08, sp), x
+      008F78 0F 03            [ 1]  599 	clr	(0x03, sp)
+      008F7A                        600 00109$:
+      008F7A 1E 08            [ 2]  601 	ldw	x, (0x08, sp)
+      008F7C F6               [ 1]  602 	ld	a, (x)
+      008F7D 5F               [ 1]  603 	clrw	x
+      008F7E 97               [ 1]  604 	ld	xl, a
+      008F7F 58               [ 2]  605 	sllw	x
+      008F80 58               [ 2]  606 	sllw	x
+      008F81 58               [ 2]  607 	sllw	x
+      008F82 1F 0A            [ 2]  608 	ldw	(0x0a, sp), x
+      008F84 7B 03            [ 1]  609 	ld	a, (0x03, sp)
+      008F86 6B 06            [ 1]  610 	ld	(0x06, sp), a
+      008F88 0F 05            [ 1]  611 	clr	(0x05, sp)
+      008F8A 1E 05            [ 2]  612 	ldw	x, (0x05, sp)
+      008F8C 13 0A            [ 2]  613 	cpw	x, (0x0a, sp)
+      008F8E 2E 49            [ 1]  614 	jrsge	00111$
                                     615 ;	user/max7219.c: 136: dataGet = data[cntC+scrollCnt];
-      008B3A 5F               [ 1]  616 	clrw	x
-      008B3B 7B 0E            [ 1]  617 	ld	a, (0x0e, sp)
-      008B3D 97               [ 1]  618 	ld	xl, a
-      008B3E 72 FB 06         [ 2]  619 	addw	x, (0x06, sp)
-      008B41 72 FB 0F         [ 2]  620 	addw	x, (0x0f, sp)
-      008B44 F6               [ 1]  621 	ld	a, (x)
-      008B45 6B 03            [ 1]  622 	ld	(0x03, sp), a
+      008F90 5F               [ 1]  616 	clrw	x
+      008F91 7B 0E            [ 1]  617 	ld	a, (0x0e, sp)
+      008F93 97               [ 1]  618 	ld	xl, a
+      008F94 72 FB 05         [ 2]  619 	addw	x, (0x05, sp)
+      008F97 72 FB 0F         [ 2]  620 	addw	x, (0x0f, sp)
+      008F9A F6               [ 1]  621 	ld	a, (x)
+      008F9B 6B 02            [ 1]  622 	ld	(0x02, sp), a
                                     623 ;	user/max7219.c: 137: mask = 0x01;
-      008B47 A6 01            [ 1]  624 	ld	a, #0x01
-      008B49 6B 04            [ 1]  625 	ld	(0x04, sp), a
+      008F9D A6 01            [ 1]  624 	ld	a, #0x01
+      008F9F 6B 04            [ 1]  625 	ld	(0x04, sp), a
                                     626 ;	user/max7219.c: 138: for(cntR = 0; cntR<8; cntR++)
-      008B4B 0F 02            [ 1]  627 	clr	(0x02, sp)
-      008B4D                        628 00106$:
-                                    629 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR -1, 1);
-      008B4D A6 07            [ 1]  630 	ld	a, #0x07
-      008B4F 10 02            [ 1]  631 	sub	a, (0x02, sp)
-      008B51 6B 05            [ 1]  632 	ld	(0x05, sp), a
-                                    633 ;	user/max7219.c: 140: if(dataGet&mask)
-      008B53 7B 03            [ 1]  634 	ld	a, (0x03, sp)
-      008B55 14 04            [ 1]  635 	and	a, (0x04, sp)
-      008B57 4D               [ 1]  636 	tnz	a
-      008B58 27 0F            [ 1]  637 	jreq	00102$
-                                    638 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR -1, 1);
-      008B5A 4B 01            [ 1]  639 	push	#0x01
-      008B5C 7B 06            [ 1]  640 	ld	a, (0x06, sp)
-      008B5E 88               [ 1]  641 	push	a
-      008B5F 7B 03            [ 1]  642 	ld	a, (0x03, sp)
-      008B61 88               [ 1]  643 	push	a
-      008B62 CD 8A 32         [ 4]  644 	call	_setDot
-      008B65 5B 03            [ 2]  645 	addw	sp, #3
-      008B67 20 0D            [ 2]  646 	jra	00103$
-      008B69                        647 00102$:
-                                    648 ;	user/max7219.c: 143: setDot(cntC, 8 - cntR -1, 0);
-      008B69 4B 00            [ 1]  649 	push	#0x00
-      008B6B 7B 06            [ 1]  650 	ld	a, (0x06, sp)
-      008B6D 88               [ 1]  651 	push	a
-      008B6E 7B 03            [ 1]  652 	ld	a, (0x03, sp)
-      008B70 88               [ 1]  653 	push	a
-      008B71 CD 8A 32         [ 4]  654 	call	_setDot
-      008B74 5B 03            [ 2]  655 	addw	sp, #3
-      008B76                        656 00103$:
+      008FA1 0F 01            [ 1]  627 	clr	(0x01, sp)
+      008FA3                        628 00106$:
+                                    629 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR-1, 1);
+      008FA3 A6 07            [ 1]  630 	ld	a, #0x07
+      008FA5 10 01            [ 1]  631 	sub	a, (0x01, sp)
+                                    632 ;	user/max7219.c: 140: if(dataGet&mask)
+      008FA7 88               [ 1]  633 	push	a
+      008FA8 7B 03            [ 1]  634 	ld	a, (0x03, sp)
+      008FAA 14 05            [ 1]  635 	and	a, (0x05, sp)
+      008FAC 6B 08            [ 1]  636 	ld	(0x08, sp), a
+      008FAE 84               [ 1]  637 	pop	a
+      008FAF 0D 07            [ 1]  638 	tnz	(0x07, sp)
+      008FB1 27 0D            [ 1]  639 	jreq	00102$
+                                    640 ;	user/max7219.c: 141: setDot(cntC, 8 - cntR-1, 1);
+      008FB3 4B 01            [ 1]  641 	push	#0x01
+      008FB5 88               [ 1]  642 	push	a
+      008FB6 7B 05            [ 1]  643 	ld	a, (0x05, sp)
+      008FB8 88               [ 1]  644 	push	a
+      008FB9 CD 8E 88         [ 4]  645 	call	_setDot
+      008FBC 5B 03            [ 2]  646 	addw	sp, #3
+      008FBE 20 0B            [ 2]  647 	jra	00103$
+      008FC0                        648 00102$:
+                                    649 ;	user/max7219.c: 143: setDot(cntC, 8 - cntR-1, 0);
+      008FC0 4B 00            [ 1]  650 	push	#0x00
+      008FC2 88               [ 1]  651 	push	a
+      008FC3 7B 05            [ 1]  652 	ld	a, (0x05, sp)
+      008FC5 88               [ 1]  653 	push	a
+      008FC6 CD 8E 88         [ 4]  654 	call	_setDot
+      008FC9 5B 03            [ 2]  655 	addw	sp, #3
+      008FCB                        656 00103$:
                                     657 ;	user/max7219.c: 144: mask <<=1;
-      008B76 08 04            [ 1]  658 	sll	(0x04, sp)
+      008FCB 08 04            [ 1]  658 	sll	(0x04, sp)
                                     659 ;	user/max7219.c: 138: for(cntR = 0; cntR<8; cntR++)
-      008B78 0C 02            [ 1]  660 	inc	(0x02, sp)
-      008B7A 7B 02            [ 1]  661 	ld	a, (0x02, sp)
-      008B7C A1 08            [ 1]  662 	cp	a, #0x08
-      008B7E 25 CD            [ 1]  663 	jrc	00106$
+      008FCD 0C 01            [ 1]  660 	inc	(0x01, sp)
+      008FCF 7B 01            [ 1]  661 	ld	a, (0x01, sp)
+      008FD1 A1 08            [ 1]  662 	cp	a, #0x08
+      008FD3 25 CE            [ 1]  663 	jrc	00106$
                                     664 ;	user/max7219.c: 134: for(cntC = 0; cntC < matrix.maxLed*8; cntC++)
-      008B80 0C 01            [ 1]  665 	inc	(0x01, sp)
-      008B82 20 A0            [ 2]  666 	jra	00109$
-      008B84                        667 00111$:
-      008B84 5B 0B            [ 2]  668 	addw	sp, #11
-      008B86 81               [ 4]  669 	ret
+      008FD5 0C 03            [ 1]  665 	inc	(0x03, sp)
+      008FD7 20 A1            [ 2]  666 	jra	00109$
+      008FD9                        667 00111$:
+      008FD9 5B 0B            [ 2]  668 	addw	sp, #11
+      008FDB 81               [ 4]  669 	ret
                                     670 	.area CODE
                                     671 	.area INITIALIZER
                                     672 	.area CABS (ABS)

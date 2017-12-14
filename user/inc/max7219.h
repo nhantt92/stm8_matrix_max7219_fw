@@ -1,3 +1,6 @@
+#ifndef __MAX7219_H
+#define __MAX7219_H
+
 #include "stm8s.h"
 #include "stm8s_gpio.h"
 
@@ -29,6 +32,8 @@ typedef struct
 	uint8_t buffer[80]; // 10 led 80 byte
 }MaxMatrix_Struct;
 
+extern MaxMatrix_Struct matrix;
+
 void MaxMatrix(GPIO_TypeDef* port, uint8_t data, uint8_t cs, uint8_t clk, uint8_t numLed);
 void Init(void);
 void Clear(void);
@@ -45,3 +50,5 @@ void shiftRight(bool rotate, bool fill_zero);
 void shiftUp(bool rotate);
 void shiftDown(bool rotate);
 void DrawEx(uint8_t scrollCnt, uint8_t *data);
+
+#endif

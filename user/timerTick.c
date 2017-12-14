@@ -8,6 +8,7 @@
 *********************************************
 */
 #include "timerTick.h"
+#include "stm8s_tim4.h"
 
 uint16_t timeGet;
 uint16_t timeBack;

@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.0 #9615 (Mac OS X x86_64)
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
                                       4 ;--------------------------------------------------------
                                       5 	.module main
                                       6 	.optsdcc -mstm8
@@ -9,479 +9,498 @@
                                       9 ; Public variables in this module
                                      10 ;--------------------------------------------------------
                                      11 	.globl _main
-                                     12 	.globl _delay
-                                     13 	.globl _DrawEx
-                                     14 	.globl _Screen
-                                     15 	.globl _Init
-                                     16 	.globl _MaxMatrix
-                                     17 	.globl _CLK_Config
-                                     18 ;--------------------------------------------------------
-                                     19 ; ram data
-                                     20 ;--------------------------------------------------------
-                                     21 	.area DATA
-                                     22 ;--------------------------------------------------------
-                                     23 ; ram data
-                                     24 ;--------------------------------------------------------
-                                     25 	.area INITIALIZED
-                                     26 ;--------------------------------------------------------
-                                     27 ; Stack segment in internal ram 
-                                     28 ;--------------------------------------------------------
-                                     29 	.area	SSEG
-      000000                         30 __start__stack:
-      000000                         31 	.ds	1
-                                     32 
+                                     12 	.globl _TIM4_UPD_OVF_IRQHandler
+                                     13 	.globl _delay
+                                     14 	.globl _TEXT_Manage
+                                     15 	.globl _TEXT_Init
+                                     16 	.globl _TIMER_Inc
+                                     17 	.globl _TIMER_Init
+                                     18 	.globl _Screen
+                                     19 	.globl _Init
+                                     20 	.globl _MaxMatrix
+                                     21 	.globl _TIM4_ClearITPendingBit
+                                     22 	.globl _IWDG_Enable
+                                     23 	.globl _IWDG_ReloadCounter
+                                     24 	.globl _IWDG_SetReload
+                                     25 	.globl _IWDG_SetPrescaler
+                                     26 	.globl _IWDG_WriteAccessCmd
+                                     27 	.globl _CLK_Config
+                                     28 	.globl _IWDG_Config
+                                     29 ;--------------------------------------------------------
+                                     30 ; ram data
+                                     31 ;--------------------------------------------------------
+                                     32 	.area DATA
                                      33 ;--------------------------------------------------------
-                                     34 ; absolute external ram data
+                                     34 ; ram data
                                      35 ;--------------------------------------------------------
-                                     36 	.area DABS (ABS)
+                                     36 	.area INITIALIZED
                                      37 ;--------------------------------------------------------
-                                     38 ; interrupt vector 
+                                     38 ; Stack segment in internal ram 
                                      39 ;--------------------------------------------------------
-                                     40 	.area HOME
-      000000                         41 __interrupt_vect:
-      000000 82v00u00u00             42 	int s_GSINIT ;reset
-      000004 82 00 00 00             43 	int 0x0000 ;trap
-      000008 82 00 00 00             44 	int 0x0000 ;int0
-      00000C 82 00 00 00             45 	int 0x0000 ;int1
-      000010 82 00 00 00             46 	int 0x0000 ;int2
-      000014 82 00 00 00             47 	int 0x0000 ;int3
-      000018 82 00 00 00             48 	int 0x0000 ;int4
-      00001C 82 00 00 00             49 	int 0x0000 ;int5
-      000020 82 00 00 00             50 	int 0x0000 ;int6
-      000024 82 00 00 00             51 	int 0x0000 ;int7
-      000028 82 00 00 00             52 	int 0x0000 ;int8
-      00002C 82 00 00 00             53 	int 0x0000 ;int9
-      000030 82 00 00 00             54 	int 0x0000 ;int10
-      000034 82 00 00 00             55 	int 0x0000 ;int11
-      000038 82 00 00 00             56 	int 0x0000 ;int12
-      00003C 82 00 00 00             57 	int 0x0000 ;int13
-      000040 82 00 00 00             58 	int 0x0000 ;int14
-      000044 82 00 00 00             59 	int 0x0000 ;int15
-      000048 82 00 00 00             60 	int 0x0000 ;int16
-      00004C 82 00 00 00             61 	int 0x0000 ;int17
-      000050 82 00 00 00             62 	int 0x0000 ;int18
-      000054 82 00 00 00             63 	int 0x0000 ;int19
-      000058 82 00 00 00             64 	int 0x0000 ;int20
-      00005C 82 00 00 00             65 	int 0x0000 ;int21
-      000060 82 00 00 00             66 	int 0x0000 ;int22
-      000064 82 00 00 00             67 	int 0x0000 ;int23
-      000068 82 00 00 00             68 	int 0x0000 ;int24
-      00006C 82 00 00 00             69 	int 0x0000 ;int25
-      000070 82 00 00 00             70 	int 0x0000 ;int26
-      000074 82 00 00 00             71 	int 0x0000 ;int27
-      000078 82 00 00 00             72 	int 0x0000 ;int28
-      00007C 82 00 00 00             73 	int 0x0000 ;int29
-                                     74 ;--------------------------------------------------------
-                                     75 ; global & static initialisations
-                                     76 ;--------------------------------------------------------
-                                     77 	.area HOME
-                                     78 	.area GSINIT
-                                     79 	.area GSFINAL
-                                     80 	.area GSINIT
-      000000                         81 __sdcc_gs_init_startup:
-      000000                         82 __sdcc_init_data:
-                                     83 ; stm8_genXINIT() start
-      000000 AEr00r00         [ 2]   84 	ldw x, #l_DATA
-      000003 27 07            [ 1]   85 	jreq	00002$
-      000005                         86 00001$:
-      000005 72 4FuFFuFF      [ 1]   87 	clr (s_DATA - 1, x)
-      000009 5A               [ 2]   88 	decw x
-      00000A 26 F9            [ 1]   89 	jrne	00001$
-      00000C                         90 00002$:
-      00000C AEr00r00         [ 2]   91 	ldw	x, #l_INITIALIZER
-      00000F 27 09            [ 1]   92 	jreq	00004$
-      000011                         93 00003$:
-      000011 D6uFFuFF         [ 1]   94 	ld	a, (s_INITIALIZER - 1, x)
-      000014 D7uFFuFF         [ 1]   95 	ld	(s_INITIALIZED - 1, x), a
-      000017 5A               [ 2]   96 	decw	x
-      000018 26 F7            [ 1]   97 	jrne	00003$
-      00001A                         98 00004$:
-                                     99 ; stm8_genXINIT() end
-                                    100 	.area GSFINAL
-      000000 CCr00r80         [ 2]  101 	jp	__sdcc_program_startup
-                                    102 ;--------------------------------------------------------
-                                    103 ; Home
-                                    104 ;--------------------------------------------------------
-                                    105 	.area HOME
-                                    106 	.area HOME
-      000080                        107 __sdcc_program_startup:
-      000080 CCr00r0C         [ 2]  108 	jp	_main
-                                    109 ;	return from main will return to caller
-                                    110 ;--------------------------------------------------------
-                                    111 ; code
-                                    112 ;--------------------------------------------------------
-                                    113 	.area CODE
-                                    114 ;	user/main.c: 25: void delay(uint16_t x)
-                                    115 ;	-----------------------------------------
-                                    116 ;	 function delay
-                                    117 ;	-----------------------------------------
-      000000                        118 _delay:
-      000000 89               [ 2]  119 	pushw	x
-                                    120 ;	user/main.c: 27: while(x--);
-      000001 1E 05            [ 2]  121 	ldw	x, (0x05, sp)
-      000003                        122 00101$:
-      000003 1F 01            [ 2]  123 	ldw	(0x01, sp), x
-      000005 5A               [ 2]  124 	decw	x
-      000006 16 01            [ 2]  125 	ldw	y, (0x01, sp)
-      000008 26 F9            [ 1]  126 	jrne	00101$
-      00000A 85               [ 2]  127 	popw	x
-      00000B 81               [ 4]  128 	ret
-                                    129 ;	user/main.c: 31: void main() 
-                                    130 ;	-----------------------------------------
-                                    131 ;	 function main
-                                    132 ;	-----------------------------------------
-      00000C                        133 _main:
-      00000C 52 6C            [ 2]  134 	sub	sp, #108
-                                    135 ;	user/main.c: 34: const unsigned char text[96] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-      00000E 96               [ 1]  136 	ldw	x, sp
-      00000F 1C 00 09         [ 2]  137 	addw	x, #9
-      000012 1F 6B            [ 2]  138 	ldw	(0x6b, sp), x
-      000014 1E 6B            [ 2]  139 	ldw	x, (0x6b, sp)
-      000016 7F               [ 1]  140 	clr	(x)
-      000017 1E 6B            [ 2]  141 	ldw	x, (0x6b, sp)
-      000019 5C               [ 2]  142 	incw	x
-      00001A 7F               [ 1]  143 	clr	(x)
-      00001B 1E 6B            [ 2]  144 	ldw	x, (0x6b, sp)
-      00001D 5C               [ 2]  145 	incw	x
-      00001E 5C               [ 2]  146 	incw	x
-      00001F 7F               [ 1]  147 	clr	(x)
-      000020 1E 6B            [ 2]  148 	ldw	x, (0x6b, sp)
-      000022 1C 00 03         [ 2]  149 	addw	x, #0x0003
-      000025 7F               [ 1]  150 	clr	(x)
-      000026 1E 6B            [ 2]  151 	ldw	x, (0x6b, sp)
-      000028 1C 00 04         [ 2]  152 	addw	x, #0x0004
-      00002B 7F               [ 1]  153 	clr	(x)
-      00002C 1E 6B            [ 2]  154 	ldw	x, (0x6b, sp)
-      00002E 1C 00 05         [ 2]  155 	addw	x, #0x0005
-      000031 7F               [ 1]  156 	clr	(x)
-      000032 1E 6B            [ 2]  157 	ldw	x, (0x6b, sp)
-      000034 1C 00 06         [ 2]  158 	addw	x, #0x0006
-      000037 7F               [ 1]  159 	clr	(x)
-      000038 1E 6B            [ 2]  160 	ldw	x, (0x6b, sp)
-      00003A 1C 00 07         [ 2]  161 	addw	x, #0x0007
-      00003D 7F               [ 1]  162 	clr	(x)
-      00003E 1E 6B            [ 2]  163 	ldw	x, (0x6b, sp)
-      000040 1C 00 08         [ 2]  164 	addw	x, #0x0008
-      000043 7F               [ 1]  165 	clr	(x)
-      000044 1E 6B            [ 2]  166 	ldw	x, (0x6b, sp)
-      000046 A6 7E            [ 1]  167 	ld	a, #0x7e
-      000048 E7 09            [ 1]  168 	ld	(0x0009, x), a
-      00004A 1E 6B            [ 2]  169 	ldw	x, (0x6b, sp)
-      00004C A6 04            [ 1]  170 	ld	a, #0x04
-      00004E E7 0A            [ 1]  171 	ld	(0x000a, x), a
-      000050 1E 6B            [ 2]  172 	ldw	x, (0x6b, sp)
-      000052 A6 08            [ 1]  173 	ld	a, #0x08
-      000054 E7 0B            [ 1]  174 	ld	(0x000b, x), a
-      000056 1E 6B            [ 2]  175 	ldw	x, (0x6b, sp)
-      000058 A6 08            [ 1]  176 	ld	a, #0x08
-      00005A E7 0C            [ 1]  177 	ld	(0x000c, x), a
-      00005C 1E 6B            [ 2]  178 	ldw	x, (0x6b, sp)
-      00005E A6 04            [ 1]  179 	ld	a, #0x04
-      000060 E7 0D            [ 1]  180 	ld	(0x000d, x), a
-      000062 1E 6B            [ 2]  181 	ldw	x, (0x6b, sp)
-      000064 A6 7E            [ 1]  182 	ld	a, #0x7e
-      000066 E7 0E            [ 1]  183 	ld	(0x000e, x), a
-      000068 1E 6B            [ 2]  184 	ldw	x, (0x6b, sp)
-      00006A 1C 00 0F         [ 2]  185 	addw	x, #0x000f
-      00006D 7F               [ 1]  186 	clr	(x)
-      00006E 1E 6B            [ 2]  187 	ldw	x, (0x6b, sp)
-      000070 1C 00 10         [ 2]  188 	addw	x, #0x0010
-      000073 7F               [ 1]  189 	clr	(x)
-      000074 1E 6B            [ 2]  190 	ldw	x, (0x6b, sp)
-      000076 A6 42            [ 1]  191 	ld	a, #0x42
-      000078 E7 11            [ 1]  192 	ld	(0x0011, x), a
-      00007A 1E 6B            [ 2]  193 	ldw	x, (0x6b, sp)
-      00007C A6 42            [ 1]  194 	ld	a, #0x42
-      00007E E7 12            [ 1]  195 	ld	(0x0012, x), a
-      000080 1E 6B            [ 2]  196 	ldw	x, (0x6b, sp)
-      000082 A6 7E            [ 1]  197 	ld	a, #0x7e
-      000084 E7 13            [ 1]  198 	ld	(0x0013, x), a
-      000086 1E 6B            [ 2]  199 	ldw	x, (0x6b, sp)
-      000088 A6 7E            [ 1]  200 	ld	a, #0x7e
-      00008A E7 14            [ 1]  201 	ld	(0x0014, x), a
-      00008C 1E 6B            [ 2]  202 	ldw	x, (0x6b, sp)
-      00008E A6 42            [ 1]  203 	ld	a, #0x42
-      000090 E7 15            [ 1]  204 	ld	(0x0015, x), a
-      000092 1E 6B            [ 2]  205 	ldw	x, (0x6b, sp)
-      000094 A6 42            [ 1]  206 	ld	a, #0x42
-      000096 E7 16            [ 1]  207 	ld	(0x0016, x), a
-      000098 1E 6B            [ 2]  208 	ldw	x, (0x6b, sp)
-      00009A 1C 00 17         [ 2]  209 	addw	x, #0x0017
-      00009D 7F               [ 1]  210 	clr	(x)
-      00009E 1E 6B            [ 2]  211 	ldw	x, (0x6b, sp)
-      0000A0 1C 00 18         [ 2]  212 	addw	x, #0x0018
-      0000A3 7F               [ 1]  213 	clr	(x)
-      0000A4 1E 6B            [ 2]  214 	ldw	x, (0x6b, sp)
-      0000A6 A6 3C            [ 1]  215 	ld	a, #0x3c
-      0000A8 E7 19            [ 1]  216 	ld	(0x0019, x), a
-      0000AA 1E 6B            [ 2]  217 	ldw	x, (0x6b, sp)
-      0000AC A6 42            [ 1]  218 	ld	a, #0x42
-      0000AE E7 1A            [ 1]  219 	ld	(0x001a, x), a
-      0000B0 1E 6B            [ 2]  220 	ldw	x, (0x6b, sp)
-      0000B2 A6 42            [ 1]  221 	ld	a, #0x42
-      0000B4 E7 1B            [ 1]  222 	ld	(0x001b, x), a
-      0000B6 1E 6B            [ 2]  223 	ldw	x, (0x6b, sp)
-      0000B8 A6 42            [ 1]  224 	ld	a, #0x42
-      0000BA E7 1C            [ 1]  225 	ld	(0x001c, x), a
-      0000BC 1E 6B            [ 2]  226 	ldw	x, (0x6b, sp)
-      0000BE A6 42            [ 1]  227 	ld	a, #0x42
-      0000C0 E7 1D            [ 1]  228 	ld	(0x001d, x), a
-      0000C2 1E 6B            [ 2]  229 	ldw	x, (0x6b, sp)
-      0000C4 A6 24            [ 1]  230 	ld	a, #0x24
-      0000C6 E7 1E            [ 1]  231 	ld	(0x001e, x), a
-      0000C8 1E 6B            [ 2]  232 	ldw	x, (0x6b, sp)
-      0000CA 1C 00 1F         [ 2]  233 	addw	x, #0x001f
-      0000CD 7F               [ 1]  234 	clr	(x)
-      0000CE 1E 6B            [ 2]  235 	ldw	x, (0x6b, sp)
-      0000D0 1C 00 20         [ 2]  236 	addw	x, #0x0020
-      0000D3 7F               [ 1]  237 	clr	(x)
-      0000D4 1E 6B            [ 2]  238 	ldw	x, (0x6b, sp)
-      0000D6 A6 7E            [ 1]  239 	ld	a, #0x7e
-      0000D8 E7 21            [ 1]  240 	ld	(0x0021, x), a
-      0000DA 1E 6B            [ 2]  241 	ldw	x, (0x6b, sp)
-      0000DC A6 1A            [ 1]  242 	ld	a, #0x1a
-      0000DE E7 22            [ 1]  243 	ld	(0x0022, x), a
-      0000E0 1E 6B            [ 2]  244 	ldw	x, (0x6b, sp)
-      0000E2 A6 1A            [ 1]  245 	ld	a, #0x1a
-      0000E4 E7 23            [ 1]  246 	ld	(0x0023, x), a
-      0000E6 1E 6B            [ 2]  247 	ldw	x, (0x6b, sp)
-      0000E8 A6 1A            [ 1]  248 	ld	a, #0x1a
-      0000EA E7 24            [ 1]  249 	ld	(0x0024, x), a
-      0000EC 1E 6B            [ 2]  250 	ldw	x, (0x6b, sp)
-      0000EE A6 2A            [ 1]  251 	ld	a, #0x2a
-      0000F0 E7 25            [ 1]  252 	ld	(0x0025, x), a
-      0000F2 1E 6B            [ 2]  253 	ldw	x, (0x6b, sp)
-      0000F4 A6 44            [ 1]  254 	ld	a, #0x44
-      0000F6 E7 26            [ 1]  255 	ld	(0x0026, x), a
-      0000F8 1E 6B            [ 2]  256 	ldw	x, (0x6b, sp)
-      0000FA 1C 00 27         [ 2]  257 	addw	x, #0x0027
-      0000FD 7F               [ 1]  258 	clr	(x)
-      0000FE 1E 6B            [ 2]  259 	ldw	x, (0x6b, sp)
-      000100 1C 00 28         [ 2]  260 	addw	x, #0x0028
-      000103 7F               [ 1]  261 	clr	(x)
-      000104 1E 6B            [ 2]  262 	ldw	x, (0x6b, sp)
-      000106 A6 3C            [ 1]  263 	ld	a, #0x3c
-      000108 E7 29            [ 1]  264 	ld	(0x0029, x), a
-      00010A 1E 6B            [ 2]  265 	ldw	x, (0x6b, sp)
-      00010C A6 42            [ 1]  266 	ld	a, #0x42
-      00010E E7 2A            [ 1]  267 	ld	(0x002a, x), a
-      000110 1E 6B            [ 2]  268 	ldw	x, (0x6b, sp)
-      000112 A6 42            [ 1]  269 	ld	a, #0x42
-      000114 E7 2B            [ 1]  270 	ld	(0x002b, x), a
-      000116 1E 6B            [ 2]  271 	ldw	x, (0x6b, sp)
-      000118 A6 42            [ 1]  272 	ld	a, #0x42
-      00011A E7 2C            [ 1]  273 	ld	(0x002c, x), a
-      00011C 1E 6B            [ 2]  274 	ldw	x, (0x6b, sp)
-      00011E A6 42            [ 1]  275 	ld	a, #0x42
-      000120 E7 2D            [ 1]  276 	ld	(0x002d, x), a
-      000122 1E 6B            [ 2]  277 	ldw	x, (0x6b, sp)
-      000124 A6 3C            [ 1]  278 	ld	a, #0x3c
-      000126 E7 2E            [ 1]  279 	ld	(0x002e, x), a
-      000128 1E 6B            [ 2]  280 	ldw	x, (0x6b, sp)
-      00012A 1C 00 2F         [ 2]  281 	addw	x, #0x002f
-      00012D 7F               [ 1]  282 	clr	(x)
-      00012E 1E 6B            [ 2]  283 	ldw	x, (0x6b, sp)
-      000130 1C 00 30         [ 2]  284 	addw	x, #0x0030
-      000133 7F               [ 1]  285 	clr	(x)
-      000134 1E 6B            [ 2]  286 	ldw	x, (0x6b, sp)
-      000136 A6 7C            [ 1]  287 	ld	a, #0x7c
-      000138 E7 31            [ 1]  288 	ld	(0x0031, x), a
-      00013A 1E 6B            [ 2]  289 	ldw	x, (0x6b, sp)
-      00013C A6 12            [ 1]  290 	ld	a, #0x12
-      00013E E7 32            [ 1]  291 	ld	(0x0032, x), a
-      000140 1E 6B            [ 2]  292 	ldw	x, (0x6b, sp)
-      000142 A6 12            [ 1]  293 	ld	a, #0x12
-      000144 E7 33            [ 1]  294 	ld	(0x0033, x), a
-      000146 1E 6B            [ 2]  295 	ldw	x, (0x6b, sp)
-      000148 A6 12            [ 1]  296 	ld	a, #0x12
-      00014A E7 34            [ 1]  297 	ld	(0x0034, x), a
-      00014C 1E 6B            [ 2]  298 	ldw	x, (0x6b, sp)
-      00014E A6 12            [ 1]  299 	ld	a, #0x12
-      000150 E7 35            [ 1]  300 	ld	(0x0035, x), a
-      000152 1E 6B            [ 2]  301 	ldw	x, (0x6b, sp)
-      000154 A6 7C            [ 1]  302 	ld	a, #0x7c
-      000156 E7 36            [ 1]  303 	ld	(0x0036, x), a
-      000158 1E 6B            [ 2]  304 	ldw	x, (0x6b, sp)
-      00015A 1C 00 37         [ 2]  305 	addw	x, #0x0037
-      00015D 7F               [ 1]  306 	clr	(x)
-      00015E 1E 6B            [ 2]  307 	ldw	x, (0x6b, sp)
-      000160 1C 00 38         [ 2]  308 	addw	x, #0x0038
-      000163 7F               [ 1]  309 	clr	(x)
-      000164 1E 6B            [ 2]  310 	ldw	x, (0x6b, sp)
-      000166 A6 7E            [ 1]  311 	ld	a, #0x7e
-      000168 E7 39            [ 1]  312 	ld	(0x0039, x), a
-      00016A 1E 6B            [ 2]  313 	ldw	x, (0x6b, sp)
-      00016C A6 1A            [ 1]  314 	ld	a, #0x1a
-      00016E E7 3A            [ 1]  315 	ld	(0x003a, x), a
-      000170 1E 6B            [ 2]  316 	ldw	x, (0x6b, sp)
-      000172 A6 1A            [ 1]  317 	ld	a, #0x1a
-      000174 E7 3B            [ 1]  318 	ld	(0x003b, x), a
-      000176 1E 6B            [ 2]  319 	ldw	x, (0x6b, sp)
-      000178 A6 1A            [ 1]  320 	ld	a, #0x1a
-      00017A E7 3C            [ 1]  321 	ld	(0x003c, x), a
-      00017C 1E 6B            [ 2]  322 	ldw	x, (0x6b, sp)
-      00017E A6 2A            [ 1]  323 	ld	a, #0x2a
-      000180 E7 3D            [ 1]  324 	ld	(0x003d, x), a
-      000182 1E 6B            [ 2]  325 	ldw	x, (0x6b, sp)
-      000184 A6 44            [ 1]  326 	ld	a, #0x44
-      000186 E7 3E            [ 1]  327 	ld	(0x003e, x), a
-      000188 1E 6B            [ 2]  328 	ldw	x, (0x6b, sp)
-      00018A 1C 00 3F         [ 2]  329 	addw	x, #0x003f
-      00018D 7F               [ 1]  330 	clr	(x)
-      00018E 1E 6B            [ 2]  331 	ldw	x, (0x6b, sp)
-      000190 1C 00 40         [ 2]  332 	addw	x, #0x0040
-      000193 7F               [ 1]  333 	clr	(x)
-      000194 1E 6B            [ 2]  334 	ldw	x, (0x6b, sp)
-      000196 A6 7E            [ 1]  335 	ld	a, #0x7e
-      000198 E7 41            [ 1]  336 	ld	(0x0041, x), a
-      00019A 1E 6B            [ 2]  337 	ldw	x, (0x6b, sp)
-      00019C A6 7E            [ 1]  338 	ld	a, #0x7e
-      00019E E7 42            [ 1]  339 	ld	(0x0042, x), a
-      0001A0 1E 6B            [ 2]  340 	ldw	x, (0x6b, sp)
-      0001A2 A6 4A            [ 1]  341 	ld	a, #0x4a
-      0001A4 E7 43            [ 1]  342 	ld	(0x0043, x), a
-      0001A6 1E 6B            [ 2]  343 	ldw	x, (0x6b, sp)
-      0001A8 A6 4A            [ 1]  344 	ld	a, #0x4a
-      0001AA E7 44            [ 1]  345 	ld	(0x0044, x), a
-      0001AC 1E 6B            [ 2]  346 	ldw	x, (0x6b, sp)
-      0001AE A6 4A            [ 1]  347 	ld	a, #0x4a
-      0001B0 E7 45            [ 1]  348 	ld	(0x0045, x), a
-      0001B2 1E 6B            [ 2]  349 	ldw	x, (0x6b, sp)
-      0001B4 A6 42            [ 1]  350 	ld	a, #0x42
-      0001B6 E7 46            [ 1]  351 	ld	(0x0046, x), a
-      0001B8 1E 6B            [ 2]  352 	ldw	x, (0x6b, sp)
-      0001BA 1C 00 47         [ 2]  353 	addw	x, #0x0047
-      0001BD 7F               [ 1]  354 	clr	(x)
-      0001BE 1E 6B            [ 2]  355 	ldw	x, (0x6b, sp)
-      0001C0 1C 00 48         [ 2]  356 	addw	x, #0x0048
-      0001C3 7F               [ 1]  357 	clr	(x)
-      0001C4 1E 6B            [ 2]  358 	ldw	x, (0x6b, sp)
-      0001C6 A6 7E            [ 1]  359 	ld	a, #0x7e
-      0001C8 E7 49            [ 1]  360 	ld	(0x0049, x), a
-      0001CA 1E 6B            [ 2]  361 	ldw	x, (0x6b, sp)
-      0001CC A6 04            [ 1]  362 	ld	a, #0x04
-      0001CE E7 4A            [ 1]  363 	ld	(0x004a, x), a
-      0001D0 1E 6B            [ 2]  364 	ldw	x, (0x6b, sp)
-      0001D2 A6 08            [ 1]  365 	ld	a, #0x08
-      0001D4 E7 4B            [ 1]  366 	ld	(0x004b, x), a
-      0001D6 1E 6B            [ 2]  367 	ldw	x, (0x6b, sp)
-      0001D8 A6 10            [ 1]  368 	ld	a, #0x10
-      0001DA E7 4C            [ 1]  369 	ld	(0x004c, x), a
-      0001DC 1E 6B            [ 2]  370 	ldw	x, (0x6b, sp)
-      0001DE A6 20            [ 1]  371 	ld	a, #0x20
-      0001E0 E7 4D            [ 1]  372 	ld	(0x004d, x), a
-      0001E2 1E 6B            [ 2]  373 	ldw	x, (0x6b, sp)
-      0001E4 A6 7E            [ 1]  374 	ld	a, #0x7e
-      0001E6 E7 4E            [ 1]  375 	ld	(0x004e, x), a
-      0001E8 1E 6B            [ 2]  376 	ldw	x, (0x6b, sp)
-      0001EA 1C 00 4F         [ 2]  377 	addw	x, #0x004f
-      0001ED 7F               [ 1]  378 	clr	(x)
-      0001EE 1E 6B            [ 2]  379 	ldw	x, (0x6b, sp)
-      0001F0 1C 00 50         [ 2]  380 	addw	x, #0x0050
-      0001F3 7F               [ 1]  381 	clr	(x)
-      0001F4 1E 6B            [ 2]  382 	ldw	x, (0x6b, sp)
-      0001F6 A6 7C            [ 1]  383 	ld	a, #0x7c
-      0001F8 E7 51            [ 1]  384 	ld	(0x0051, x), a
-      0001FA 1E 6B            [ 2]  385 	ldw	x, (0x6b, sp)
-      0001FC A6 12            [ 1]  386 	ld	a, #0x12
-      0001FE E7 52            [ 1]  387 	ld	(0x0052, x), a
-      000200 1E 6B            [ 2]  388 	ldw	x, (0x6b, sp)
-      000202 A6 12            [ 1]  389 	ld	a, #0x12
-      000204 E7 53            [ 1]  390 	ld	(0x0053, x), a
-      000206 1E 6B            [ 2]  391 	ldw	x, (0x6b, sp)
-      000208 A6 12            [ 1]  392 	ld	a, #0x12
-      00020A E7 54            [ 1]  393 	ld	(0x0054, x), a
-      00020C 1E 6B            [ 2]  394 	ldw	x, (0x6b, sp)
-      00020E A6 12            [ 1]  395 	ld	a, #0x12
-      000210 E7 55            [ 1]  396 	ld	(0x0055, x), a
-      000212 1E 6B            [ 2]  397 	ldw	x, (0x6b, sp)
-      000214 A6 7C            [ 1]  398 	ld	a, #0x7c
-      000216 E7 56            [ 1]  399 	ld	(0x0056, x), a
-      000218 1E 6B            [ 2]  400 	ldw	x, (0x6b, sp)
-      00021A 1C 00 57         [ 2]  401 	addw	x, #0x0057
-      00021D 7F               [ 1]  402 	clr	(x)
-      00021E 1E 6B            [ 2]  403 	ldw	x, (0x6b, sp)
-      000220 1C 00 58         [ 2]  404 	addw	x, #0x0058
-      000223 7F               [ 1]  405 	clr	(x)
-      000224 1E 6B            [ 2]  406 	ldw	x, (0x6b, sp)
-      000226 1C 00 59         [ 2]  407 	addw	x, #0x0059
-      000229 7F               [ 1]  408 	clr	(x)
-      00022A 1E 6B            [ 2]  409 	ldw	x, (0x6b, sp)
-      00022C 1C 00 5A         [ 2]  410 	addw	x, #0x005a
-      00022F 7F               [ 1]  411 	clr	(x)
-      000230 1E 6B            [ 2]  412 	ldw	x, (0x6b, sp)
-      000232 1C 00 5B         [ 2]  413 	addw	x, #0x005b
-      000235 7F               [ 1]  414 	clr	(x)
-      000236 1E 6B            [ 2]  415 	ldw	x, (0x6b, sp)
-      000238 1C 00 5C         [ 2]  416 	addw	x, #0x005c
-      00023B 7F               [ 1]  417 	clr	(x)
-      00023C 1E 6B            [ 2]  418 	ldw	x, (0x6b, sp)
-      00023E 1C 00 5D         [ 2]  419 	addw	x, #0x005d
-      000241 7F               [ 1]  420 	clr	(x)
-      000242 1E 6B            [ 2]  421 	ldw	x, (0x6b, sp)
-      000244 1C 00 5E         [ 2]  422 	addw	x, #0x005e
-      000247 7F               [ 1]  423 	clr	(x)
-      000248 1E 6B            [ 2]  424 	ldw	x, (0x6b, sp)
-      00024A 1C 00 5F         [ 2]  425 	addw	x, #0x005f
-      00024D 7F               [ 1]  426 	clr	(x)
-                                    427 ;	user/main.c: 47: char smile[]={0x00, 0x7E, 0x04, 0x08, 0x08, 0x04, 0x7E, 0x00};
-      00024E 96               [ 1]  428 	ldw	x, sp
-      00024F 5C               [ 2]  429 	incw	x
-      000250 1F 69            [ 2]  430 	ldw	(0x69, sp), x
-      000252 1E 69            [ 2]  431 	ldw	x, (0x69, sp)
-      000254 7F               [ 1]  432 	clr	(x)
-      000255 1E 69            [ 2]  433 	ldw	x, (0x69, sp)
-      000257 5C               [ 2]  434 	incw	x
-      000258 A6 7E            [ 1]  435 	ld	a, #0x7e
-      00025A F7               [ 1]  436 	ld	(x), a
-      00025B 1E 69            [ 2]  437 	ldw	x, (0x69, sp)
-      00025D 5C               [ 2]  438 	incw	x
-      00025E 5C               [ 2]  439 	incw	x
-      00025F A6 04            [ 1]  440 	ld	a, #0x04
-      000261 F7               [ 1]  441 	ld	(x), a
-      000262 1E 69            [ 2]  442 	ldw	x, (0x69, sp)
-      000264 A6 08            [ 1]  443 	ld	a, #0x08
-      000266 E7 03            [ 1]  444 	ld	(0x0003, x), a
-      000268 1E 69            [ 2]  445 	ldw	x, (0x69, sp)
-      00026A A6 08            [ 1]  446 	ld	a, #0x08
-      00026C E7 04            [ 1]  447 	ld	(0x0004, x), a
-      00026E 1E 69            [ 2]  448 	ldw	x, (0x69, sp)
-      000270 A6 04            [ 1]  449 	ld	a, #0x04
-      000272 E7 05            [ 1]  450 	ld	(0x0005, x), a
-      000274 1E 69            [ 2]  451 	ldw	x, (0x69, sp)
-      000276 A6 7E            [ 1]  452 	ld	a, #0x7e
-      000278 E7 06            [ 1]  453 	ld	(0x0006, x), a
-      00027A 1E 69            [ 2]  454 	ldw	x, (0x69, sp)
-      00027C 1C 00 07         [ 2]  455 	addw	x, #0x0007
-      00027F 7F               [ 1]  456 	clr	(x)
-                                    457 ;	user/main.c: 48: CLK_Config();
-      000280 CDr00r00         [ 4]  458 	call	_CLK_Config
-                                    459 ;	user/main.c: 51: MaxMatrix(GPIOC, GPIO_PIN_6, GPIO_PIN_4, GPIO_PIN_5, 4);
-      000283 4B 04            [ 1]  460 	push	#0x04
-      000285 4B 20            [ 1]  461 	push	#0x20
-      000287 4B 10            [ 1]  462 	push	#0x10
-      000289 4B 40            [ 1]  463 	push	#0x40
-      00028B 4B 0A            [ 1]  464 	push	#0x0a
-      00028D 4B 50            [ 1]  465 	push	#0x50
-      00028F CDr00r00         [ 4]  466 	call	_MaxMatrix
-      000292 5B 06            [ 2]  467 	addw	sp, #6
-                                    468 ;	user/main.c: 52: Init();
-      000294 CDr00r00         [ 4]  469 	call	_Init
-                                    470 ;	user/main.c: 53: Screen();
-      000297 CDr00r00         [ 4]  471 	call	_Screen
-                                    472 ;	user/main.c: 57: DrawEx(8, text);
-      00029A 1E 6B            [ 2]  473 	ldw	x, (0x6b, sp)
-      00029C 89               [ 2]  474 	pushw	x
-      00029D 4B 08            [ 1]  475 	push	#0x08
-      00029F CDr00r00         [ 4]  476 	call	_DrawEx
-      0002A2 5B 03            [ 2]  477 	addw	sp, #3
-                                    478 ;	user/main.c: 58: Screen();
-      0002A4 CDr00r00         [ 4]  479 	call	_Screen
-                                    480 ;	user/main.c: 82: while(TRUE) 
-      0002A7                        481 00102$:
-      0002A7 20 FE            [ 2]  482 	jra	00102$
-      0002A9 5B 6C            [ 2]  483 	addw	sp, #108
-      0002AB 81               [ 4]  484 	ret
-                                    485 	.area CODE
-                                    486 	.area INITIALIZER
-                                    487 	.area CABS (ABS)
+                                     40 	.area	SSEG
+      000000                         41 __start__stack:
+      000000                         42 	.ds	1
+                                     43 
+                                     44 ;--------------------------------------------------------
+                                     45 ; absolute external ram data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area DABS (ABS)
+                                     48 ;--------------------------------------------------------
+                                     49 ; interrupt vector 
+                                     50 ;--------------------------------------------------------
+                                     51 	.area HOME
+      000000                         52 __interrupt_vect:
+      000000 82v00u00u00             53 	int s_GSINIT ;reset
+      000004 82 00 00 00             54 	int 0x0000 ;trap
+      000008 82 00 00 00             55 	int 0x0000 ;int0
+      00000C 82 00 00 00             56 	int 0x0000 ;int1
+      000010 82 00 00 00             57 	int 0x0000 ;int2
+      000014 82 00 00 00             58 	int 0x0000 ;int3
+      000018 82 00 00 00             59 	int 0x0000 ;int4
+      00001C 82 00 00 00             60 	int 0x0000 ;int5
+      000020 82 00 00 00             61 	int 0x0000 ;int6
+      000024 82 00 00 00             62 	int 0x0000 ;int7
+      000028 82 00 00 00             63 	int 0x0000 ;int8
+      00002C 82 00 00 00             64 	int 0x0000 ;int9
+      000030 82 00 00 00             65 	int 0x0000 ;int10
+      000034 82 00 00 00             66 	int 0x0000 ;int11
+      000038 82 00 00 00             67 	int 0x0000 ;int12
+      00003C 82 00 00 00             68 	int 0x0000 ;int13
+      000040 82 00 00 00             69 	int 0x0000 ;int14
+      000044 82 00 00 00             70 	int 0x0000 ;int15
+      000048 82 00 00 00             71 	int 0x0000 ;int16
+      00004C 82 00 00 00             72 	int 0x0000 ;int17
+      000050 82 00 00 00             73 	int 0x0000 ;int18
+      000054 82 00 00 00             74 	int 0x0000 ;int19
+      000058 82 00 00 00             75 	int 0x0000 ;int20
+      00005C 82 00 00 00             76 	int 0x0000 ;int21
+      000060 82 00 00 00             77 	int 0x0000 ;int22
+      000064 82v00u00u0C             78 	int _TIM4_UPD_OVF_IRQHandler ;int23
+      000068 82 00 00 00             79 	int 0x0000 ;int24
+      00006C 82 00 00 00             80 	int 0x0000 ;int25
+      000070 82 00 00 00             81 	int 0x0000 ;int26
+      000074 82 00 00 00             82 	int 0x0000 ;int27
+      000078 82 00 00 00             83 	int 0x0000 ;int28
+      00007C 82 00 00 00             84 	int 0x0000 ;int29
+                                     85 ;--------------------------------------------------------
+                                     86 ; global & static initialisations
+                                     87 ;--------------------------------------------------------
+                                     88 	.area HOME
+                                     89 	.area GSINIT
+                                     90 	.area GSFINAL
+                                     91 	.area GSINIT
+      000000                         92 __sdcc_gs_init_startup:
+      000000                         93 __sdcc_init_data:
+                                     94 ; stm8_genXINIT() start
+      000000 AEr00r00         [ 2]   95 	ldw x, #l_DATA
+      000003 27 07            [ 1]   96 	jreq	00002$
+      000005                         97 00001$:
+      000005 72 4FuFFuFF      [ 1]   98 	clr (s_DATA - 1, x)
+      000009 5A               [ 2]   99 	decw x
+      00000A 26 F9            [ 1]  100 	jrne	00001$
+      00000C                        101 00002$:
+      00000C AEr00r00         [ 2]  102 	ldw	x, #l_INITIALIZER
+      00000F 27 09            [ 1]  103 	jreq	00004$
+      000011                        104 00003$:
+      000011 D6uFFuFF         [ 1]  105 	ld	a, (s_INITIALIZER - 1, x)
+      000014 D7uFFuFF         [ 1]  106 	ld	(s_INITIALIZED - 1, x), a
+      000017 5A               [ 2]  107 	decw	x
+      000018 26 F7            [ 1]  108 	jrne	00003$
+      00001A                        109 00004$:
+                                    110 ; stm8_genXINIT() end
+                                    111 	.area GSFINAL
+      000000 CCr00r80         [ 2]  112 	jp	__sdcc_program_startup
+                                    113 ;--------------------------------------------------------
+                                    114 ; Home
+                                    115 ;--------------------------------------------------------
+                                    116 	.area HOME
+                                    117 	.area HOME
+      000080                        118 __sdcc_program_startup:
+      000080 CCr00r32         [ 2]  119 	jp	_main
+                                    120 ;	return from main will return to caller
+                                    121 ;--------------------------------------------------------
+                                    122 ; code
+                                    123 ;--------------------------------------------------------
+                                    124 	.area CODE
+                                    125 ;	user/main.c: 26: void delay(uint16_t x)
+                                    126 ;	-----------------------------------------
+                                    127 ;	 function delay
+                                    128 ;	-----------------------------------------
+      000000                        129 _delay:
+      000000 89               [ 2]  130 	pushw	x
+                                    131 ;	user/main.c: 28: while(x--);
+      000001 1E 05            [ 2]  132 	ldw	x, (0x05, sp)
+      000003                        133 00101$:
+      000003 1F 01            [ 2]  134 	ldw	(0x01, sp), x
+      000005 5A               [ 2]  135 	decw	x
+      000006 16 01            [ 2]  136 	ldw	y, (0x01, sp)
+      000008 26 F9            [ 1]  137 	jrne	00101$
+      00000A 85               [ 2]  138 	popw	x
+      00000B 81               [ 4]  139 	ret
+                                    140 ;	user/main.c: 31: INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
+                                    141 ;	-----------------------------------------
+                                    142 ;	 function TIM4_UPD_OVF_IRQHandler
+                                    143 ;	-----------------------------------------
+      00000C                        144 _TIM4_UPD_OVF_IRQHandler:
+      00000C 62               [ 2]  145 	div	x, a
+                                    146 ;	user/main.c: 33: TIM4_ClearITPendingBit(TIM4_IT_UPDATE);
+      00000D 4B 01            [ 1]  147 	push	#0x01
+      00000F CDr00r00         [ 4]  148 	call	_TIM4_ClearITPendingBit
+      000012 84               [ 1]  149 	pop	a
+                                    150 ;	user/main.c: 34: TIMER_Inc();
+      000013 CDr00r00         [ 4]  151 	call	_TIMER_Inc
+                                    152 ;	user/main.c: 35: IWDG_ReloadCounter();
+      000016 CDr00r00         [ 4]  153 	call	_IWDG_ReloadCounter
+      000019 80               [11]  154 	iret
+                                    155 ;	user/main.c: 38: void IWDG_Config(void)
+                                    156 ;	-----------------------------------------
+                                    157 ;	 function IWDG_Config
+                                    158 ;	-----------------------------------------
+      00001A                        159 _IWDG_Config:
+                                    160 ;	user/main.c: 42: IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+      00001A 4B 55            [ 1]  161 	push	#0x55
+      00001C CDr00r00         [ 4]  162 	call	_IWDG_WriteAccessCmd
+      00001F 84               [ 1]  163 	pop	a
+                                    164 ;	user/main.c: 44: IWDG_SetPrescaler(IWDG_Prescaler_256);
+      000020 4B 06            [ 1]  165 	push	#0x06
+      000022 CDr00r00         [ 4]  166 	call	_IWDG_SetPrescaler
+      000025 84               [ 1]  167 	pop	a
+                                    168 ;	user/main.c: 48: IWDG_SetReload(250);
+      000026 4B FA            [ 1]  169 	push	#0xfa
+      000028 CDr00r00         [ 4]  170 	call	_IWDG_SetReload
+      00002B 84               [ 1]  171 	pop	a
+                                    172 ;	user/main.c: 50: IWDG_ReloadCounter();
+      00002C CDr00r00         [ 4]  173 	call	_IWDG_ReloadCounter
+                                    174 ;	user/main.c: 52: IWDG_Enable();
+      00002F CCr00r00         [ 2]  175 	jp	_IWDG_Enable
+                                    176 ;	user/main.c: 56: void main() 
+                                    177 ;	-----------------------------------------
+                                    178 ;	 function main
+                                    179 ;	-----------------------------------------
+      000032                        180 _main:
+      000032 52 62            [ 2]  181 	sub	sp, #98
+                                    182 ;	user/main.c: 59: const unsigned char text[96] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      000034 96               [ 1]  183 	ldw	x, sp
+      000035 5C               [ 2]  184 	incw	x
+      000036 1F 61            [ 2]  185 	ldw	(0x61, sp), x
+      000038 1E 61            [ 2]  186 	ldw	x, (0x61, sp)
+      00003A 7F               [ 1]  187 	clr	(x)
+      00003B 1E 61            [ 2]  188 	ldw	x, (0x61, sp)
+      00003D 5C               [ 2]  189 	incw	x
+      00003E 7F               [ 1]  190 	clr	(x)
+      00003F 1E 61            [ 2]  191 	ldw	x, (0x61, sp)
+      000041 5C               [ 2]  192 	incw	x
+      000042 5C               [ 2]  193 	incw	x
+      000043 7F               [ 1]  194 	clr	(x)
+      000044 1E 61            [ 2]  195 	ldw	x, (0x61, sp)
+      000046 1C 00 03         [ 2]  196 	addw	x, #0x0003
+      000049 7F               [ 1]  197 	clr	(x)
+      00004A 1E 61            [ 2]  198 	ldw	x, (0x61, sp)
+      00004C 1C 00 04         [ 2]  199 	addw	x, #0x0004
+      00004F 7F               [ 1]  200 	clr	(x)
+      000050 1E 61            [ 2]  201 	ldw	x, (0x61, sp)
+      000052 1C 00 05         [ 2]  202 	addw	x, #0x0005
+      000055 7F               [ 1]  203 	clr	(x)
+      000056 1E 61            [ 2]  204 	ldw	x, (0x61, sp)
+      000058 1C 00 06         [ 2]  205 	addw	x, #0x0006
+      00005B 7F               [ 1]  206 	clr	(x)
+      00005C 1E 61            [ 2]  207 	ldw	x, (0x61, sp)
+      00005E 1C 00 07         [ 2]  208 	addw	x, #0x0007
+      000061 7F               [ 1]  209 	clr	(x)
+      000062 1E 61            [ 2]  210 	ldw	x, (0x61, sp)
+      000064 1C 00 08         [ 2]  211 	addw	x, #0x0008
+      000067 7F               [ 1]  212 	clr	(x)
+      000068 1E 61            [ 2]  213 	ldw	x, (0x61, sp)
+      00006A A6 7E            [ 1]  214 	ld	a, #0x7e
+      00006C E7 09            [ 1]  215 	ld	(0x0009, x), a
+      00006E 1E 61            [ 2]  216 	ldw	x, (0x61, sp)
+      000070 A6 04            [ 1]  217 	ld	a, #0x04
+      000072 E7 0A            [ 1]  218 	ld	(0x000a, x), a
+      000074 1E 61            [ 2]  219 	ldw	x, (0x61, sp)
+      000076 A6 08            [ 1]  220 	ld	a, #0x08
+      000078 E7 0B            [ 1]  221 	ld	(0x000b, x), a
+      00007A 1E 61            [ 2]  222 	ldw	x, (0x61, sp)
+      00007C A6 08            [ 1]  223 	ld	a, #0x08
+      00007E E7 0C            [ 1]  224 	ld	(0x000c, x), a
+      000080 1E 61            [ 2]  225 	ldw	x, (0x61, sp)
+      000082 A6 04            [ 1]  226 	ld	a, #0x04
+      000084 E7 0D            [ 1]  227 	ld	(0x000d, x), a
+      000086 1E 61            [ 2]  228 	ldw	x, (0x61, sp)
+      000088 A6 7E            [ 1]  229 	ld	a, #0x7e
+      00008A E7 0E            [ 1]  230 	ld	(0x000e, x), a
+      00008C 1E 61            [ 2]  231 	ldw	x, (0x61, sp)
+      00008E 1C 00 0F         [ 2]  232 	addw	x, #0x000f
+      000091 7F               [ 1]  233 	clr	(x)
+      000092 1E 61            [ 2]  234 	ldw	x, (0x61, sp)
+      000094 1C 00 10         [ 2]  235 	addw	x, #0x0010
+      000097 7F               [ 1]  236 	clr	(x)
+      000098 1E 61            [ 2]  237 	ldw	x, (0x61, sp)
+      00009A A6 42            [ 1]  238 	ld	a, #0x42
+      00009C E7 11            [ 1]  239 	ld	(0x0011, x), a
+      00009E 1E 61            [ 2]  240 	ldw	x, (0x61, sp)
+      0000A0 A6 42            [ 1]  241 	ld	a, #0x42
+      0000A2 E7 12            [ 1]  242 	ld	(0x0012, x), a
+      0000A4 1E 61            [ 2]  243 	ldw	x, (0x61, sp)
+      0000A6 A6 7E            [ 1]  244 	ld	a, #0x7e
+      0000A8 E7 13            [ 1]  245 	ld	(0x0013, x), a
+      0000AA 1E 61            [ 2]  246 	ldw	x, (0x61, sp)
+      0000AC A6 7E            [ 1]  247 	ld	a, #0x7e
+      0000AE E7 14            [ 1]  248 	ld	(0x0014, x), a
+      0000B0 1E 61            [ 2]  249 	ldw	x, (0x61, sp)
+      0000B2 A6 42            [ 1]  250 	ld	a, #0x42
+      0000B4 E7 15            [ 1]  251 	ld	(0x0015, x), a
+      0000B6 1E 61            [ 2]  252 	ldw	x, (0x61, sp)
+      0000B8 A6 42            [ 1]  253 	ld	a, #0x42
+      0000BA E7 16            [ 1]  254 	ld	(0x0016, x), a
+      0000BC 1E 61            [ 2]  255 	ldw	x, (0x61, sp)
+      0000BE 1C 00 17         [ 2]  256 	addw	x, #0x0017
+      0000C1 7F               [ 1]  257 	clr	(x)
+      0000C2 1E 61            [ 2]  258 	ldw	x, (0x61, sp)
+      0000C4 1C 00 18         [ 2]  259 	addw	x, #0x0018
+      0000C7 7F               [ 1]  260 	clr	(x)
+      0000C8 1E 61            [ 2]  261 	ldw	x, (0x61, sp)
+      0000CA A6 3C            [ 1]  262 	ld	a, #0x3c
+      0000CC E7 19            [ 1]  263 	ld	(0x0019, x), a
+      0000CE 1E 61            [ 2]  264 	ldw	x, (0x61, sp)
+      0000D0 A6 42            [ 1]  265 	ld	a, #0x42
+      0000D2 E7 1A            [ 1]  266 	ld	(0x001a, x), a
+      0000D4 1E 61            [ 2]  267 	ldw	x, (0x61, sp)
+      0000D6 A6 42            [ 1]  268 	ld	a, #0x42
+      0000D8 E7 1B            [ 1]  269 	ld	(0x001b, x), a
+      0000DA 1E 61            [ 2]  270 	ldw	x, (0x61, sp)
+      0000DC A6 42            [ 1]  271 	ld	a, #0x42
+      0000DE E7 1C            [ 1]  272 	ld	(0x001c, x), a
+      0000E0 1E 61            [ 2]  273 	ldw	x, (0x61, sp)
+      0000E2 A6 42            [ 1]  274 	ld	a, #0x42
+      0000E4 E7 1D            [ 1]  275 	ld	(0x001d, x), a
+      0000E6 1E 61            [ 2]  276 	ldw	x, (0x61, sp)
+      0000E8 A6 24            [ 1]  277 	ld	a, #0x24
+      0000EA E7 1E            [ 1]  278 	ld	(0x001e, x), a
+      0000EC 1E 61            [ 2]  279 	ldw	x, (0x61, sp)
+      0000EE 1C 00 1F         [ 2]  280 	addw	x, #0x001f
+      0000F1 7F               [ 1]  281 	clr	(x)
+      0000F2 1E 61            [ 2]  282 	ldw	x, (0x61, sp)
+      0000F4 1C 00 20         [ 2]  283 	addw	x, #0x0020
+      0000F7 7F               [ 1]  284 	clr	(x)
+      0000F8 1E 61            [ 2]  285 	ldw	x, (0x61, sp)
+      0000FA A6 7E            [ 1]  286 	ld	a, #0x7e
+      0000FC E7 21            [ 1]  287 	ld	(0x0021, x), a
+      0000FE 1E 61            [ 2]  288 	ldw	x, (0x61, sp)
+      000100 A6 1A            [ 1]  289 	ld	a, #0x1a
+      000102 E7 22            [ 1]  290 	ld	(0x0022, x), a
+      000104 1E 61            [ 2]  291 	ldw	x, (0x61, sp)
+      000106 A6 1A            [ 1]  292 	ld	a, #0x1a
+      000108 E7 23            [ 1]  293 	ld	(0x0023, x), a
+      00010A 1E 61            [ 2]  294 	ldw	x, (0x61, sp)
+      00010C A6 1A            [ 1]  295 	ld	a, #0x1a
+      00010E E7 24            [ 1]  296 	ld	(0x0024, x), a
+      000110 1E 61            [ 2]  297 	ldw	x, (0x61, sp)
+      000112 A6 2A            [ 1]  298 	ld	a, #0x2a
+      000114 E7 25            [ 1]  299 	ld	(0x0025, x), a
+      000116 1E 61            [ 2]  300 	ldw	x, (0x61, sp)
+      000118 A6 44            [ 1]  301 	ld	a, #0x44
+      00011A E7 26            [ 1]  302 	ld	(0x0026, x), a
+      00011C 1E 61            [ 2]  303 	ldw	x, (0x61, sp)
+      00011E 1C 00 27         [ 2]  304 	addw	x, #0x0027
+      000121 7F               [ 1]  305 	clr	(x)
+      000122 1E 61            [ 2]  306 	ldw	x, (0x61, sp)
+      000124 1C 00 28         [ 2]  307 	addw	x, #0x0028
+      000127 7F               [ 1]  308 	clr	(x)
+      000128 1E 61            [ 2]  309 	ldw	x, (0x61, sp)
+      00012A A6 3C            [ 1]  310 	ld	a, #0x3c
+      00012C E7 29            [ 1]  311 	ld	(0x0029, x), a
+      00012E 1E 61            [ 2]  312 	ldw	x, (0x61, sp)
+      000130 A6 42            [ 1]  313 	ld	a, #0x42
+      000132 E7 2A            [ 1]  314 	ld	(0x002a, x), a
+      000134 1E 61            [ 2]  315 	ldw	x, (0x61, sp)
+      000136 A6 42            [ 1]  316 	ld	a, #0x42
+      000138 E7 2B            [ 1]  317 	ld	(0x002b, x), a
+      00013A 1E 61            [ 2]  318 	ldw	x, (0x61, sp)
+      00013C A6 42            [ 1]  319 	ld	a, #0x42
+      00013E E7 2C            [ 1]  320 	ld	(0x002c, x), a
+      000140 1E 61            [ 2]  321 	ldw	x, (0x61, sp)
+      000142 A6 42            [ 1]  322 	ld	a, #0x42
+      000144 E7 2D            [ 1]  323 	ld	(0x002d, x), a
+      000146 1E 61            [ 2]  324 	ldw	x, (0x61, sp)
+      000148 A6 3C            [ 1]  325 	ld	a, #0x3c
+      00014A E7 2E            [ 1]  326 	ld	(0x002e, x), a
+      00014C 1E 61            [ 2]  327 	ldw	x, (0x61, sp)
+      00014E 1C 00 2F         [ 2]  328 	addw	x, #0x002f
+      000151 7F               [ 1]  329 	clr	(x)
+      000152 1E 61            [ 2]  330 	ldw	x, (0x61, sp)
+      000154 1C 00 30         [ 2]  331 	addw	x, #0x0030
+      000157 7F               [ 1]  332 	clr	(x)
+      000158 1E 61            [ 2]  333 	ldw	x, (0x61, sp)
+      00015A A6 7C            [ 1]  334 	ld	a, #0x7c
+      00015C E7 31            [ 1]  335 	ld	(0x0031, x), a
+      00015E 1E 61            [ 2]  336 	ldw	x, (0x61, sp)
+      000160 A6 12            [ 1]  337 	ld	a, #0x12
+      000162 E7 32            [ 1]  338 	ld	(0x0032, x), a
+      000164 1E 61            [ 2]  339 	ldw	x, (0x61, sp)
+      000166 A6 12            [ 1]  340 	ld	a, #0x12
+      000168 E7 33            [ 1]  341 	ld	(0x0033, x), a
+      00016A 1E 61            [ 2]  342 	ldw	x, (0x61, sp)
+      00016C A6 12            [ 1]  343 	ld	a, #0x12
+      00016E E7 34            [ 1]  344 	ld	(0x0034, x), a
+      000170 1E 61            [ 2]  345 	ldw	x, (0x61, sp)
+      000172 A6 12            [ 1]  346 	ld	a, #0x12
+      000174 E7 35            [ 1]  347 	ld	(0x0035, x), a
+      000176 1E 61            [ 2]  348 	ldw	x, (0x61, sp)
+      000178 A6 7C            [ 1]  349 	ld	a, #0x7c
+      00017A E7 36            [ 1]  350 	ld	(0x0036, x), a
+      00017C 1E 61            [ 2]  351 	ldw	x, (0x61, sp)
+      00017E 1C 00 37         [ 2]  352 	addw	x, #0x0037
+      000181 7F               [ 1]  353 	clr	(x)
+      000182 1E 61            [ 2]  354 	ldw	x, (0x61, sp)
+      000184 1C 00 38         [ 2]  355 	addw	x, #0x0038
+      000187 7F               [ 1]  356 	clr	(x)
+      000188 1E 61            [ 2]  357 	ldw	x, (0x61, sp)
+      00018A A6 7E            [ 1]  358 	ld	a, #0x7e
+      00018C E7 39            [ 1]  359 	ld	(0x0039, x), a
+      00018E 1E 61            [ 2]  360 	ldw	x, (0x61, sp)
+      000190 A6 1A            [ 1]  361 	ld	a, #0x1a
+      000192 E7 3A            [ 1]  362 	ld	(0x003a, x), a
+      000194 1E 61            [ 2]  363 	ldw	x, (0x61, sp)
+      000196 A6 1A            [ 1]  364 	ld	a, #0x1a
+      000198 E7 3B            [ 1]  365 	ld	(0x003b, x), a
+      00019A 1E 61            [ 2]  366 	ldw	x, (0x61, sp)
+      00019C A6 1A            [ 1]  367 	ld	a, #0x1a
+      00019E E7 3C            [ 1]  368 	ld	(0x003c, x), a
+      0001A0 1E 61            [ 2]  369 	ldw	x, (0x61, sp)
+      0001A2 A6 2A            [ 1]  370 	ld	a, #0x2a
+      0001A4 E7 3D            [ 1]  371 	ld	(0x003d, x), a
+      0001A6 1E 61            [ 2]  372 	ldw	x, (0x61, sp)
+      0001A8 A6 44            [ 1]  373 	ld	a, #0x44
+      0001AA E7 3E            [ 1]  374 	ld	(0x003e, x), a
+      0001AC 1E 61            [ 2]  375 	ldw	x, (0x61, sp)
+      0001AE 1C 00 3F         [ 2]  376 	addw	x, #0x003f
+      0001B1 7F               [ 1]  377 	clr	(x)
+      0001B2 1E 61            [ 2]  378 	ldw	x, (0x61, sp)
+      0001B4 1C 00 40         [ 2]  379 	addw	x, #0x0040
+      0001B7 7F               [ 1]  380 	clr	(x)
+      0001B8 1E 61            [ 2]  381 	ldw	x, (0x61, sp)
+      0001BA A6 7E            [ 1]  382 	ld	a, #0x7e
+      0001BC E7 41            [ 1]  383 	ld	(0x0041, x), a
+      0001BE 1E 61            [ 2]  384 	ldw	x, (0x61, sp)
+      0001C0 A6 7E            [ 1]  385 	ld	a, #0x7e
+      0001C2 E7 42            [ 1]  386 	ld	(0x0042, x), a
+      0001C4 1E 61            [ 2]  387 	ldw	x, (0x61, sp)
+      0001C6 A6 4A            [ 1]  388 	ld	a, #0x4a
+      0001C8 E7 43            [ 1]  389 	ld	(0x0043, x), a
+      0001CA 1E 61            [ 2]  390 	ldw	x, (0x61, sp)
+      0001CC A6 4A            [ 1]  391 	ld	a, #0x4a
+      0001CE E7 44            [ 1]  392 	ld	(0x0044, x), a
+      0001D0 1E 61            [ 2]  393 	ldw	x, (0x61, sp)
+      0001D2 A6 4A            [ 1]  394 	ld	a, #0x4a
+      0001D4 E7 45            [ 1]  395 	ld	(0x0045, x), a
+      0001D6 1E 61            [ 2]  396 	ldw	x, (0x61, sp)
+      0001D8 A6 42            [ 1]  397 	ld	a, #0x42
+      0001DA E7 46            [ 1]  398 	ld	(0x0046, x), a
+      0001DC 1E 61            [ 2]  399 	ldw	x, (0x61, sp)
+      0001DE 1C 00 47         [ 2]  400 	addw	x, #0x0047
+      0001E1 7F               [ 1]  401 	clr	(x)
+      0001E2 1E 61            [ 2]  402 	ldw	x, (0x61, sp)
+      0001E4 1C 00 48         [ 2]  403 	addw	x, #0x0048
+      0001E7 7F               [ 1]  404 	clr	(x)
+      0001E8 1E 61            [ 2]  405 	ldw	x, (0x61, sp)
+      0001EA A6 7E            [ 1]  406 	ld	a, #0x7e
+      0001EC E7 49            [ 1]  407 	ld	(0x0049, x), a
+      0001EE 1E 61            [ 2]  408 	ldw	x, (0x61, sp)
+      0001F0 A6 04            [ 1]  409 	ld	a, #0x04
+      0001F2 E7 4A            [ 1]  410 	ld	(0x004a, x), a
+      0001F4 1E 61            [ 2]  411 	ldw	x, (0x61, sp)
+      0001F6 A6 08            [ 1]  412 	ld	a, #0x08
+      0001F8 E7 4B            [ 1]  413 	ld	(0x004b, x), a
+      0001FA 1E 61            [ 2]  414 	ldw	x, (0x61, sp)
+      0001FC A6 10            [ 1]  415 	ld	a, #0x10
+      0001FE E7 4C            [ 1]  416 	ld	(0x004c, x), a
+      000200 1E 61            [ 2]  417 	ldw	x, (0x61, sp)
+      000202 A6 20            [ 1]  418 	ld	a, #0x20
+      000204 E7 4D            [ 1]  419 	ld	(0x004d, x), a
+      000206 1E 61            [ 2]  420 	ldw	x, (0x61, sp)
+      000208 A6 7E            [ 1]  421 	ld	a, #0x7e
+      00020A E7 4E            [ 1]  422 	ld	(0x004e, x), a
+      00020C 1E 61            [ 2]  423 	ldw	x, (0x61, sp)
+      00020E 1C 00 4F         [ 2]  424 	addw	x, #0x004f
+      000211 7F               [ 1]  425 	clr	(x)
+      000212 1E 61            [ 2]  426 	ldw	x, (0x61, sp)
+      000214 1C 00 50         [ 2]  427 	addw	x, #0x0050
+      000217 7F               [ 1]  428 	clr	(x)
+      000218 1E 61            [ 2]  429 	ldw	x, (0x61, sp)
+      00021A A6 7C            [ 1]  430 	ld	a, #0x7c
+      00021C E7 51            [ 1]  431 	ld	(0x0051, x), a
+      00021E 1E 61            [ 2]  432 	ldw	x, (0x61, sp)
+      000220 A6 12            [ 1]  433 	ld	a, #0x12
+      000222 E7 52            [ 1]  434 	ld	(0x0052, x), a
+      000224 1E 61            [ 2]  435 	ldw	x, (0x61, sp)
+      000226 A6 12            [ 1]  436 	ld	a, #0x12
+      000228 E7 53            [ 1]  437 	ld	(0x0053, x), a
+      00022A 1E 61            [ 2]  438 	ldw	x, (0x61, sp)
+      00022C A6 12            [ 1]  439 	ld	a, #0x12
+      00022E E7 54            [ 1]  440 	ld	(0x0054, x), a
+      000230 1E 61            [ 2]  441 	ldw	x, (0x61, sp)
+      000232 A6 12            [ 1]  442 	ld	a, #0x12
+      000234 E7 55            [ 1]  443 	ld	(0x0055, x), a
+      000236 1E 61            [ 2]  444 	ldw	x, (0x61, sp)
+      000238 A6 7C            [ 1]  445 	ld	a, #0x7c
+      00023A E7 56            [ 1]  446 	ld	(0x0056, x), a
+      00023C 1E 61            [ 2]  447 	ldw	x, (0x61, sp)
+      00023E 1C 00 57         [ 2]  448 	addw	x, #0x0057
+      000241 7F               [ 1]  449 	clr	(x)
+      000242 1E 61            [ 2]  450 	ldw	x, (0x61, sp)
+      000244 1C 00 58         [ 2]  451 	addw	x, #0x0058
+      000247 7F               [ 1]  452 	clr	(x)
+      000248 1E 61            [ 2]  453 	ldw	x, (0x61, sp)
+      00024A 1C 00 59         [ 2]  454 	addw	x, #0x0059
+      00024D 7F               [ 1]  455 	clr	(x)
+      00024E 1E 61            [ 2]  456 	ldw	x, (0x61, sp)
+      000250 1C 00 5A         [ 2]  457 	addw	x, #0x005a
+      000253 7F               [ 1]  458 	clr	(x)
+      000254 1E 61            [ 2]  459 	ldw	x, (0x61, sp)
+      000256 1C 00 5B         [ 2]  460 	addw	x, #0x005b
+      000259 7F               [ 1]  461 	clr	(x)
+      00025A 1E 61            [ 2]  462 	ldw	x, (0x61, sp)
+      00025C 1C 00 5C         [ 2]  463 	addw	x, #0x005c
+      00025F 7F               [ 1]  464 	clr	(x)
+      000260 1E 61            [ 2]  465 	ldw	x, (0x61, sp)
+      000262 1C 00 5D         [ 2]  466 	addw	x, #0x005d
+      000265 7F               [ 1]  467 	clr	(x)
+      000266 1E 61            [ 2]  468 	ldw	x, (0x61, sp)
+      000268 1C 00 5E         [ 2]  469 	addw	x, #0x005e
+      00026B 7F               [ 1]  470 	clr	(x)
+      00026C 1E 61            [ 2]  471 	ldw	x, (0x61, sp)
+      00026E 1C 00 5F         [ 2]  472 	addw	x, #0x005f
+      000271 7F               [ 1]  473 	clr	(x)
+                                    474 ;	user/main.c: 80: CLK_Config();
+      000272 CDr00r00         [ 4]  475 	call	_CLK_Config
+                                    476 ;	user/main.c: 83: MaxMatrix(GPIOC, GPIO_PIN_6, GPIO_PIN_4, GPIO_PIN_5, 4);
+      000275 4B 04            [ 1]  477 	push	#0x04
+      000277 4B 20            [ 1]  478 	push	#0x20
+      000279 4B 10            [ 1]  479 	push	#0x10
+      00027B 4B 40            [ 1]  480 	push	#0x40
+      00027D 4B 0A            [ 1]  481 	push	#0x0a
+      00027F 4B 50            [ 1]  482 	push	#0x50
+      000281 CDr00r00         [ 4]  483 	call	_MaxMatrix
+      000284 5B 06            [ 2]  484 	addw	sp, #6
+                                    485 ;	user/main.c: 84: Init();
+      000286 CDr00r00         [ 4]  486 	call	_Init
+                                    487 ;	user/main.c: 85: Screen();
+      000289 CDr00r00         [ 4]  488 	call	_Screen
+                                    489 ;	user/main.c: 86: TEXT_Init();
+      00028C CDr00r00         [ 4]  490 	call	_TEXT_Init
+                                    491 ;	user/main.c: 87: TIMER_Init();
+      00028F CDr00r00         [ 4]  492 	call	_TIMER_Init
+                                    493 ;	user/main.c: 88: IWDG_Config();
+      000292 CDr00r1A         [ 4]  494 	call	_IWDG_Config
+                                    495 ;	user/main.c: 89: enableInterrupts();
+      000295 9A               [ 1]  496 	rim
+                                    497 ;	user/main.c: 119: while(TRUE) 
+      000296                        498 00102$:
+                                    499 ;	user/main.c: 121: TEXT_Manage();
+      000296 CDr00r00         [ 4]  500 	call	_TEXT_Manage
+      000299 20 FB            [ 2]  501 	jra	00102$
+      00029B 5B 62            [ 2]  502 	addw	sp, #98
+      00029D 81               [ 4]  503 	ret
+                                    504 	.area CODE
+                                    505 	.area INITIALIZER
+                                    506 	.area CABS (ABS)
